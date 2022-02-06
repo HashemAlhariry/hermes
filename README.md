@@ -19,14 +19,14 @@ cd "run scripts/linux and mac"
 ./run1server1client.sh
 ```
 ## Windows
-Open your CMD in the project directory and follow those instructions.
+Open your CMD in the project directory and follow these instructions.
 ```bat
 cd "run scripts/windows"
-# Now choose the script you want to run
-# To run client only
+:: Now choose the script you want to run
+:: To run client only
 runclient.bat
-# To run server only
+:: To run server only
 runserver.bat
-# To run both server and client (one instance of each one)
+:: To run both server and client (one instance for each application)
 run1server1client.bat
 ```

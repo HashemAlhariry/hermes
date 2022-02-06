@@ -24,13 +24,15 @@ public enum StageCooridinator {
         return primaryStage;
     }
     
-    public void switchToLoginScene() {
-        prepareScene("loginScene", "/layout/login/LoginLayout.fxml");
-    }
+	// Examples on how you may implement switching to different scenes
 
-	public void switchToRegisterScene() {
-        prepareScene("loginScene", "/layout/register/RegisterLayout.fxml");
-    }
+    // public void switchToLoginScene() {
+    //     prepareScene("loginScene", "/layout/login/LoginLayout.fxml");
+    // }
+
+	// public void switchToRegisterScene() {
+    //     prepareScene("loginScene", "/layout/register/RegisterLayout.fxml");
+    // }
 
     private void prepareScene(String sceneName, String fxmlLocation) {
         if (sceneMap.get(sceneName) == null) {
