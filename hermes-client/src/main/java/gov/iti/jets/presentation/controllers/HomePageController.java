@@ -13,6 +13,9 @@ public class HomePageController implements Initializable {
  
 
 
+
+
+
     @FXML
     private ImageView chattingScreen;
 
