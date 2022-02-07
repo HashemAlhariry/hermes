@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>gov.iti.jets</groupId>
+		<artifactId>hermes</artifactId>
+		<version>1.0.0</version>
+	</parent>
+
+	<groupId>gov.iti.jets</groupId>
+	<artifactId>hermes-client</artifactId>
+	<version>1.0.0</version>
+	<name>hermes-client</name>
+	<url>https://github.com/amiraElmergawy/chat-app</url>
+
+	<dependencies></dependencies>
+
+	<build>
+		<plugins>
+
+			<plugin>
+				<groupId>org.openjfx</groupId>
+				<artifactId>javafx-maven-plugin</artifactId>
+				<configuration>
+					<stripDebug>true</stripDebug>
+					<compress>2</compress>
+					<noHeaderFiles>true</noHeaderFiles>
+					<launcher>hremes-client</launcher>
+					<jlinkImageName>hermes-client-image</jlinkImageName>
+					<jlinkZipName>hermeszip</jlinkZipName>
+					<mainClass>gov.iti.jets/gov.iti.jets.App</mainClass>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>
