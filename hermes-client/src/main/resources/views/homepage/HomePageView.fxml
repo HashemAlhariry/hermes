@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -14,22 +15,15 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane  
-  prefHeight="500.0"
-  prefWidth="750.0"
-  styleClass="mainbackground-color" 
-  stylesheets="@HomePage.css" 
-  xmlns="http://javafx.com/javafx/17" 
-  xmlns:fx="http://javafx.com/fxml/1"
-  fx:controller="gov.iti.jets.presentation.controllers.HomePageController">
+<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="750.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.HomePageController">
    <left>
       <HBox prefHeight="500.0" prefWidth="231.0" BorderPane.alignment="CENTER">
          <children>
-            <VBox prefHeight="500.0" prefWidth="37.0" styleClass="background-color" >
+            <VBox prefHeight="500.0" prefWidth="37.0" styleClass="background-color">
                <children>
                   <ImageView fx:id="profilePicture" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-iOS%20Filled-User.png" />
+                        <Image url="@../../images/icons8-iOS%20Filled-User.png" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="40.0" left="5.0" top="10.0" />
@@ -37,7 +31,7 @@
                   </ImageView>
                   <ImageView fx:id="chattingScreen" fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-iOS%20Glyph-Chat.png" />
+                        <Image url="@../../images/icons8-iOS%20Glyph-Chat.png" />
                      </image>
                      <VBox.margin>
                         <Insets left="5.0" top="20.0" />
@@ -45,7 +39,7 @@
                   </ImageView>
                   <ImageView fx:id="settings" fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-Material%20Sharp-Settings.png" />
+                        <Image url="@../../images/icons8-Material%20Sharp-Settings.png" />
                      </image>
                      <VBox.margin>
                         <Insets left="5.0" top="20.0" />
@@ -54,7 +48,7 @@
                   <Pane prefHeight="200.0" prefWidth="200.0" />
                   <ImageView fx:id="logout" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-iOS%20Filled-Logout%20Rounded%20Left.png" />
+                        <Image url="@../../images/icons8-iOS%20Filled-Logout%20Rounded%20Left.png" />
                      </image>
                      <VBox.margin>
                         <Insets left="10.0" top="100.0" />
@@ -64,17 +58,17 @@
             </VBox>
             <VBox prefHeight="500.0" prefWidth="196.0" styleClass="gray-background">
                <children>
-                  <HBox prefHeight="13.0" prefWidth="154.0">
+                  <HBox prefHeight="20.0" prefWidth="154.0">
                      <children>
-                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Fluency%20System%20Filled-Search.png" />
+                              <Image url="@../../images/icons8-iOS%20Glyph-Search.png" />
                            </image>
                            <HBox.margin>
-                              <Insets left="2.0" right="2.0" />
+                              <Insets left="4.0" right="2.0" top="3.0" />
                            </HBox.margin>
                         </ImageView>
-                        <TextField alignment="BASELINE_LEFT" onAction="#onSearchTextFieldClick" prefHeight="26.0" prefWidth="111.0" styleClass="transparent-background" >
+                        <TextField alignment="BASELINE_LEFT" onAction="#onSearchTextFieldClick" prefHeight="17.0" prefWidth="152.0" styleClass="transparent-background">
                            <padding>
                               <Insets left="10.0" />
                            </padding>
@@ -91,7 +85,7 @@
                         <String fx:value="radius" />
                      </styleClass>
                   </HBox>
-                  <Pane opacity="0.16" prefHeight="1.0" prefWidth="200.0" styleClass="background-color" >
+                  <Pane opacity="0.16" prefHeight="1.0" prefWidth="200.0" styleClass="background-color">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -100,7 +94,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -124,7 +118,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Color-Name.png" />
+                              <Image url="@../../images/icons8-Color-Name.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -145,7 +139,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -166,7 +160,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -187,7 +181,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -208,7 +202,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Color-Name.png" />
+                              <Image url="@../../images/icons8-Color-Name.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -229,7 +223,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -250,7 +244,7 @@
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
+                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                            </image>
                         </ImageView>
                         <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
@@ -273,19 +267,19 @@
       </HBox>
    </left>
    <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="mainVertical" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="371.0">
                <children>
                   <ImageView fitHeight="61.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
+                        <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="29.0" prefWidth="108.0" text="Hashem " textFill="WHITE">
+                  <Label prefHeight="29.0" prefWidth="108.0" styleClass="testing-font" stylesheets="@HomePage.css" text="Hashem " textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
@@ -308,7 +302,7 @@
                         <Insets left="10.0" right="10.0" />
                      </HBox.margin>
                      <image>
-                        <Image url="@images/icons8-iOS%20Filled-Menu%20Vertical.png" />
+                        <Image url="@../../images/icons8-iOS%20Filled-Menu%20Vertical.png" />
                      </image>
                   </ImageView>
                </children>
@@ -316,54 +310,27 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <ScrollPane prefHeight="389.0" prefWidth="521.0" styleClass="transparent-background"  VBox.vgrow="ALWAYS">
+            <ScrollPane fx:id="sp_main" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="521.0" styleClass="fourth-background" stylesheets="@HomePage.css" VBox.vgrow="ALWAYS">
                <content>
-                  <Pane prefHeight="392.0" prefWidth="517.0" styleClass="light-gray-background" >
-                     <children>
-                        <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <Label layoutX="55.0" layoutY="23.0" prefHeight="17.0" prefWidth="180.0" styleClass="incoming-bubble" text="Hey how are you today " textFill="#4a4d4a">
-                           <padding>
-                              <Insets left="4.0" />
-                           </padding>
-                        </Label>
-                        <Label layoutX="438.0" layoutY="77.0" prefHeight="17.0" prefWidth="65.0" styleClass="outgoing-bubble" text="i'm fine" textFill="WHITE">
-                           <padding>
-                              <Insets left="5.0" />
-                           </padding>
-                        </Label>
-                        <ImageView fitHeight="41.0" fitWidth="32.0" layoutX="14.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <Label layoutX="55.0" layoutY="101.0" prefHeight="17.0" prefWidth="180.0" styleClass="incoming-bubble" text="GREAAAT !!!!!!" textFill="#4a4d4a">
-                           <padding>
-                              <Insets left="4.0" />
-                           </padding>
-                        </Label>
-                     </children>
-                  </Pane>
+                  <VBox fx:id="vbox_messages" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="1500.0" prefWidth="1500.0" styleClass="fourth-background" stylesheets="@HomePage.css" />
                </content>
             </ScrollPane>
             <HBox prefHeight="39.0" prefWidth="521.0">
                <children>
                   <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@images/icons8-iOS%20Filled-Plus%20Math.png" />
+                        <Image url="@../../images/icons8-iOS%20Filled-Plus%20Math.png" />
                      </image>
                      <HBox.margin>
                         <Insets left="15.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <TextField prefHeight="26.0" prefWidth="220.0" HBox.hgrow="ALWAYS">
+                  <TextField fx:id="tf_message" prefHeight="26.0" prefWidth="220.0" HBox.hgrow="ALWAYS">
                      <HBox.margin>
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </TextField>
+                  <Button fx:id="button_send" mnemonicParsing="false" text="Button" />
                </children>
             </HBox>
          </children>
