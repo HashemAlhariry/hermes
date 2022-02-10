@@ -1,0 +1,87 @@
+.root {
+	-fx-background-color: #2B233C;
+}
+
+.label {
+	-fx-text-fill: white;
+}
+
+#myvbox {
+    -fx-background-color: #2B233C;
+    -fx-spacing: 20;
+}
+
+.text-field {
+	-fx-text-fill:#685490;
+	-fx-background-color: white;
+	-fx-font-size:20;
+	-fx-font-family: "Ubuntu Mono";
+
+}
+
+#circle {
+	-fx-fill:#685490;
+}
+
+#profilePic {
+	-fx-effect: innershadow( gaussian , rgb(85, 85, 85) , 30,0.5,0,0 );
+}
+
+#myTextFlow > Text{
+	-fx-fill: white;
+	-fx-font-family: "Ubuntu Mono";
+	-fx-font-size:20;
+	-fx-boreder-radius:5,5;
+}
+
+.text-area {
+	-fx-text-fill:white;
+	-fx-background-color: #685490;
+	-fx-font-size:20;
+	fx-highlight-fill: #2B233C;
+    -fx-highlight-text-fill: white;
+	-fx-font-family: "Ubuntu Mono";
+}
+.text-area .content {
+	-fx-background-color: #2B233C;
+
+}
+
+#user-name {
+	-fx-text-fill:white;
+	-fx-background-color: #2B233C;
+	-fx-font-size:30;
+	fx-highlight-fill: #2B233C;
+    -fx-highlight-text-fill: white;
+	-fx-padding:0;
+}
+
+.radio-button {
+	-fx-text-fill:white;
+	-fx-font-size:18;
+	-fx-font-family: "Ubuntu Mono";
+}
+.radio-button .radio{
+    -fx-padding: 4px;
+    -fx-background-color: white;
+	
+}
+.radio-button:selected .radio .dot{
+    -fx-background-color: #2B233C;
+}
+
+.button {
+	-fx-text-fill:white;
+	-fx-background-color: #685490;
+	-fx-font-family: "Ubuntu Mono";
+	-fx-font-size:25;
+
+}
+
+.button:hover {
+	-fx-background-color: #49386b;
+}
+
+#back-stackpane:hover{
+	-fx-background-color: #49386b;
+}

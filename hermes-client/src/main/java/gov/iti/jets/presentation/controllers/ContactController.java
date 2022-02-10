@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.Button;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -13,25 +13,19 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
-public class ProfileController implements Initializable {
+public class ContactController implements Initializable {
+
+	@FXML
+	private Button addToContactButton;
 
 	@FXML
 	private TextArea bioTextArea;
 
 	@FXML
-	private DatePicker birthdayDatePicker;
-
-	@FXML
-	private ImageView changeNameImageView;
-
-	@FXML
-	private ImageView changeProfilePictureImageView;
+	private TextField birthDayTextField;
 
 	@FXML
 	private TextField countryTextField;
-
-	@FXML
-	private TextField emailTextField;
 
 	@FXML
 	private RadioButton femaleRadioButton;
@@ -63,12 +57,7 @@ public class ProfileController implements Initializable {
 	}
 
 	@FXML
-	void changeProgileImage(MouseEvent event) {
-
-	}
-
-	@FXML
-	void editUserNameTextField(MouseEvent event) {
+	void backToPreviousScene(MouseEvent event) {
 
 	}
 
