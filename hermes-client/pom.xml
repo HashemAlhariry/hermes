@@ -8,7 +8,7 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>gov.iti.jets.client</groupId>
+	<groupId>gov.iti.jets</groupId>
 	<artifactId>hermes-client</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-client</name>
@@ -29,7 +29,7 @@
 					<launcher>hremes-client</launcher>
 					<jlinkImageName>hermes-client-image</jlinkImageName>
 					<jlinkZipName>hermeszip</jlinkZipName>
-					<mainClass>gov.iti.jets.client/gov.iti.jets.client.App</mainClass>
+					<mainClass>gov.iti.jets/gov.iti.jets.App</mainClass>
 				</configuration>
 			</plugin>
 

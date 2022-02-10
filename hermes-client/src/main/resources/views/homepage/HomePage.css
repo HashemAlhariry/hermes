@@ -1,0 +1,33 @@
+.mainbackground-color{
+  -fx-background-color:'#4A4D4A';
+  
+  }
+  .background-color{
+    -fx-background-color:'#4A4D4A';
+  }
+  
+  .gray-background{
+    -fx-background-color:'#686868'
+  }
+  
+  .transparent-background{
+    -fx-background-color:rgba(0,0,0,0);
+  }
+  
+  .radius{
+    -fx-background-radius:10px;
+  }
+  
+  .light-gray-background{
+    -fx-background-color:'#E7E7E7';
+  }
+  
+  .incoming-bubble{
+    -fx-background-color:'#FFFFFF';
+      -fx-background-radius:10px;
+  
+  }
+  .outgoing-bubble{
+    -fx-background-color:'#7192D9';
+    -fx-background-radius:10px;
+  }

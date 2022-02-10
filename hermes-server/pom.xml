@@ -8,11 +8,11 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>gov.iti.jets.server</groupId>
+	<groupId>gov.iti.jets</groupId>
 	<artifactId>hermes-server</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-server</name>
-	
+
 	<url>https://github.com/amiraElmergawy/chat-app</url>
 
 	<dependencies></dependencies>
@@ -30,7 +30,7 @@
 					<launcher>hremes-server</launcher>
 					<jlinkImageName>hermes-server-image</jlinkImageName>
 					<jlinkZipName>serverzip</jlinkZipName>
-					<mainClass>gov.iti.jets.server/gov.iti.jets.server.App</mainClass>
+					<mainClass>gov.iti.jets/gov.iti.jets.App</mainClass>
 				</configuration>
 			</plugin>
 
