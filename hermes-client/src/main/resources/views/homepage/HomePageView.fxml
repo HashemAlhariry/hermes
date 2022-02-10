@@ -92,7 +92,7 @@
                   </Pane>
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="184.0">
                      <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="profileImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                            </image>
@@ -330,7 +330,11 @@
                         <Insets left="10.0" right="10.0" top="5.0" />
                      </HBox.margin>
                   </TextField>
-                  <Button fx:id="button_send" mnemonicParsing="false" text="Button" />
+                  <Button fx:id="button_send" mnemonicParsing="false" text="Send">
+                     <HBox.margin>
+                        <Insets right="5.0" top="5.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
          </children>

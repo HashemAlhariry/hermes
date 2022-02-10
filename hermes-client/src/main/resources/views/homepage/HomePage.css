@@ -2,13 +2,13 @@
   -fx-background-color:'#2B233C';
   
 }
-  .background-color{
+.background-color{
     -fx-background-color:'#2B233C';
-  }
+ }
   
-  .third-background{
-    -fx-background-color:'#307686'
-  }
+.third-background{
+   -fx-background-color:'#307686'
+}
   .fourth-background{
     -fx-background-color:'#FFFFFF'
     
@@ -42,3 +42,15 @@
   .testing-font{
     -fx-font-family: "Fresca-Regular";
   }
+
+Button{
+ -fx-text-fill: black;
+ -fx-font-family: Arial,Helvetica,sans-serif;
+ -fx-font-size: 12px;
+ -fx-background-color:white;
+ -fx-border-color:white;
+}
+Button:hover {
+  -fx-background-color: #CCA4FF;
+   -fx-text-fill: white;
+}
