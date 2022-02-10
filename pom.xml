@@ -65,10 +65,10 @@
 							won't execute since the parent is packages as a pom not a real 
 							project with main class to run so the plugin can't be shared to
 							child projects from the  -->
-							<!-- this shouldn't be written :( -->
+						<!-- this shouldn't be written :( -->
 
 						<!-- <mainClass>gov.iti.jets.App</mainClass> -->
-						
+
 						<!-- to run both applications for now run the following command
 							mvn clean javafx:run -pl hermes-server,hermes-client -->
 					</configuration>
