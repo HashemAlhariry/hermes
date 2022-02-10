@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="237.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.NotificationsController">
+   <children>
+      <Pane prefHeight="77.0" prefWidth="237.0" style="-fx-background-color: #2B233C;">
+         <children>
+            <ImageView id="photo1" fitHeight="46.0" fitWidth="52.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons8-user-48.png" />
+               </image>
+            </ImageView>
+            <Label id="label1" layoutX="78.0" layoutY="8.0" prefHeight="46.0" prefWidth="145.0" text="label" textFill="WHITE" />
+            <Separator layoutY="62.0" prefHeight="19.0" prefWidth="237.0" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets top="30.0" />
+         </padding>
+      </Pane>
+      <Pane prefHeight="89.0" prefWidth="237.0" style="-fx-background-color: #2B233C;">
+         <children>
+            <ImageView id="photo2" fitHeight="46.0" fitWidth="52.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons8-user-48.png" />
+               </image>
+            </ImageView>
+            <Label id="label2" layoutX="78.0" layoutY="8.0" prefHeight="46.0" prefWidth="145.0" text="label" textFill="WHITE" />
+            <Separator layoutY="65.0" prefHeight="19.0" prefWidth="237.0" />
+         </children>
+         <padding>
+            <Insets top="20.0" />
+         </padding>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Pane>
+      <Pane prefHeight="61.0" prefWidth="237.0" style="-fx-background-color: #2B233C;">
+         <children>
+            <ImageView id="photo3" fitHeight="46.0" fitWidth="52.0" layoutX="14.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons8-user-48.png" />
+               </image>
+            </ImageView>
+            <Label id="label3" layoutX="78.0" layoutY="8.0" prefHeight="46.0" prefWidth="145.0" text="label" textFill="WHITE" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+      </Pane>
+      <Pane prefHeight="56.0" prefWidth="243.0" style="-fx-background-color: #2B233C;">
+         <children>
+            <ImageView id="photo4" fitHeight="46.0" fitWidth="52.0" layoutX="14.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../images/icons8-user-48.png" />
+               </image>
+            </ImageView>
+            <Label id="label4" layoutX="78.0" layoutY="14.0" prefHeight="46.0" prefWidth="145.0" text="label" textFill="WHITE" />
+            <Separator prefHeight="19.0" prefWidth="237.0" />
+         </children>
+      </Pane>
+      <Pane prefHeight="0.0" prefWidth="237.0" style="-fx-background-color: #2B233C;">
+         <children>
+            <Hyperlink id="seeAllMessagesHyperLink" layoutX="64.0" layoutY="38.0" onMouseClicked="#seeAllMessagesMouseClicked" prefHeight="42.0" prefWidth="110.0" style="-fx-underline: true;" text="See all messages" textFill="#0000a4" />
+         </children>
+      </Pane>
+   </children>
+</VBox>

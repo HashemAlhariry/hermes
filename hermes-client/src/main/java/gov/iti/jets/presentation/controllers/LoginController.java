@@ -1,52 +1,72 @@
 package gov.iti.jets.presentation.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
-import gov.iti.jets.presentation.util.ModelsFactory;
-import gov.iti.jets.presentation.util.StageCoordinator;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.fxml.Initializable;
+import java.net.URL;
+import java.util.ResourceBundle;
+import gov.iti.jets.presentation.models.UserModel;
+import gov.iti.jets.presentation.util.ModelsFactory;
+import gov.iti.jets.presentation.util.StageCoordinator;
+ 
 
 public class LoginController implements Initializable {
 
-	@FXML
-	private PasswordField passwordPasswordField;
 
-	@FXML
-	private TextField userNameTextField;
+    @FXML
+    private TextField emailTextField;
 
-	private final StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-	private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
+    @FXML
+    private ImageView eyeImage;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    private TextField nameTextField;
 
-	}
+    @FXML
+    private PasswordField passwordTextField;
 
-	@FXML
-	void onRegisterationButtonClick(ActionEvent event) {
-		stageCoordinator.switchToRegisterationScene();
-	}
+    @FXML
+    private Button signInButton;
 
-	@FXML
-	void onLoginButtonClick(ActionEvent event) {
+    private final StageCoordinator stageCoordinator= StageCoordinator.getInstance();
+    private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
+    
 
-	}
+    @FXML
+    void eyeImageMouseClicked(MouseEvent event) {
 
-	@FXML
-	void onProfileButtonClick(ActionEvent event) {
+    }
+
+    @FXML
+    void signUpHyperLinkAction(ActionEvent event) {
+        stageCoordinator.switchToRegisterationScene();
+    }
+
+    @FXML
+    void signinButtonAction(ActionEvent event) {
 		stageCoordinator.switchtoHomePageScene();
+    }
 
-	}
+    @FXML
+    void signinKeyPressed(KeyEvent event) {
 
-	@FXML
-	void onHomePageButtonClick(ActionEvent event) {
+    }
 
-	}
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+            UserModel userModel = modelsFactory.getUserModel();
+            // nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+            // passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+            
+    }
 
 }
