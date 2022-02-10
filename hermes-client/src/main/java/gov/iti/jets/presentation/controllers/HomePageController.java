@@ -86,7 +86,7 @@ public class HomePageController implements Initializable {
                     TextFlow textFlow = new TextFlow(text);
 
                     textFlow.setStyle("-fx-color: rgb(255,255,255); " +
-                            "-fx-background-color: rgb(15,125,242); " +
+                            "-fx-background-color:  #685490; " +
                             " -fx-background-radius: 20px; ");
                     textFlow.setPadding(new Insets(5, 10, 5, 10));
                     text.setFill(Color.color(0.934, 0.945, 0.996));
