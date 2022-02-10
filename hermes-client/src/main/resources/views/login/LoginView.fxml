@@ -64,7 +64,7 @@
    <bottom>
       <HBox spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" onAction="#onregisterationButtonClick" text="registeration" />
+            <Button mnemonicParsing="false" onAction="#onRegisterationButtonClick" text="registeration" />
             <Region HBox.hgrow="ALWAYS" />
             <Button mnemonicParsing="false" onAction="#onProfileButtonClick" text="Profile" />
             <Region HBox.hgrow="ALWAYS" />

@@ -31,7 +31,8 @@ public class StageCoordinator {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
 
-	public void switchToregisterationScene() {
+	public void switchToRegisterationScene() {
+		System.out.println("from reg");
 		prepareScene("registerationScene", "/views/registeration/RegisterationView.fxml");
 	}
 
