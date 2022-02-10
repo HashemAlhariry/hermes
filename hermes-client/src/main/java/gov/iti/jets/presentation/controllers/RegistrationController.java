@@ -19,17 +19,6 @@ public class RegistrationController implements Initializable {
     private final StageCoordinator stageCoordinator = StageCoordinator.getInstance();
     private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        UserModel userModel = modelsFactory.getUserModel();
-        // userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-        // passwordPasswordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-        // emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
-        // phoneNumberTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
-
-    }
-
     @FXML
     private TextField phoneNumberTextField;
 
@@ -56,6 +45,17 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private DatePicker birthDateFeild;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        UserModel userModel = modelsFactory.getUserModel();
+        // userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+        // passwordPasswordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+        // emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
+        // phoneNumberTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
+
+    }
 
     @FXML
     void loginAction(ActionEvent event) {
