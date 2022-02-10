@@ -9,17 +9,17 @@ public class App extends Application {
 	private StageCoordinator stageCoordinator = StageCoordinator.getInstance();
 
 	public static void main(String[] args) {
-		System.out.println("Hello from client");
+		System.out.println("Hello");
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-        stageCoordinator.initStage(primaryStage);
+		stageCoordinator.initStage(primaryStage);
 
-        stageCoordinator.switchToLoginScene();
+		stageCoordinator.switchToLoginScene();
 
-        primaryStage.show();
+		primaryStage.show();
 	}
 }
