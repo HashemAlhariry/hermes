@@ -3,6 +3,7 @@ package gov.iti.jets.presentation.util;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
@@ -30,12 +31,11 @@ public class StageCoordinator {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
 
-	public void switchToRegistrationScene() {
-		prepareScene("registrationScene", "/views/registration/RegistrationView.fxml");
+	public void switchToregisterationScene() {
+		prepareScene("registerationScene", "/views/registeration/RegisterationView.fxml");
 	}
 
 	public void switchToProfileSettingsScene() {
-
 	}
 
 	public void switchToProfileScene() {
@@ -58,5 +58,4 @@ public class StageCoordinator {
 		}
 		primaryStage.setScene(sceneMap.get(sceneName));
 	}
-
 }
