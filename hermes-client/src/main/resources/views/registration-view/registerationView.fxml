@@ -30,8 +30,8 @@
                   <LinearGradient endX="1.0" endY="1.0">
                      <stops>
                         <Stop color="#ebebeb" />
-                        <Stop color="#7b74bc" offset="0.25105660228305093" />
-                        <Stop color="#bd00ff" offset="0.5954891969822645" />
+                        <Stop color="#6b65a8" offset="0.25105660228305093" />
+                        <Stop color="#76109e" offset="0.5954891969822645" />
                         <Stop color="#f3f3f5" offset="1.0" />
                      </stops>
                   </LinearGradient>
@@ -61,17 +61,20 @@
                         <TextField fx:id="passwordTextField" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="password" GridPane.rowIndex="2" />
                         <ButtonBar buttonOrder="" prefHeight="69.0" prefWidth="157.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                            <buttons>
-                              <VBox alignment="CENTER" prefHeight="104.0" prefWidth="218.0">
+                              <VBox alignment="CENTER_LEFT" prefHeight="104.0" prefWidth="218.0">
                                  <children>
-                                    <RadioButton fx:id="maleRadioButton" mnemonicParsing="false" text="Male">
+                                    <RadioButton fx:id="maleRadioButton" alignment="CENTER_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Male">
                                        <VBox.margin>
                                           <Insets />
                                        </VBox.margin>
                                     </RadioButton>
-                                    <RadioButton fx:id="femaleRadioButton" mnemonicParsing="false" prefHeight="21.0" prefWidth="149.0" text="Female">
+                                    <RadioButton fx:id="femaleRadioButton" alignment="CENTER_LEFT" mnemonicParsing="false" text="Female">
                                        <VBox.margin>
-                                          <Insets top="10.0" />
+                                          <Insets />
                                        </VBox.margin>
+                                       <padding>
+                                          <Insets top="10.0" />
+                                       </padding>
                                     </RadioButton>
                                  </children>
                               </VBox>
