@@ -2,6 +2,7 @@
 
 	main-color:#2B233C;
 	secondary-color:#307686;
+	main-font-family:"Ubuntu Mono";
 	-fx-background-color: main-color;
 }
 
@@ -13,21 +14,22 @@
 .text-field {
 	-fx-text-fill:main-color;
 	-fx-background-color: white;
-	-fx-font-size:20;
-
+	-fx-font-size:15;
+	-fx-font-family:main-font-family;
 }
 
 #registeration-btn {
 	-fx-text-fill:main-color;
 	-fx-background-color: white;
 	-fx-font-size:15;
-
+	-fx-font-family:main-font-family;
 }
 
 
 .radio-button {
 	-fx-text-fill:white;
-	-fx-font-size:20;
+	-fx-font-size:15;
+	-fx-font-family:main-font-family;
 }
 .radio-button .radio{
     -fx-padding: 4px;
