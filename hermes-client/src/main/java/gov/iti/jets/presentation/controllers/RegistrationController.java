@@ -1,9 +1,10 @@
 package gov.iti.jets.presentation.controllers;
- 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -15,11 +16,19 @@ import gov.iti.jets.presentation.util.StageCoordinator;
 
 public class RegistrationController implements Initializable {
 
-    @FXML
-    private TextField emailTextField;
+    private final StageCoordinator stageCoordinator = StageCoordinator.getInstance();
+    private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
 
-    @FXML
-    private PasswordField passwordPasswordTextField;
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+        UserModel userModel = modelsFactory.getUserModel();
+        // userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+        // passwordPasswordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+        // emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
+        // phoneNumberTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
+
+    }
 
     @FXML
     private TextField phoneNumberTextField;
@@ -27,29 +36,34 @@ public class RegistrationController implements Initializable {
     @FXML
     private TextField userNameTextField;
 
-
-    private final StageCoordinator stageCoordinator= StageCoordinator.getInstance();
-    private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
+    @FXML
+    private TextField emailTextField;
 
     @FXML
-    void onLoginButtonClick(ActionEvent event) {
+    private TextField countryTextField;
+
+    @FXML
+    private TextField confirmPasswordTextField;
+
+    @FXML
+    private TextField passwordTextField;
+
+    @FXML
+    private RadioButton maleRadioButton;
+
+    @FXML
+    private RadioButton femaleRadioButton;
+
+    @FXML
+    private DatePicker birthDateFeild;
+
+    @FXML
+    void loginAction(ActionEvent event) {
         stageCoordinator.switchToLoginScene();
     }
 
     @FXML
-    void onRegistrationButtonClick(ActionEvent event) {
-
+    void registerationAction(ActionEvent event) {
     }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-        UserModel userModel = modelsFactory.getUserModel();
-        userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-        passwordPasswordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-        emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
-        phoneNumberTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
-
-    }
-
 
 }
