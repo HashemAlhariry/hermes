@@ -5,7 +5,6 @@ import gov.iti.jets.services.impls.LoginServiceImpl;
 
 public class ServicesFactory {
 
-
     private static final ServicesFactory servicesFactory = new ServicesFactory();
     private final LoginService loginService = new LoginServiceImpl();
     public static ServicesFactory getInstance(){
@@ -19,4 +18,5 @@ public class ServicesFactory {
     public LoginService getLoginService(){
         return  loginService;
     }
+
 }
