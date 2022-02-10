@@ -1,4 +1,5 @@
 package gov.iti.jets.presentation.util;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,46 +11,40 @@ import javafx.stage.Stage;
 public class StageCoordinator {
 
     private static final StageCoordinator stageCoordinator = new StageCoordinator();
-    private final Map<String,Scene> sceneMap = new HashMap<>();
+    private final Map<String, Scene> sceneMap = new HashMap<>();
     private Stage primaryStage;
 
-    private StageCoordinator(){
+    private StageCoordinator() {
 
     }
 
-    public  static StageCoordinator getInstance(){
+    public static StageCoordinator getInstance() {
         return stageCoordinator;
     }
 
-    public void initStage(Stage primaryStage){
+    public void initStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    
-    public void switchToLoginScene(){
-        prepareScene("loginScene","/views/login/LoginView.fxml");
+    public void switchToLoginScene() {
+        prepareScene("loginScene", "/views/login/LoginView.fxml");
     }
 
-
-    public void switchToRegistrationScene(){
-        prepareScene("registrationScene","/views/registration/RegistrationView.fxml");
+    public void switchToregisterationScene() {
+        prepareScene("registerationScene", "/views/registeration/RegisterationView.fxml");
     }
 
-    public void switchToProfileSettingsScene(){
- 
-    }
-
-    public void switchToProfileScene(){
+    public void switchToProfileSettingsScene() {
 
     }
 
-    public void switchtoHomePageScene(){
-        prepareScene("homepagaScene","/views/homepage/HomePageView.fxml");
+    public void switchToProfileScene() {
+
     }
 
- 
-
-
+    public void switchtoHomePageScene() {
+        prepareScene("homepagaScene", "/views/homepage/HomePageView.fxml");
+    }
 
     private void prepareScene(String sceneName, String fxmlLocation) {
         if (sceneMap.get(sceneName) == null) {
@@ -64,5 +59,4 @@ public class StageCoordinator {
         primaryStage.setScene(sceneMap.get(sceneName));
     }
 
-    
-}   
+}

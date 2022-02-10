@@ -14,7 +14,7 @@ import gov.iti.jets.presentation.models.UserModel;
 import gov.iti.jets.presentation.util.ModelsFactory;
 import gov.iti.jets.presentation.util.StageCoordinator;
 
-public class RegistrationController implements Initializable {
+public class RegisterationController implements Initializable {
 
     private final StageCoordinator stageCoordinator = StageCoordinator.getInstance();
     private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
