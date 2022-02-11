@@ -35,15 +35,11 @@ public class HomePageController implements Initializable {
     @FXML
     private ImageView profileImageView;
     @FXML
-    private ImageView settingsImageView;
-    @FXML
     private ImageView logoutImageView;
     @FXML
     private VBox messagesVerticalBox;
     @FXML
     private ImageView contactImageView;
-    @FXML
-    private ImageView chatImageView;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -96,6 +92,11 @@ public class HomePageController implements Initializable {
 
     @FXML
     void onContactClicked(MouseEvent mouseEvent) {
+
+    }
+
+	@FXML
+    void onLogoutClicked(MouseEvent mouseEvent) {
 
     }
 
