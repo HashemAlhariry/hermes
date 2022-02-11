@@ -21,7 +21,7 @@
          <children>
             <VBox prefHeight="500.0" prefWidth="37.0" styleClass="background-color">
                <children>
-                  <ImageView fx:id="profileImageView" fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="profileImageView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/icons8-iOS%20Filled-User.png" />
                      </image>
@@ -30,7 +30,7 @@
                      </VBox.margin>
                   </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />
-                  <ImageView fx:id="logoutImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="logoutImageView" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onLogoutClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/icons8-iOS%20Filled-Logout%20Rounded%20Left.png" />
                      </image>
@@ -255,7 +255,7 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="66.0" prefWidth="371.0">
                <children>
-                  <ImageView fx:id="contactImageView" fitHeight="61.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="contactImageView" fitHeight="61.0" fitWidth="53.0" onMouseClicked="#onContactClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
                      </image>

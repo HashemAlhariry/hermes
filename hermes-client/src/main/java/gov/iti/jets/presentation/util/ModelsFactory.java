@@ -2,17 +2,14 @@ package gov.iti.jets.presentation.util;
 
 import gov.iti.jets.presentation.models.UserModel;
 
-public class ModelsFactory {
+public enum ModelsFactory {
 
-	private final static ModelsFactory modelsFactory = new ModelsFactory();
+	INSTANCE;
+
 	private UserModel userModel = new UserModel();
 
 	private ModelsFactory() {
 
-	}
-
-	public static ModelsFactory getInstance() {
-		return modelsFactory;
 	}
 
 	public UserModel getUserModel() {

@@ -6,20 +6,16 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-	private StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-
+	private StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+	
 	public static void main(String[] args) {
-		System.out.println("Hello Client");
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-
 		stageCoordinator.initStage(primaryStage);
-
 		stageCoordinator.switchToLoginScene();
-
 		primaryStage.show();
 	}
 }

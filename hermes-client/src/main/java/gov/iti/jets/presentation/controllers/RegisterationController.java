@@ -1,6 +1,5 @@
 package gov.iti.jets.presentation.controllers;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,8 +17,8 @@ import gov.iti.jets.presentation.util.StageCoordinator;
 
 public class RegisterationController implements Initializable {
 
-    private final StageCoordinator stageCoordinator = StageCoordinator.getInstance();
-    private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
+    private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+    private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
 
     @FXML
     private TextField phoneNumberTextField;
@@ -64,6 +63,7 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
+		
     }
 
 }

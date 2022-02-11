@@ -34,8 +34,8 @@ public class LoginController implements Initializable {
     @FXML
     private Button signInButton;
 
-    private final StageCoordinator stageCoordinator= StageCoordinator.getInstance();
-    private final ModelsFactory modelsFactory = ModelsFactory.getInstance();
+    private final StageCoordinator stageCoordinator= StageCoordinator.INSTANCE;
+    private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
     
 
     @FXML

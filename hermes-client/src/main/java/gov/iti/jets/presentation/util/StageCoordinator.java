@@ -9,18 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class StageCoordinator {
+public enum StageCoordinator {
 
-	private static final StageCoordinator stageCoordinator = new StageCoordinator();
+	INSTANCE;
+
 	private final Map<String, Scene> sceneMap = new HashMap<>();
 	private Stage primaryStage;
 
 	private StageCoordinator() {
 
-	}
-
-	public static StageCoordinator getInstance() {
-		return stageCoordinator;
 	}
 
 	public void initStage(Stage primaryStage) {
@@ -31,20 +28,16 @@ public class StageCoordinator {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
 
+	public void switchtoHomePageScene() {
+		prepareScene("homepagaScene", "/views/homepage/HomePageView.fxml");
+	}
+
 	public void switchToRegisterationScene() {
-		System.out.println("from reg");
 		prepareScene("registerationScene", "/views/registeration/RegisterationView.fxml");
 	}
 
-	public void switchToProfileSettingsScene() {
-	}
-
 	public void switchToProfileScene() {
-
-	}
-
-	public void switchtoHomePageScene() {
-		prepareScene("homepagaScene", "/views/homepage/HomePageView.fxml");
+		prepareScene("profileScene", "/views/profile/ProfileView.fxml");
 	}
 
 	private void prepareScene(String sceneName, String fxmlLocation) {
@@ -59,4 +52,9 @@ public class StageCoordinator {
 		}
 		primaryStage.setScene(sceneMap.get(sceneName));
 	}
+
+	public void switchToContactScene() {
+		prepareScene("contactScene", "/views/contact/ContactView.fxml");
+	}
+
 }
