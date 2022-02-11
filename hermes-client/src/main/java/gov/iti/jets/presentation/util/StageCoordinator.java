@@ -35,10 +35,6 @@ public class StageCoordinator {
         prepareScene("registrationScene","/views/registration/RegistrationView.fxml");
     }
 
-    public void switchToProfileSettingsScene(){
- 
-    }
-
     public void switchToProfileScene(){
 
     }
@@ -46,6 +42,8 @@ public class StageCoordinator {
     public void switchtoHomePageScene(){
         prepareScene("homepagaScene","/views/homepage/HomePageView.fxml");
     }
+
+
 
  
 

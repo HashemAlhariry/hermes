@@ -29,22 +29,6 @@
                         <Insets bottom="40.0" left="5.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
-                  <ImageView fx:id="chatImageView" fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/icons8-iOS%20Glyph-Chat.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets left="5.0" top="20.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="settingsImageView" fitHeight="25.0" fitWidth="25.0" layoutX="10.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/icons8-Material%20Sharp-Settings.png" />
-                     </image>
-                     <VBox.margin>
-                        <Insets left="5.0" top="20.0" />
-                     </VBox.margin>
-                  </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />
                   <ImageView fx:id="logoutImageView" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                      <image>
