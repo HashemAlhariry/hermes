@@ -75,7 +75,7 @@ public class AnnouncementController implements Initializable {
     }
 
     @FXML
-    public void onEnter(ActionEvent e) {
+    public void stageMessages(ActionEvent e) {
         String messageToSend = messageTextField.getText();
         if(!messageToSend.isEmpty()) {
             HBox hBox = new HBox();

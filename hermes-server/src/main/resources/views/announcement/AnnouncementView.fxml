@@ -26,7 +26,7 @@
                   <VBox fx:id="announcementMessagesVBox" prefHeight="230" prefWidth="517" />
                </content>
             </ScrollPane>
-            <TextField fx:id="messageTextField" layoutX="42.0" layoutY="353.0" onAction="#onEnter" prefHeight="25.0" prefWidth="517.0" />
+            <TextField fx:id="messageTextField" layoutX="42.0" layoutY="353.0" onAction="#stageMessages" prefHeight="25.0" prefWidth="517.0" />
          </children>
       </AnchorPane>
    </center>
