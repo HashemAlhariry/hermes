@@ -6,6 +6,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -42,6 +43,9 @@ public class RegisterationController implements Initializable {
 
     @FXML
     private RadioButton femaleRadioButton;
+
+	@FXML
+	private ToggleGroup genderGroup;
 
     @FXML
     private DatePicker birthDateFeild;
