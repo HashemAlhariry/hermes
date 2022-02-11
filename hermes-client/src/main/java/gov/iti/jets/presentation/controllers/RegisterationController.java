@@ -1,5 +1,6 @@
 package gov.iti.jets.presentation.controllers;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -44,9 +45,6 @@ public class RegisterationController implements Initializable {
     @FXML
     private RadioButton femaleRadioButton;
 
-	@FXML
-	private ToggleGroup genderGroup;
-
     @FXML
     private DatePicker birthDateFeild;
 
@@ -54,11 +52,9 @@ public class RegisterationController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         UserModel userModel = modelsFactory.getUserModel();
-        // userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-        // passwordPasswordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-        // emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
-        // phoneNumberTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
-
+        ToggleGroup toggleGendGroup = new ToggleGroup();
+        maleRadioButton.setToggleGroup(toggleGendGroup);
+        femaleRadioButton.setToggleGroup(toggleGendGroup);
     }
 
     @FXML

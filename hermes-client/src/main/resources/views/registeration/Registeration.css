@@ -1,40 +1,38 @@
 .root {
-
-	main-color:#2B233C;
-	secondary-color:#307686;
-	main-font-family:"Ubuntu Mono";
-	-fx-background-color: main-color;
+  main-color: #2b233c;
+  secondary-color: #307686;
+  main-font-family: "Ubuntu Mono";
+  -fx-background-color: main-color;
 }
 
 #my-vbox {
-    -fx-background-color: main-color;
-    -fx-spacing: 20;
+  -fx-background-color: main-color;
+  -fx-spacing: 20;
 }
 
 .text-field {
-	-fx-text-fill:main-color;
-	-fx-background-color: white;
-	-fx-font-size:15;
-	-fx-font-family:main-font-family;
+  -fx-text-fill: main-color;
+  -fx-background-color: white;
+  -fx-font-size: 15;
+  -fx-font-family: main-font-family;
 }
 
 #registeration-btn {
-	-fx-text-fill:main-color;
-	-fx-background-color: white;
-	-fx-font-size:15;
-	-fx-font-family:main-font-family;
+  -fx-text-fill: main-color;
+  -fx-background-color: white;
+  -fx-font-size: 15;
+  -fx-font-family: main-font-family;
 }
-
 
 .radio-button {
-	-fx-text-fill:white;
-	-fx-font-size:15;
-	-fx-font-family:main-font-family;
+  -fx-text-fill: white;
+  -fx-font-size: 15;
+  -fx-font-family: main-font-family;
 }
-.radio-button .radio{
-    -fx-padding: 4px;
-    -fx-background-color: white;
+.radio-button .radio {
+  -fx-padding: 4px;
+  -fx-background-color: white;
 }
-.radio-button:selected .radio .dot{
-    -fx-background-color: secondry-color;
+.radio-button:selected {
+  -fx-background-color: main-color;
 }
