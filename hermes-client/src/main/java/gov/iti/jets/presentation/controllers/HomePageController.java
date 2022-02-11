@@ -11,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -44,7 +45,6 @@ public class HomePageController implements Initializable {
     @FXML
     private ImageView chatImageView;
 
-    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Sending message to vbox in chat box to a specific contact
@@ -82,13 +82,22 @@ public class HomePageController implements Initializable {
         });
 
     }
-    
-    
+
     @FXML
     void onSearchTextFieldClick(ActionEvent event) {
 
     }
 
-   
+    
+    @FXML
+    void onProfileClicked(MouseEvent mouseEvent) {
 
+    }
+
+    @FXML
+    void onContactClicked(MouseEvent mouseEvent) {
+
+    }
+
+    
 }
