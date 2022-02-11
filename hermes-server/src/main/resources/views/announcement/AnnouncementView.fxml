@@ -15,14 +15,12 @@
 <BorderPane stylesheets="@AnnouncementStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.AnnouncementController">
    <center>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
-
          <children>
             <Label fx:id="textLabel" alignment="CENTER" layoutX="150.0" layoutY="32.0" prefHeight="35.0" prefWidth="300.0" text="Annoucement Screen">
                <font>
                   <Font size="29.0" />
                </font>
             </Label>
-
             <ScrollPane fx:id="mainScrollPane" fitToWidth="true" layoutX="42.0" layoutY="104.0" prefHeight="241.0" prefWidth="517">
                <content>
                   <VBox fx:id="announcementMessagesVBox" prefHeight="230" prefWidth="517" />
@@ -30,8 +28,6 @@
             </ScrollPane>
             <TextField fx:id="messageTextField" layoutX="42.0" layoutY="353.0" onAction="#onEnter" prefHeight="25.0" prefWidth="517.0" />
          </children>
-
-
       </AnchorPane>
    </center>
    <bottom>
