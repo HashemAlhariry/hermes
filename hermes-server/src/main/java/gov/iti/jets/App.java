@@ -1,22 +1,23 @@
 package gov.iti.jets;
 
+import gov.iti.jets.presentation.util.StageCoordinator;
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class App extends Application {
-
+	
+	private StageCoordinator stageCoordinator = StageCoordinator.getInstance();
 
 	public static void main(String[] args) {
+		System.out.println("Hello Server");
 		launch(args);
 	}
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		VBox box=new VBox();
-		primaryStage.setScene(new Scene(box));
-		primaryStage.setTitle("hermes-server");
-		primaryStage.show();	
+	
+		stageCoordinator.initStage(primaryStage);
+		stageCoordinator.switchToAnnouncementScene();
+		primaryStage.show();
 	}
 }

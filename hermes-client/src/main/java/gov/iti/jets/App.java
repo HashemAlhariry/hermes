@@ -9,7 +9,7 @@ public class App extends Application {
 	private StageCoordinator stageCoordinator = StageCoordinator.getInstance();
 
 	public static void main(String[] args) {
-		System.out.println("Hello");
+		System.out.println("Hello Client");
 		launch(args);
 	}
 

@@ -1,4 +1,4 @@
-package gov.iti.jets.client.presentation.util;
+package gov.iti.jets.presentation.util;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -7,32 +7,29 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public enum StageCooridinator {
+public class StageCoordinator {
 
-    INSTANCE;
-
+    private static final StageCoordinator stageCoordinator = new StageCoordinator();
+    private final Map<String,Scene> sceneMap = new HashMap<>();
     private Stage primaryStage;
 
-    private final Map<String, Scene> sceneMap = new HashMap<>();
 
-    public void initStage(Stage primaryStage) {
+    private StageCoordinator(){
+
+    }
+    public  static StageCoordinator getInstance(){
+        return stageCoordinator;
+    }
+    public void initStage(Stage primaryStage){
         this.primaryStage = primaryStage;
-        primaryStage.setResizable(false);
     }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
+    public void switchToAnnouncementScene(){
+        prepareScene("announcement","/views/announcement/AnnouncementView.fxml");
     }
-    
-	// Examples on how you may implement switching to different scenes
-
-    // public void switchToLoginScene() {
-    //     prepareScene("loginScene", "/layout/login/LoginLayout.fxml");
-    // }
-
-	// public void switchToRegisterScene() {
-    //     prepareScene("loginScene", "/layout/register/RegisterLayout.fxml");
-    // }
+    public void switchToStatisticsScene(){
+        prepareScene("statistics","/views/statistics/StatisticsView.fxml");
+    }
 
     private void prepareScene(String sceneName, String fxmlLocation) {
         if (sceneMap.get(sceneName) == null) {
@@ -47,4 +44,5 @@ public enum StageCooridinator {
         primaryStage.setScene(sceneMap.get(sceneName));
     }
 
-}
+    
+}   
