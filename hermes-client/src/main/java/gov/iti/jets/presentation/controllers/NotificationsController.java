@@ -34,11 +34,6 @@ public class NotificationsController {
     private Label label4;
 
     @FXML
-    void seeAllMessagesAction(ActionEvent event) {
-
-    }
-
-    @FXML
     void seeAllMessagesMouseClicked(MouseEvent event) {
 
     }
