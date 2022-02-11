@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 public class ProfileController implements Initializable {
 
@@ -43,9 +42,6 @@ public class ProfileController implements Initializable {
 	private RadioButton maleRadioButton;
 
 	@FXML
-	private VBox myvbox;
-
-	@FXML
 	private TextField phoneTextField;
 
 	@FXML
@@ -63,7 +59,7 @@ public class ProfileController implements Initializable {
 	}
 
 	@FXML
-	void changeProgileImage(MouseEvent event) {
+	void changeProfileImage(MouseEvent event) {
 
 	}
 
@@ -73,7 +69,7 @@ public class ProfileController implements Initializable {
 	}
 
 	@FXML
-	void gotToPreviousScene(MouseEvent event) {
+	void backToPreviousScene(MouseEvent event) {
 
 	}
 

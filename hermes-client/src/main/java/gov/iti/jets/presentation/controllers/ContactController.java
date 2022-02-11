@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.VBox;
 
 public class ContactController implements Initializable {
 
@@ -37,9 +36,6 @@ public class ContactController implements Initializable {
 	private RadioButton maleRadioButton;
 
 	@FXML
-	private VBox myvbox;
-
-	@FXML
 	private TextField phoneTextField;
 
 	@FXML
@@ -60,10 +56,5 @@ public class ContactController implements Initializable {
 	void backToPreviousScene(MouseEvent event) {
 
 	}
-
-	@FXML
-	void gotToPreviousScene(MouseEvent event) {
-
-	}
-
+	
 }
