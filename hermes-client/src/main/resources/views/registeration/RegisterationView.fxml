@@ -76,7 +76,7 @@
                   </GridPane>
                </children>
             </VBox>
-            <Button id="registeration-btn" mnemonicParsing="false" onAction="#registerationAction" prefHeight="42.0" prefWidth="120.0" style="-fx-font-weight: bold;" text="Register" textFill="WHITE">
+            <Button id="registeration-btn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerationAction" prefHeight="42.0" prefWidth="120.0" style="-fx-font-weight: bold;" text="Register" textFill="WHITE">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin></Button>
