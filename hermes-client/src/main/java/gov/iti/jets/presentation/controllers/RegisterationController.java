@@ -3,9 +3,6 @@ package gov.iti.jets.presentation.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javax.swing.text.html.ImageView;
-
-import org.w3c.dom.events.MouseEvent;
 
 import gov.iti.jets.presentation.models.UserModel;
 import gov.iti.jets.presentation.util.ModelsFactory;
@@ -18,7 +15,9 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 
 public class RegisterationController implements Initializable {
 
