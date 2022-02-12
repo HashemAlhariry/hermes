@@ -7,22 +7,24 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-public class StageCoordinator {
+public enum StageCoordinator {
 
-    private static final StageCoordinator stageCoordinator = new StageCoordinator();
+	INSTANCE;
+
     private final Map<String,Scene> sceneMap = new HashMap<>();
     private Stage primaryStage;
-
 
     private StageCoordinator(){
 
     }
-    public  static StageCoordinator getInstance(){
-        return stageCoordinator;
-    }
+
     public void initStage(Stage primaryStage){
         this.primaryStage = primaryStage;
     }
+
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
 
     public void switchToAnnouncementScene(){
         prepareScene("announcement","/views/announcement/AnnouncementView.fxml");

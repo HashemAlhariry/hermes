@@ -17,9 +17,21 @@ Button:hover {
 }
 Label{
  -fx-text-fill: white;
+ -fx-font-size: 20px;
 }
 .chart-legend { -fx-background-color: #363A54; }
 .chart-content {
     -fx-padding: 30px;
     -fx-background-color: FFFFFF;
+}
+#back-stackpane:hover{
+	-fx-background-color: #49386b;
+}
+
+#backLabel {
+	-fx-font-size: 20px;
+}
+
+#statisticsLabel {
+	-fx-font-size: 30px;
 }

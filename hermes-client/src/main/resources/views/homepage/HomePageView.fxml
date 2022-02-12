@@ -15,7 +15,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="500.0" prefWidth="750.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.HomePageController">
+<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.HomePageController">
    <left>
       <HBox prefHeight="500.0" prefWidth="231.0" BorderPane.alignment="CENTER">
          <children>

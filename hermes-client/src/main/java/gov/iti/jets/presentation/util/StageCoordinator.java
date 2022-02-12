@@ -20,6 +20,10 @@ public enum StageCoordinator {
 
 	}
 
+	public Stage getPrimaryStage() {
+		return primaryStage;
+	}
+
 	public void initStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}

@@ -60,7 +60,7 @@ public class AnnouncementController implements Initializable {
         statisticsButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                StageCoordinator.getInstance().switchToStatisticsScene();
+                StageCoordinator.INSTANCE.switchToStatisticsScene();
             }
         });
     }
@@ -84,7 +84,7 @@ public class AnnouncementController implements Initializable {
             Text text = new Text(messageToSend);
 
             broadcastTextMessages+=messageToSend;
-            broadcastTextMessages+=" ";
+            broadcastTextMessages+=" \n";
 
             TextFlow textFlow = new TextFlow(text);
             textFlow.setStyle("-fx-background-color:rgb(233,233,235); " + "-fx-background-radius: 20px;");

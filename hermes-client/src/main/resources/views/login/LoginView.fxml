@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
+<BorderPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.LoginController">
    <center>
       <Pane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="364.0" style="-fx-background-color: #2B233C;">
          <children>
@@ -52,8 +52,8 @@
                         </ImageView>
                      </children>
                   </Pane>
-                  <Label layoutX="76.0" layoutY="349.0" style="-fx-font-size: 12;" text="Already have an account?" textFill="WHITE" />
-                  <Hyperlink id="signUpHyperLink" layoutX="211.0" layoutY="345.0" onAction="#signUpHyperLinkAction" prefHeight="26.0" prefWidth="75.0" style="-fx-font-weight: bold;" text="Sign up" textFill="#0000a4" underline="true">
+                  <Label layoutX="76.0" layoutY="349.0" style="-fx-font-size: 12;" text="Don't have an account?" textFill="WHITE" />
+                  <Hyperlink id="signUpHyperLink" layoutX="211.0" layoutY="345.0" onAction="#signUpHyperLinkAction" prefHeight="26.0" prefWidth="75.0" style="-fx-font-weight: bold;" text="Sign up" textFill="#307686" underline="true">
                      <font>
                         <Font size="13.0" />
                      </font>

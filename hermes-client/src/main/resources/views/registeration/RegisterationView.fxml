@@ -2,12 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -18,7 +18,7 @@
 <?import javafx.scene.paint.Stop?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="500.0" stylesheets="@Registeration.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.RegisterationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@Registeration.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.presentation.controllers.RegisterationController">
    <children>
       <VBox id="my-vbox" alignment="CENTER" maxHeight="1.7976931348623157E308" prefHeight="600.0" prefWidth="508.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -36,11 +36,13 @@
                      </stops>
                   </LinearGradient>
                </textFill>
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
             </Label>
-            <Button id="registeration-btn" mnemonicParsing="false" onAction="#registerationAction" text="Register" textFill="WHITE" />
             <VBox alignment="CENTER">
                <children>
-                  <GridPane alignment="CENTER" prefHeight="443.0" prefWidth="480.0">
+                  <GridPane alignment="CENTER" vgap="30.0">
                      <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="218.0" />
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="112.0" />
@@ -53,42 +55,32 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TextField fx:id="phoneNumberTextField" prefHeight="25.0" prefWidth="217.0" promptText="phone number" GridPane.columnIndex="2" />
-                        <TextField fx:id="userNameTextField" promptText="user name" />
-                        <TextField fx:id="emailTextField" layoutX="10.0" layoutY="29.0" promptText="email" GridPane.rowIndex="1" />
-                        <TextField fx:id="countryTextField" layoutX="10.0" layoutY="92.0" promptText="country" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                        <TextField fx:id="confirmPasswordTextField" layoutX="10.0" layoutY="29.0" promptText="confirm password" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                        <TextField fx:id="passwordTextField" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="password" GridPane.rowIndex="2" />
-                        <ButtonBar buttonOrder="" prefHeight="69.0" prefWidth="157.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-                           <buttons>
-                              <VBox alignment="CENTER_LEFT" prefHeight="104.0" prefWidth="218.0">
-                                 <children>
-                                    <RadioButton fx:id="maleRadioButton" alignment="CENTER_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Male">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                    </RadioButton>
-                                    <RadioButton fx:id="femaleRadioButton" alignment="CENTER_LEFT" mnemonicParsing="false" text="Female">
-                                       <VBox.margin>
-                                          <Insets />
-                                       </VBox.margin>
-                                       <padding>
-                                          <Insets top="10.0" />
-                                       </padding>
-                                    </RadioButton>
-                                 </children>
-                              </VBox>
-                           </buttons>
-                        </ButtonBar>
-                        <DatePicker fx:id="birthDateFeild" GridPane.rowIndex="3" />
+                        <TextField fx:id="userNameTextField" promptText="Name" />
+                        <TextField fx:id="phoneNumberTextField" prefHeight="25.0" prefWidth="217.0" promptText="Phone number" GridPane.columnIndex="2" />
+                        <TextField fx:id="emailTextField" layoutX="10.0" layoutY="29.0" promptText="Email" GridPane.rowIndex="1" />
+                        <TextField fx:id="countryTextField" layoutX="10.0" layoutY="92.0" promptText="Country" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <TextField fx:id="passwordTextField" accessibleRole="PASSWORD_FIELD" layoutX="10.0" layoutY="29.0" prefHeight="25.0" prefWidth="218.0" promptText="Password" GridPane.rowIndex="2" />
+                        <TextField fx:id="confirmPasswordTextField" layoutX="10.0" layoutY="29.0" promptText="confirm password" GridPane.rowIndex="3" />
+                        <DatePicker fx:id="birthDateFeild" maxWidth="1.7976931348623157E308" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                        <HBox alignment="CENTER_LEFT" spacing="20.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                           <children>
+                              <RadioButton fx:id="maleRadioButton" alignment="CENTER_LEFT" contentDisplay="CENTER" mnemonicParsing="false" selected="true" text="Male">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="gender" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton fx:id="femaleRadioButton" alignment="CENTER_LEFT" contentDisplay="CENTER" mnemonicParsing="false" text="Female" toggleGroup="$gender" />
+                           </children>
+                        </HBox>
                      </children>
                   </GridPane>
                </children>
             </VBox>
+            <Button id="registeration-btn" mnemonicParsing="false" onAction="#registerationAction" text="Register" textFill="WHITE" />
             <HBox alignment="CENTER">
                <children>
-                  <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="123.0" text="already have account?" textFill="WHITE" />
-                  <Hyperlink onAction="#loginAction" prefHeight="23.0" prefWidth="43.0" text="login" />
+                  <Label contentDisplay="RIGHT" prefHeight="17.0" prefWidth="150.0" text="Already have an account?" textFill="WHITE" />
+                  <Hyperlink onAction="#loginAction" prefHeight="23.0" prefWidth="43.0" style="-fx-font-weight: bold;" text="Login" textFill="#307686" underline="true" />
                </children>
             </HBox>
          </children>
