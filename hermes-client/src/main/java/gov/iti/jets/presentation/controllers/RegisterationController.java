@@ -1,24 +1,50 @@
 package gov.iti.jets.presentation.controllers;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
-
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.swing.text.html.ImageView;
+
+import org.w3c.dom.events.MouseEvent;
 
 import gov.iti.jets.presentation.models.UserModel;
 import gov.iti.jets.presentation.util.ModelsFactory;
 import gov.iti.jets.presentation.util.StageCoordinator;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.KeyEvent;
 
 public class RegisterationController implements Initializable {
 
     private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
     private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+
+    @FXML
+    private DatePicker birthDateFeild;
+
+    @FXML
+    private PasswordField confirmPasswordTextField;
+
+    @FXML
+    private TextField countryTextField;
+
+    @FXML
+    private TextField emailTextField;
+
+    @FXML
+    private ImageView eyeImage;
+
+    @FXML
+    private RadioButton femaleRadioButton;
+
+    @FXML
+    private RadioButton maleRadioButton;
 
     @FXML
     private TextField phoneNumberTextField;
@@ -27,25 +53,7 @@ public class RegisterationController implements Initializable {
     private TextField userNameTextField;
 
     @FXML
-    private TextField emailTextField;
-
-    @FXML
-    private TextField countryTextField;
-
-    @FXML
-    private TextField confirmPasswordTextField;
-
-    @FXML
-    private TextField passwordTextField;
-
-    @FXML
-    private RadioButton maleRadioButton;
-
-    @FXML
-    private RadioButton femaleRadioButton;
-
-    @FXML
-    private DatePicker birthDateFeild;
+    private ImageView wrongImage;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -57,13 +65,23 @@ public class RegisterationController implements Initializable {
     }
 
     @FXML
-    void loginAction(ActionEvent event) {
+    void eyeImageMouseClicked(MouseEvent event) {
+
+    }
+
+    @FXML
+    void loginAction(MouseEvent event) {
         stageCoordinator.switchToLoginScene();
     }
 
     @FXML
     void registerationAction(ActionEvent event) {
-        stageCoordinator.switchToLoginScene();
+        stageCoordinator.switchtoHomePageScene();
+    }
+
+    @FXML
+    void registerationKeyPressed(KeyEvent event) {
+        stageCoordinator.switchtoHomePageScene();
     }
 
 }
