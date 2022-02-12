@@ -14,59 +14,54 @@ import java.util.ResourceBundle;
 import gov.iti.jets.presentation.models.UserModel;
 import gov.iti.jets.presentation.util.ModelsFactory;
 import gov.iti.jets.presentation.util.StageCoordinator;
- 
 
 public class LoginController implements Initializable {
 
+  @FXML
+  private TextField emailTextField;
 
-    @FXML
-    private TextField emailTextField;
+  @FXML
+  private ImageView eyeImage;
 
-    @FXML
-    private ImageView eyeImage;
+  @FXML
+  private TextField nameTextField;
 
-    @FXML
-    private TextField nameTextField;
+  @FXML
+  private PasswordField passwordTextField;
 
-    @FXML
-    private PasswordField passwordTextField;
+  @FXML
+  private Button signInButton;
 
-    @FXML
-    private Button signInButton;
+  private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+  private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
 
-    private final StageCoordinator stageCoordinator= StageCoordinator.INSTANCE;
-    private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
-    
+  @FXML
+  void eyeImageMouseClicked(MouseEvent event) {
 
-    @FXML
-    void eyeImageMouseClicked(MouseEvent event) {
+  }
 
-    }
+  @FXML
+  void signUpHyperLinkAction(ActionEvent event) {
+    stageCoordinator.switchToRegisterationScene();
+  }
 
-    @FXML
-    void signUpHyperLinkAction(ActionEvent event) {
-        stageCoordinator.switchToRegisterationScene();
-    }
+  @FXML
+  void signinButtonAction(ActionEvent event) {
+    stageCoordinator.switchtoHomePageScene();
+  }
 
-    @FXML
-    void signinButtonAction(ActionEvent event) {
-		stageCoordinator.switchtoHomePageScene();
-    }
+  @FXML
+  void signinKeyPressed(KeyEvent event) {
 
-    @FXML
-    void signinKeyPressed(KeyEvent event) {
+  }
 
-    }
+  @Override
+  public void initialize(URL location, ResourceBundle resources) {
 
+    UserModel userModel = modelsFactory.getUserModel();
+    // nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+    // passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-            UserModel userModel = modelsFactory.getUserModel();
-            // nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-            // passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-            
-    }
+  }
 
 }
