@@ -1,6 +1,5 @@
 package gov.iti.jets.presentation.controllers;
 
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,6 +63,7 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
+        stageCoordinator.switchToLoginScene();
     }
 
 }
