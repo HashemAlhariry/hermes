@@ -63,7 +63,7 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
-		
+        stageCoordinator.switchToLoginScene();
     }
 
 }
