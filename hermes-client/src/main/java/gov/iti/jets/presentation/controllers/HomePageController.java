@@ -2,6 +2,8 @@ package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gov.iti.jets.presentation.util.StageCoordinator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,6 +23,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public class HomePageController implements Initializable {
+
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
     Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
 
@@ -87,17 +91,17 @@ public class HomePageController implements Initializable {
     
     @FXML
     void onProfileClicked(MouseEvent mouseEvent) {
-
+		stageCoordinator.switchToProfileScene();
     }
 
     @FXML
     void onContactClicked(MouseEvent mouseEvent) {
-
+		stageCoordinator.switchToContactScene();
     }
 
 	@FXML
     void onLogoutClicked(MouseEvent mouseEvent) {
-
+		stageCoordinator.switchToLoginScene();
     }
 
     

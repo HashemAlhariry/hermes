@@ -6,9 +6,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gov.iti.jets.presentation.util.StageCoordinator;
 
 public class StatisticsController implements Initializable {
 
@@ -40,5 +43,11 @@ public class StatisticsController implements Initializable {
         userGenderPieChart.setData(pieChartDataForGender);
         onlineOfflineUserPieChart.setData(pieChartDataForOnlineOffline);
         countryPieChart.setData(pieChartDataForCountry);
+    }
+
+
+    @FXML
+    void backToPreviousScene(MouseEvent event) {
+		StageCoordinator.INSTANCE.switchToAnnouncementScene();
     }
 }
