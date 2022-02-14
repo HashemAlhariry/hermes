@@ -12,7 +12,7 @@
 	<artifactId>hermes-server</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-server</name>
-	
+
 	<url>https://github.com/amiraElmergawy/chat-app</url>
 
 	<dependencies></dependencies>

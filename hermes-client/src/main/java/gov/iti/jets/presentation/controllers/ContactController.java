@@ -2,6 +2,9 @@ package gov.iti.jets.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gov.iti.jets.presentation.util.StageCoordinator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -13,6 +16,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class ContactController implements Initializable {
+
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
 	@FXML
 	private Button addToContactButton;
@@ -49,12 +54,18 @@ public class ContactController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		userNameTextField.setFocusTraversable(false);
+	}
+
+
+	@FXML
+	void addContact(ActionEvent event){
 
 	}
 
 	@FXML
 	void backToPreviousScene(MouseEvent event) {
-
+		stageCoordinator.switchtoHomePageScene();
 	}
 	
 }

@@ -1,0 +1,17 @@
+.root{
+    -fx-background-color:#363A54;
+}
+Button{
+ -fx-text-fill: black;
+ -fx-font-family: Arial,Helvetica,sans-serif;
+ -fx-font-size: 14px;
+ -fx-background-color:white;
+ -fx-border-color:white;
+}
+Button:hover {
+  -fx-background-color: #C2C7FF;
+   -fx-text-fill: white;
+}
+Label{
+ -fx-text-fill: white;
+}
