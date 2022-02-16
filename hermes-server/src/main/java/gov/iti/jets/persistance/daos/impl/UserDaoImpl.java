@@ -5,18 +5,25 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.namespace.QName;
+
+import gov.iti.jets.business.daos.UserDao;
+import gov.iti.jets.business.dtos.UserDto;
 import gov.iti.jets.persistance.DataSource;
-import gov.iti.jets.persistance.daos.UserDao;
 import gov.iti.jets.persistance.entities.UserEntity;
 
 public class UserDaoImpl implements UserDao {
 
 	@Override
 	public List<UserEntity> getAllUsers() throws SQLException {
+
 		List<UserEntity> userEntities = new ArrayList<>();
-		var con = DataSource.getConnection();
+
+		var connection = DataSource.INSTANCE.getConnection();
+
 		String query = "Select * from user";
-		PreparedStatement preparedStatement = con.prepareStatement(query);
+
+		PreparedStatement preparedStatement = connection.prepareStatement(query);
 
 		var resultSet = preparedStatement.executeQuery();
 
@@ -26,32 +33,44 @@ public class UserDaoImpl implements UserDao {
 			userEntity.phone = resultSet.getString("phone");
 			userEntities.add(userEntity);
 		}
-
 		return userEntities;
 	}
 
 	@Override
-	public UserEntity getUserByPhone(String phone) {
-		// TODO Auto-generated method stub
+	public UserEntity getUserByPhone(UserDto userDto) {
+		
+		String query = "Select * from user where phone = ? and password = ?";
+
+
 		return null;
+
 	}
 
 	@Override
-	public void insertUser(UserEntity user) {
-		// TODO Auto-generated method stub
+	public UserEntity getUserRegistered(UserDto userDto) {
 		
+		String query = "Select * from user where phone = ? and password = ?";
+
+
+		return null;
+
+	}
+
+	
+
+	@Override
+	public void insertUser(UserEntity user) {
+		throw new UnsupportedOperationException("NOT IMPLMENTED YET");
 	}
 
 	@Override
 	public void updateUser(UserEntity user) {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("NOT IMPLMENTED YET");
 	}
 
 	@Override
 	public void deleteUser(UserEntity user) {
-		// TODO Auto-generated method stub
-		
+		throw new UnsupportedOperationException("NOT IMPLMENTED YET");
 	}
-	
+
 }

@@ -2,7 +2,7 @@ package gov.iti.jets;
 
 import java.sql.SQLException;
 
-import gov.iti.jets.persistance.daos.UserDao;
+import gov.iti.jets.business.daos.UserDao;
 import gov.iti.jets.persistance.daos.impl.UserDaoImpl;
 import gov.iti.jets.presentation.util.StageCoordinator;
 import javafx.application.Application;

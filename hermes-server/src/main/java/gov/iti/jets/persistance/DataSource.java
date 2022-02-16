@@ -6,12 +6,14 @@ import java.sql.SQLException;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-public class DataSource {
+public enum DataSource {
 
-	private static HikariConfig config = new HikariConfig();
-	private static HikariDataSource ds;
+	INSTANCE;
 
-	static {
+	private  HikariConfig config = new HikariConfig();
+	private  HikariDataSource ds;
+
+	{
 		config.setJdbcUrl("jdbc:mysql://localhost:3306/hermesdb");
 		config.setUsername("root");
 		config.setPassword("mina1234");
@@ -21,10 +23,7 @@ public class DataSource {
 		ds = new HikariDataSource(config);
 	}
 
-	public DataSource() {
-	}
-
-	public static Connection getConnection() throws SQLException {
+	public  Connection getConnection() throws SQLException {
 		return ds.getConnection();
 	}
 
