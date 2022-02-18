@@ -6,7 +6,7 @@
 	<artifactId>hermes-common</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-common</name>
-	<url>https://github.com/amiraElmergawy/chat-app</url>
+	<url>https://github.com/amiraElmergawy/hermes</url>
 	<packaging>jar</packaging>
 
 	<parent>
