@@ -8,13 +8,32 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>gov.iti.jets</groupId>
+	<groupId>gov.iti.jets.client</groupId>
 	<artifactId>hermes-client</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-client</name>
 	<url>https://github.com/amiraElmergawy/chat-app</url>
 
-	<dependencies></dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>common</groupId>
+			<artifactId>hermes-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -29,7 +48,7 @@
 					<launcher>hremes-client</launcher>
 					<jlinkImageName>hermes-client-image</jlinkImageName>
 					<jlinkZipName>hermeszip</jlinkZipName>
-					<mainClass>gov.iti.jets/gov.iti.jets.App</mainClass>
+					<mainClass>gov.iti.jets.client/gov.iti.jets.client.App</mainClass>
 				</configuration>
 			</plugin>
 
