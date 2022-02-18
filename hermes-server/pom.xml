@@ -8,14 +8,43 @@
 		<version>1.0.0</version>
 	</parent>
 
-	<groupId>gov.iti.jets</groupId>
+	<groupId>gov.iti.jets.server</groupId>
 	<artifactId>hermes-server</artifactId>
 	<version>1.0.0</version>
 	<name>hermes-server</name>
 
-	<url>https://github.com/amiraElmergawy/chat-app</url>
+	<url>https://github.com/amiraElmergawy/hermes</url>
 
-	<dependencies></dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-controls</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-fxml</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>8.0.28</version>
+		</dependency>
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<version>5.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>common</groupId>
+			<artifactId>hermes-common</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
 
 	<build>
 		<plugins>
@@ -30,7 +59,7 @@
 					<launcher>hremes-server</launcher>
 					<jlinkImageName>hermes-server-image</jlinkImageName>
 					<jlinkZipName>serverzip</jlinkZipName>
-					<mainClass>gov.iti.jets/gov.iti.jets.App</mainClass>
+					<mainClass>gov.iti.jets.server/gov.iti.jets.server.App</mainClass>
 				</configuration>
 			</plugin>
 
