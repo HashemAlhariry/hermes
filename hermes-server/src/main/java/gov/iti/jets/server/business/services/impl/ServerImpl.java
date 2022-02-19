@@ -15,7 +15,6 @@ import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
     private Map<String, Client> connectedClients;
-
     public ServerImpl() throws RemoteException {
         super();
         connectedClients = new HashMap<>();
@@ -36,6 +35,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
             e.printStackTrace();
         }
     }
+
+
 
     @Override
     public void register(Client connectedClient) {
@@ -70,14 +71,25 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         // getting from db to check all avaialble numbers in database
         // delegate the calling and bussiness to another class
-        invitationDto.invitedPhones.forEach(x -> {
+
+      
+        invitationDto.invitedPhones.forEach(phone -> {
+            System.out.println(phone);
+        });
+
+        invitationDto.invitedPhones.forEach(contactInvited-> {
             try {
-                connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
+                
+                connectedClients.get(contactInvited).recieveInvitation(invitationDto.senderPhone);
+
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         });
+  
+
+     
 
     }
 

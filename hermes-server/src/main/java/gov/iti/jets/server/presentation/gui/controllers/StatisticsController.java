@@ -7,10 +7,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
-
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
 
 public class StatisticsController implements Initializable {

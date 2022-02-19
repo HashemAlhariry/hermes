@@ -23,10 +23,18 @@
                <children>
                   <ImageView fx:id="profileImageView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/icons8-iOS%20Filled-User.png" />
+                        <Image url="@../../images/profile-screen.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="40.0" left="5.0" top="10.0" />
+                        <Insets bottom="20.0" left="5.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="addContactView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onAddContactClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/add-contact.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="5.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />

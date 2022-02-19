@@ -2,14 +2,12 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
 import java.rmi.AccessException;
-import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
-
 import common.business.dtos.UserAuthDto;
-import common.business.dtos.UserDto;
+import common.business.services.Server;
 import gov.iti.jets.client.business.services.ClientImpl;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
@@ -28,26 +26,23 @@ import javafx.scene.input.MouseEvent;
 
 public class LoginController implements Initializable {
 
+
   @FXML
   private TextField emailTextField;
-
   @FXML
   private ImageView eyeImage;
-
   @FXML
   private TextField nameTextField;
-
   @FXML
   private PasswordField passwordTextField;
-
   @FXML
   private Button signInButton;
 
+  
   private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
   private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
- 
-
   private UserModel userModel = modelsFactory.getUserModel();
+
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
@@ -72,7 +67,6 @@ public class LoginController implements Initializable {
 
   @FXML
   void eyeImageMouseClicked(MouseEvent event) {
-
   }
 
   @FXML
@@ -84,15 +78,14 @@ public class LoginController implements Initializable {
   void signinButtonAction(ActionEvent event) {
 
     Platform.runLater(() -> {
- 
       try {
-        RMIConnection.INSTANCE.getServer().login(new ClientImpl(), new UserAuthDto("01149056691","456"));
-        
+        RMIConnection rmiConnection= RMIConnection.INSTANCE;
+        Server server = rmiConnection.getServer();
+        server.login(new ClientImpl(), new UserAuthDto("01149056691","456"));
       } catch (RemoteException e) {
    
         e.printStackTrace();
       }
-         
       stageCoordinator.switchtoHomePageScene();
     });
 
