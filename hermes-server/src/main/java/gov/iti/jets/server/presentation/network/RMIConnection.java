@@ -1,7 +1,7 @@
 package gov.iti.jets.server.presentation.network;
 
 import java.rmi.AccessException;
-import java.rmi.NoSuchObjectException;
+
 import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
@@ -10,16 +10,14 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
-
-import common.business.services.Login;
-import gov.iti.jets.server.business.services.impl.LoginImpl;
+import gov.iti.jets.server.business.services.impl.ServerImpl;
 
 public enum RMIConnection {
 	INSTANCE;
 
 	private Registry registry;
-
 	private Map<String, Remote> services;
+	// private List<ConnectedClient>onlineUsers;
 
 	public void init() {
 		services = new HashMap<>();
@@ -33,7 +31,7 @@ public enum RMIConnection {
 	}
 
 	private void addAllServices() throws RemoteException {
-		services.put("Login", new LoginImpl());
+		services.put("Server", new ServerImpl());
 
 	}
 
@@ -43,6 +41,9 @@ public enum RMIConnection {
 		}
 	}
 
+
+
+	
 	public void close() throws AccessException, RemoteException, NotBoundException {
 		for (var service : registry.list()) {
 			registry.unbind(service);

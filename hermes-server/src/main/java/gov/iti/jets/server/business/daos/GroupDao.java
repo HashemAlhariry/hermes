@@ -11,5 +11,5 @@ public interface GroupDao {
 	void insertGroup(GroupEntity groupEntity);
 	void updateGroup(GroupEntity groupEntity);
 	void deleteGroup(GroupEntity groupEntity);
-	
+	List<String> getUsersByGroupId(Long groupID);
 }

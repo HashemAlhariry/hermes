@@ -4,7 +4,7 @@ import java.rmi.AlreadyBoundException;
 import java.rmi.registry.Registry;
 import java.sql.SQLException;
 
-import common.business.services.Login;
+
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.daos.impl.UserDaoImpl;
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
@@ -16,7 +16,7 @@ public class App extends Application {
 
 	private StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 	Registry registry;
-	Login login;
+
 
 	public static void main(String[] args) throws AlreadyBoundException {
 		UserDao dao = new UserDaoImpl();

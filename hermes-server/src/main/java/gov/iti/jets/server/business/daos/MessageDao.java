@@ -9,4 +9,5 @@ public interface MessageDao {
 	List<MessageEntity> getAllMessagesByGroup(GroupDao groupDao);
 	void insertMessage(MessageEntity messageEntity);
 	
+	
 }
