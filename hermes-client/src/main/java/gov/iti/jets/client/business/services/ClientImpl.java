@@ -8,16 +8,9 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
 
-	private static ClientImpl instance;
 
 	public ClientImpl() throws RemoteException {
 		super();
-	}
-
-	public static ClientImpl getInstance() throws RemoteException {
-		if (instance == null)
-			instance = new ClientImpl();
-		return instance;
 	}
 
 	@Override
