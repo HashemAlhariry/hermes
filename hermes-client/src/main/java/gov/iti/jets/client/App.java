@@ -30,4 +30,11 @@ public class App extends Application {
 		primaryStage.setTitle("Hermes");
 		primaryStage.show();
 	}
+
+	@Override
+	public void stop() throws Exception {
+		RMIConnection.INSTANCE.close();
+		super.stop();
+	}
+
 }

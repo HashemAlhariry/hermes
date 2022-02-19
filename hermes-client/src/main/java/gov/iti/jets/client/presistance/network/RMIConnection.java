@@ -6,6 +6,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
  
@@ -38,5 +39,14 @@ public enum RMIConnection {
     public Server getServer() {
         return (Server) services.get("Server");
     }
+
+    public void close() throws AccessException, RemoteException, NotBoundException {
+		for (var service : registry.list()) {
+			registry.unbind(service);
+		}
+		for (var entry : services.entrySet()) {
+			UnicastRemoteObject.unexportObject(entry.getValue(), true);
+		}
+	}
 
 }
