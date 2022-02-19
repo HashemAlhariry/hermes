@@ -3,6 +3,7 @@ package gov.iti.jets.client.presentation.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import net.synedra.validatorfx.Validator;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
@@ -53,10 +54,12 @@ public class RegisterationController implements Initializable {
     @FXML
     private ImageView wrongImage;
 
+    Validator validator = new Validator();
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
         UserModel userModel = modelsFactory.getUserModel();
+        
         ToggleGroup toggleGendGroup = new ToggleGroup();
         maleRadioButton.setToggleGroup(toggleGendGroup);
         femaleRadioButton.setToggleGroup(toggleGendGroup);

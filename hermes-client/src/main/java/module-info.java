@@ -4,6 +4,7 @@ module gov.iti.jets.client {
 	requires javafx.fxml;
 	requires java.rmi;
 	requires common.mod;
+	requires validatorfx;
 	
 	opens gov.iti.jets.client.presentation.controllers to javafx.fxml;
 

@@ -33,6 +33,11 @@
 			<artifactId>hermes-common</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>net.synedra</groupId>
+			<artifactId>validatorfx</artifactId>
+			<version>0.2.1</version>
+		 </dependency>
 	</dependencies>
 
 	<build>
@@ -51,6 +56,7 @@
 					<mainClass>gov.iti.jets.client/gov.iti.jets.client.App</mainClass>
 				</configuration>
 			</plugin>
+
 
 		</plugins>
 	</build>
