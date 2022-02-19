@@ -8,28 +8,29 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
 
-    public ClientImpl() throws RemoteException {
-        super();
-    }
 
-    @Override
-    public void recieveMessage(MessageDto message) {
-        System.out.println("MESSAGE RECIEVED" + message.content);
-    }
+	public ClientImpl() throws RemoteException {
+		super();
+	}
 
-    @Override
-    public void recieveInvitation(String sender) {
-        System.out.println("INVITATION RECIEVED FROM " + sender);
-    }
+	@Override
+	public void recieveMessage(MessageDto message) {
+		System.out.println("MESSAGE RECIEVED" + message.content);
+	}
 
-    @Override
-    public String getPhoneNumber() {
-        return ModelsFactory.INSTANCE.getUserModel().getPhoneNumber();
-    }
+	@Override
+	public void recieveInvitation(String sender) {
+		System.out.println("INVITATION RECIEVED FROM " + sender);
+	}
 
-    @Override
-    public void loginSuccess() {
-        System.out.println("AMIRA IS HERE");
-    }
+	@Override
+	public String getPhoneNumber() {
+		return ModelsFactory.INSTANCE.getUserModel().getPhoneNumber();
+	}
+
+	@Override
+	public void loginSuccess() {
+		System.out.println("AMIRA IS HERE");
+	}
 
 }

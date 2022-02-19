@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
+
 import common.business.dtos.InvitationDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
@@ -15,6 +16,7 @@ import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
     private Map<String, Client> connectedClients;
+
     public ServerImpl() throws RemoteException {
         super();
         connectedClients = new HashMap<>();
@@ -22,9 +24,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
     @Override
     public void login(Client connectedClient, UserAuthDto userAuthDto) {
-      
-        //call another class for authenicating db 
-        //checking if user exists or not
+
+        // call another class for authenicating db
+        // checking if user exists or not
 
         connectedClients.put(userAuthDto.phoneNumber, connectedClient);
         System.out.println("HELLO FROM SERVER");
@@ -36,14 +38,13 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         }
     }
 
-
-
     @Override
     public void register(Client connectedClient) {
     }
 
     @Override
     public void logout(UserAuthDto userAuthDto) {
+        // maybe add additional check to see if he is connected or not
         connectedClients.remove(userAuthDto.phoneNumber);
     }
 
@@ -72,24 +73,17 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         // getting from db to check all avaialble numbers in database
         // delegate the calling and bussiness to another class
 
-      
         invitationDto.invitedPhones.forEach(phone -> {
             System.out.println(phone);
         });
-
-        invitationDto.invitedPhones.forEach(contactInvited-> {
+        invitationDto.invitedPhones.forEach(x -> {
             try {
-                
-                connectedClients.get(contactInvited).recieveInvitation(invitationDto.senderPhone);
-
+                connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
             } catch (RemoteException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         });
-  
-
-     
 
     }
 

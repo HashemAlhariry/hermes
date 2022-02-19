@@ -1,7 +1,6 @@
 package gov.iti.jets.server.persistance.daos.impl;
 
 import java.util.List;
-
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.MessageDao;
 import gov.iti.jets.server.persistance.entities.MessageEntity;

@@ -2,7 +2,6 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
