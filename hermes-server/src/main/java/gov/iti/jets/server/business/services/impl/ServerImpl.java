@@ -4,6 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
+
 import common.business.dtos.InvitationDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
@@ -14,71 +15,72 @@ import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
-    private Map<String, Client> connectedClients;
+	private Map<String, Client> connectedClients;
 
-    public ServerImpl() throws RemoteException {
-        super();
-        connectedClients = new HashMap<>();
-    }
+	public ServerImpl() throws RemoteException {
+		super();
+		connectedClients = new HashMap<>();
+	}
 
-    @Override
-    public void login(Client connectedClient, UserAuthDto userAuthDto) {
-      
-        //call another class for authenicating db 
-        //checking if user exists or not
+	@Override
+	public void login(Client connectedClient, UserAuthDto userAuthDto) {
 
-        connectedClients.put(userAuthDto.phoneNumber, connectedClient);
-        System.out.println("HELLO FROM SERVER");
-        try {
-            connectedClient.loginSuccess();
-        } catch (RemoteException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-    }
+		// call another class for authenicating db
+		// checking if user exists or not
 
-    @Override
-    public void register(Client connectedClient) {
-    }
+		connectedClients.put(userAuthDto.phoneNumber, connectedClient);
+		System.out.println("HELLO FROM SERVER");
+		try {
+			connectedClient.loginSuccess();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void logout(UserAuthDto userAuthDto) {
-        connectedClients.remove(userAuthDto.phoneNumber);
-    }
+	@Override
+	public void register(Client connectedClient) {
+	}
 
-    @Override
-    public void sendMessage(MessageDto messageDto) {
+	@Override
+	public void logout(UserAuthDto userAuthDto) {
+		// maybe add additional check to see if he is connected or not
+		connectedClients.remove(userAuthDto.phoneNumber);
+	}
 
-        GroupDao group = new GroupDaoImpl();
-        group.getUsersByGroupId(messageDto.groupID);
+	@Override
+	public void sendMessage(MessageDto messageDto) {
 
-        // ask db to get all users joined to this group id from messageDto
-        /*
-         * for (ConnectedClient connectedClient : connectedClients) {
-         * 
-         * 
-         * if(message.groupID.equals(connectedClient.)){
-         * connectedClient.recieveInvitation(invitationDto.senderPhone);
-         * }
-         * }
-         * 
-         */
-    }
+		GroupDao group = new GroupDaoImpl();
+		group.getUsersByGroupId(messageDto.groupID);
 
-    @Override
-    public void sendInvitation(InvitationDto invitationDto) {
+		// ask db to get all users joined to this group id from messageDto
+		/*
+		 * for (ConnectedClient connectedClient : connectedClients) {
+		 * 
+		 * 
+		 * if(message.groupID.equals(connectedClient.)){
+		 * connectedClient.recieveInvitation(invitationDto.senderPhone);
+		 * }
+		 * }
+		 * 
+		 */
+	}
 
-        // getting from db to check all avaialble numbers in database
-        // delegate the calling and bussiness to another class
-        invitationDto.invitedPhones.forEach(x -> {
-            try {
-                connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
-            } catch (RemoteException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        });
+	@Override
+	public void sendInvitation(InvitationDto invitationDto) {
 
-    }
+		// getting from db to check all avaialble numbers in database
+		// delegate the calling and bussiness to another class
+		invitationDto.invitedPhones.forEach(x -> {
+			try {
+				connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
+
+	}
 
 }

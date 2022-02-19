@@ -2,9 +2,6 @@ package gov.iti.jets.server.persistance.daos.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.mysql.cj.protocol.Resultset;
-
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.GroupEntity;

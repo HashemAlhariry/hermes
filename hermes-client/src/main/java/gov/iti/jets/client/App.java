@@ -1,5 +1,6 @@
 package gov.iti.jets.client;
 
+import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Application;
@@ -34,7 +35,9 @@ public class App extends Application {
 	@Override
 	public void stop() throws Exception {
 		RMIConnection.INSTANCE.close();
+		ServiceFactory.INSTANCE.releaseClientImpl();
 		super.stop();
+		System.exit(0);
 	}
 
 }

@@ -1,15 +1,10 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
-import java.rmi.RemoteException;
 import java.util.ResourceBundle;
-
-import common.business.services.Client;
-import gov.iti.jets.client.business.services.ClientImpl;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
-import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,7 +28,7 @@ public class HomePageController implements Initializable {
   private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
   Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
-  private Client clientImpl;
+
   @FXML
   private BorderPane mainBorderPane;
   @FXML
@@ -54,13 +49,6 @@ public class HomePageController implements Initializable {
   @Override
   public void initialize(URL location, ResourceBundle resources) {
 
-      try {
-        clientImpl =new ClientImpl();
-        //RMIConnection.INSTANCE.getConnectedClients().login(clientImpl);
-      } catch (RemoteException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-      }
 
 
     // Sending message to vbox in chat box to a specific contact

@@ -1,9 +1,7 @@
 package common.business.services;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
-
 import common.business.dtos.MessageDto;
-import common.business.dtos.UserConnectedDto;
 
 public interface Client extends Remote {
  

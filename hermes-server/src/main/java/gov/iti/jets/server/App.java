@@ -3,8 +3,6 @@ package gov.iti.jets.server;
 import java.rmi.AlreadyBoundException;
 import java.rmi.registry.Registry;
 import java.sql.SQLException;
-
-
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.daos.impl.UserDaoImpl;
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;

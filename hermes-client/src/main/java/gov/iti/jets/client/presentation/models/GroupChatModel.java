@@ -1,7 +1,6 @@
 package gov.iti.jets.client.presentation.models;
 
 import java.util.List;
-
 import common.business.dtos.MessageDto;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;

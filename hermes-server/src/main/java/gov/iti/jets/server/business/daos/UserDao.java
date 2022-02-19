@@ -2,7 +2,6 @@ package gov.iti.jets.server.business.daos;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import common.business.dtos.UserDto;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 
