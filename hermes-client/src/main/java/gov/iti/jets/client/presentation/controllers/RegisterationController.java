@@ -99,30 +99,27 @@ public class RegisterationController implements Initializable {
         countryComboBox.getSelectionModel().select("Egypt");
         countryComboBox.setPromptText("Country");
     }
-
-    private void validatePassword(net.synedra.validatorfx.Check.Context context) {
-
-        String passwordToCheck = context.get(PASSWORD);
-        if (passwordToCheck == null || passwordToCheck.isBlank()) {
-            context.error(Messages.PASSWORD_EMPTY);
-        }
-        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck)
-        // )
-        context.error(Messages.INVALID_PASSWORD_FORMAT);
-
+    private void validatePassword(net.synedra.validatorfx.Check.Context context)
+    {
+       
+        // String passwordToCheck = context.get(PASSWORD);  
+        //     if(confirmPasswordTextField==passwordTextField)
+        //     {
+        //         context.error(Messages.PASSWORDS_MUST_MATCH);
+        //     }
     }
 
     private void validateConfirmationPassword(net.synedra.validatorfx.Check.Context context) {
         String confirmationPasswordToCheck = context.get(PASSWORD_CONFIRMATION);
         if (confirmationPasswordToCheck == null || confirmationPasswordToCheck.isBlank())
             context.error(Messages.PASSWORD_EMPTY);
-
-        else if (!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
-
-        else if (!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
-
+        
+        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck) )
+        //     context.error(Messages.INVALID_PASSWORD_FORMAT);
+    
+        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
+        //      context.error(Messages.INVALID_PASSWORD_FORMAT);
+       
     }
 
     @FXML
