@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import net.synedra.validatorfx.TooltipWrapper;
 import net.synedra.validatorfx.Validator;
+import net.synedra.validatorfx.Check.Context;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
@@ -46,7 +47,9 @@ public class RegisterationController implements Initializable {
     private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
     private static final String PASSWORD = "password";
     private static final String PASSWORD_CONFIRMATION = "password_confirmation";
+    private static final String PHONE_NUMBER = "phone_number";
 
+    
     @FXML
     private BorderPane mainPane;
 
@@ -99,16 +102,40 @@ public class RegisterationController implements Initializable {
         countryComboBox.getSelectionModel().select("Egypt");
         countryComboBox.setPromptText("Country");
     }
+<<<<<<< Updated upstream
     private void validatePassword(net.synedra.validatorfx.Check.Context context)
+=======
+       catch(IOException ex){
+           ex.printStackTrace();
+       }
+       countryComboBox.getSelectionModel().select("Egypt");
+       countryComboBox.setPromptText("Country");
+   }
+    private void validatePassword(Context context)
+>>>>>>> Stashed changes
     {
-       
-        // String passwordToCheck = context.get(PASSWORD);  
-        //     if(confirmPasswordTextField==passwordTextField)
-        //     {
-        //         context.error(Messages.PASSWORDS_MUST_MATCH);
-        //     }
+        String passwordToCheck = context.get(PASSWORD);  
+        if(passwordToCheck == null ||passwordToCheck.isBlank())
+            //context.error(Messages.PASSWORD_EMPTY);
+            return;
+        else if (passwordToCheck.matches("[a-zA-Z]+"))
+             context.error(Messages.INVALID_PASSWORD_FORMAT);
+        else if(passwordToCheck.matches("[0-9]+"))
+             context.error(Messages.INVALID_PASSWORD_FORMAT);
+        else if (passwordToCheck.length()<7)
+            context.error(Messages.PASSWORDS_MUST_MORETHAN_7);
+    } 
+
+    private void validateConfirmationPassword(Context context){
+        String passwordToCheck = context.get(PASSWORD_CONFIRMATION);
+        String originPassword =context.get(PASSWORD);
+        if(passwordToCheck==null || originPassword==null)
+            return;
+        if(!passwordToCheck.equals(originPassword))
+            context.error(Messages.PASSWORDS_MUST_MATCH);
     }
 
+<<<<<<< Updated upstream
     private void validateConfirmationPassword(net.synedra.validatorfx.Check.Context context) {
         String confirmationPasswordToCheck = context.get(PASSWORD_CONFIRMATION);
         if (confirmationPasswordToCheck == null || confirmationPasswordToCheck.isBlank())
@@ -129,6 +156,22 @@ public class RegisterationController implements Initializable {
     private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
     private ToggleGroup toggleGendGroup = new ToggleGroup();
 
+=======
+    private void validatePhoneNumber(Context context){
+        String phoneToCheck = context.get(PHONE_NUMBER);
+        if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
+            return;
+        else if(phoneToCheck.contains(" "))
+            context.error(Messages.PHONE_MUSTNOT_CONTAIN_SPACES);
+        else if(phoneToCheck.length()<11 || phoneToCheck.length()>11)
+            context.error(Messages.PHONE_MUST_CONTAIN_11_NUMBER);
+        else if (!phoneToCheck.matches("[0-9]+"))
+            context.error(Messages.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
+        else if(!phoneToCheck.startsWith("01"))
+            context.error("Phone not correct");
+    }
+
+>>>>>>> Stashed changes
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserModel userModel = modelsFactory.getUserModel();
@@ -144,6 +187,7 @@ public class RegisterationController implements Initializable {
                 .immediate();
 
         validator.createCheck()
+<<<<<<< Updated upstream
                 .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
                 .withMethod(this::validateConfirmationPassword)
                 .decorates(confirmPasswordTextField)
@@ -189,12 +233,26 @@ public class RegisterationController implements Initializable {
             System.out.println(checkIsNull.get());
         });
 
+=======
+        .dependsOn(PASSWORD, passwordTextField.textProperty())
+        .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
+        .withMethod(this::validateConfirmationPassword)
+        .decorates(confirmPasswordTextField)
+        .immediate(); 
+
+        validator.createCheck()
+        .dependsOn(PHONE_NUMBER, phoneNumberTextField.textProperty())
+        .withMethod(this::validatePhoneNumber)
+        .decorates(phoneNumberTextField)
+        .immediate();
+>>>>>>> Stashed changes
     }
 
     @FXML
     void eyeImageMouseClicked(MouseEvent event) {
 
     }
+
 
     @FXML
     void loginAction(MouseEvent event) {

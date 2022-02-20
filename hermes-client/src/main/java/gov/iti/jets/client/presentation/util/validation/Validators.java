@@ -10,6 +10,7 @@ public enum Validators {
 	public boolean isEmpty(String toValidate) {
 		return toValidate == null || toValidate.isBlank();
 	}
+<<<<<<< Updated upstream
 	public boolean isContainCharacters(String password){
 		if(password.matches("[a-zA-Z]+"))
 			return true;
@@ -48,4 +49,7 @@ public enum Validators {
 	}
 
 
+=======
+	
+>>>>>>> Stashed changes
 }
