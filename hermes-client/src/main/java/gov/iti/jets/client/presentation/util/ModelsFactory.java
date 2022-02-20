@@ -7,7 +7,6 @@ public enum ModelsFactory {
 	INSTANCE;
 
 	private UserModel userModel = new UserModel();
-
 	private ModelsFactory() {
 
 	}
