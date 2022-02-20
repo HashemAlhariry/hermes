@@ -4,8 +4,8 @@ import java.rmi.RemoteException;
 import gov.iti.jets.client.business.services.ClientImpl;
 
 public enum ServiceFactory {
-	INSTANCE;
 
+	INSTANCE;
 	private ClientImpl clientImplInstance;
 
 	public ClientImpl getClientImpl() throws RemoteException {

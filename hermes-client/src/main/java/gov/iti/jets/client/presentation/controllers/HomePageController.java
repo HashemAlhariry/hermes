@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.regex.Pattern;
-
 import common.business.dtos.InvitationDto;
 import common.business.services.Client;
 import gov.iti.jets.client.business.services.ClientImpl;
@@ -51,6 +50,8 @@ public class HomePageController implements Initializable {
   Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
 
   @FXML
+  private  ImageView searchImageView;
+  @FXML
   private BorderPane mainBorderPane;
   @FXML
   private TextField messageTextField;
@@ -71,7 +72,6 @@ public class HomePageController implements Initializable {
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
-
 
     // Sending message to vbox in chat box to a specific contact
     sendButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -115,6 +115,11 @@ public class HomePageController implements Initializable {
   }
 
   @FXML
+  void onSearchContactList(MouseEvent mouseEvent){
+    System.out.println("CLICKED");
+  }
+
+  @FXML
   void onProfileClicked(MouseEvent mouseEvent) {
     UserModel userModel1 = ModelsFactory.INSTANCE.getUserModel();
     userModel1.setEmail("hashemalhariry33@gmail.com");
@@ -128,14 +133,18 @@ public class HomePageController implements Initializable {
 
   @FXML
   void onContactClicked(MouseEvent mouseEvent) {
-
     // stageCoordinator.switchToContactScene();
   }
 
+
+
   @FXML
   void onLogoutClicked(MouseEvent mouseEvent) {
-
-     stageCoordinator.switchToLoginScene();
+    UserModel userModel1 = ModelsFactory.INSTANCE.getUserModel();
+    userModel1.setEmail("Mina@gmail.com");
+    userModel1.setPhoneNumber("01285097233");
+    userModel1.setUserName("MINA");
+    //stageCoordinator.switchToLoginScene();
   }
 
   // Added Contact/Contacts feature
@@ -143,10 +152,9 @@ public class HomePageController implements Initializable {
   void onAddContactClicked(MouseEvent mouseEvent) {
 
     // contact list to send invitation to all users
-    List<String> addedContactsList = new ArrayList();
+    List<String> addedContactsList = new ArrayList<String>();
 
     Dialog<Integer> dialog = new Dialog<>();
-
     dialog.setTitle("Enter Phone Number");
 
     ButtonType loginButtonType = new ButtonType("Add Contact/Contacts", ButtonData.OK_DONE);
@@ -171,6 +179,7 @@ public class HomePageController implements Initializable {
     dialog.getDialogPane().setContent(gridPane);
 
     Platform.runLater(() -> addOneContact.setOnAction(new EventHandler<ActionEvent>() {
+
       @Override
       public void handle(ActionEvent event) {
 
@@ -181,8 +190,8 @@ public class HomePageController implements Initializable {
         }
       }
     }));
-    // Request focus on the newContact field by default.
 
+    // Request focus on the newContact field by default.
     Platform.runLater(() -> newContact.requestFocus());
     dialog.setResultConverter(dialogButton -> {
       if (dialogButton == loginButtonType) {
@@ -193,23 +202,26 @@ public class HomePageController implements Initializable {
 
     Optional<Integer> result = dialog.showAndWait();
     result.ifPresent(length -> {
-
       System.out.println(length);
-
     });
 
-    // calling RMI SERVICE TO ADD CONTACTS
     if (!addedContactsList.isEmpty()) {
+
+      // calling RMI SERVICE TO ADD CONTACTS if list is not empty
       // SEND USER PHONE AND LIST OF ADDED CONTACT BY USER
 
       try {
-        RMIConnection.INSTANCE.getServer().sendInvitation(
-            new InvitationDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), addedContactsList));
+
+        System.out.print("Client "+ ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()+ " Sending all invitation ...");
+
+        RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), addedContactsList));
+
       } catch (RemoteException e) {
 
         e.printStackTrace();
       }
     }
+
   }
 
 }

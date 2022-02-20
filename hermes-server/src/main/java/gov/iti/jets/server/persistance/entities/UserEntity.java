@@ -1,6 +1,7 @@
 package gov.iti.jets.server.persistance.entities;
 
 public class UserEntity {
+	
 	public String phone;
 	public String name;
 

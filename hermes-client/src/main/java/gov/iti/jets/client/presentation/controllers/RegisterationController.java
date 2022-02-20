@@ -1,10 +1,16 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.util.ResourceBundle;
+
+import common.business.dtos.UserAuthDto;
+import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presistance.network.RMIConnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -73,6 +79,22 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
+        Platform.runLater(() -> {
+
+            ModelsFactory.INSTANCE.getUserModel().setPhoneNumber("01285097233");
+            ModelsFactory.INSTANCE.getUserModel().setPassword("456");
+          
+            try {
+                RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
+                        new UserAuthDto("01285097233", "456"));
+
+            } catch (RemoteException e) {
+
+                e.printStackTrace();
+            }
+
+            stageCoordinator.switchtoHomePageScene();
+        });
         stageCoordinator.switchtoHomePageScene();
     }
 

@@ -1,6 +1,8 @@
 package common.business.dtos;
 
-public class MessageDto {
+import java.io.Serializable;
+
+public class MessageDto implements Serializable{
    public String senderPhone;
    public String content;
    public Long groupID;
