@@ -15,4 +15,5 @@ public enum Messages {
 	public final String PHONE_MUST_CONTAIN_NUMBERS_ONLY="Phone must contain numbers only";
 	public final String PHONE_MUSTNOT_CONTAIN_SPACES="Phone must not contain spaces";
 	public final String PHONE_MUST_CONTAIN_11_NUMBER="Phone must contain 11 numbers";
+	public final String PHONE_MUSTNOT_EMPTY="Phone must not be empty";
 }
