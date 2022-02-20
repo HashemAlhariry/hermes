@@ -102,7 +102,7 @@ public class RegisterationController implements Initializable {
         countryComboBox.getSelectionModel().select("Egypt");
         countryComboBox.setPromptText("Country");
     }
-    
+
     private void validatePassword(Context context)
     {
         String passwordToCheck = context.get(PASSWORD);  
@@ -110,11 +110,11 @@ public class RegisterationController implements Initializable {
             //context.error(Messages.PASSWORD_EMPTY);
             return;
         else if (passwordToCheck.matches("[a-zA-Z]+"))
-             context.error(Messages.INVALID_PASSWORD_FORMAT);
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
         else if(passwordToCheck.matches("[0-9]+"))
-             context.error(Messages.INVALID_PASSWORD_FORMAT);
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
         else if (passwordToCheck.length()<7)
-            context.error(Messages.PASSWORDS_MUST_MORETHAN_7);
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MORETHAN_7);
     } 
 
     private void validateConfirmationPassword(Context context){
@@ -123,7 +123,7 @@ public class RegisterationController implements Initializable {
         if(passwordToCheck==null || originPassword==null)
             return;
         if(!passwordToCheck.equals(originPassword))
-            context.error(Messages.PASSWORDS_MUST_MATCH);
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MATCH);
     }
 
     @FXML
@@ -138,11 +138,11 @@ public class RegisterationController implements Initializable {
         if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
             return;
         else if(phoneToCheck.contains(" "))
-            context.error(Messages.PHONE_MUSTNOT_CONTAIN_SPACES);
+            context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
         else if(phoneToCheck.length()<11 || phoneToCheck.length()>11)
-            context.error(Messages.PHONE_MUST_CONTAIN_11_NUMBER);
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_11_NUMBER);
         else if (!phoneToCheck.matches("[0-9]+"))
-            context.error(Messages.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
         else if(!phoneToCheck.startsWith("01"))
             context.error("Phone not correct");
     }
