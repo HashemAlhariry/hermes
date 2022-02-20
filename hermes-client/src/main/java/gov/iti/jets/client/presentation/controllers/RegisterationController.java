@@ -107,8 +107,8 @@ public class RegisterationController implements Initializable {
     {
         String passwordToCheck = context.get(PASSWORD);  
         if(passwordToCheck == null ||passwordToCheck.isBlank())
-            //context.error(Messages.PASSWORD_EMPTY);
-            return;
+            context.error(Messages.INSTANCE.PASSWORD_EMPTY);
+           
         else if (passwordToCheck.matches("[a-zA-Z]+"))
              context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
         else if(passwordToCheck.matches("[0-9]+"))
