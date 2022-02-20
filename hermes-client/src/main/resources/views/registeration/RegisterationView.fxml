@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="728.0" prefWidth="1017.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.RegisterationController">
+<BorderPane fx:id="mainPane" prefHeight="728.0" prefWidth="1017.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.RegisterationController">
    <center>
       <Pane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="619.0" prefWidth="832.0" style="-fx-background-color: #2B233C;">
 
@@ -65,7 +65,7 @@
                         <Font size="13.0" />
                      </font>
                   </Hyperlink>
-                  <Button id="signButton" layoutX="364.0" layoutY="360.0" mnemonicParsing="false" onAction="#registerationAction" onKeyPressed="#registerationKeyPressed" prefHeight="42.0" prefWidth="120.0" style="-fx-background-color: white; -fx-background-radius: 100; -fx-font-weight: bold; -fx-background-size: 20px;" text="Register">
+                  <Button id="signButton" fx:id="registerationButton" layoutX="364.0" layoutY="360.0" mnemonicParsing="false" onAction="#registerationAction" onKeyPressed="#registerationKeyPressed" prefHeight="42.0" prefWidth="120.0" style="-fx-background-color: white; -fx-background-radius: 100; -fx-font-weight: bold; -fx-background-size: 20px;" text="Register">
                      <font>
                         <Font size="16.0" />
                      </font>
