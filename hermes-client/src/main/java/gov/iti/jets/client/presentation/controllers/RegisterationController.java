@@ -91,13 +91,11 @@ public class RegisterationController implements Initializable {
     private void validatePassword(net.synedra.validatorfx.Check.Context context)
     {
        
-        String passwordToCheck = context.get(PASSWORD);
-        if(passwordToCheck == null || passwordToCheck.isBlank()){
-            context.error(Messages.PASSWORD_EMPTY);
-        }
-      //  else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck) )
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
-    
+        // String passwordToCheck = context.get(PASSWORD);  
+        //     if(confirmPasswordTextField==passwordTextField)
+        //     {
+        //         context.error(Messages.PASSWORDS_MUST_MATCH);
+        //     }
     }
 
     private void validateConfirmationPassword(net.synedra.validatorfx.Check.Context context){
@@ -105,11 +103,11 @@ public class RegisterationController implements Initializable {
         if(confirmationPasswordToCheck == null || confirmationPasswordToCheck.isBlank())
             context.error(Messages.PASSWORD_EMPTY);
         
-        else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck) )
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
+        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck) )
+        //     context.error(Messages.INVALID_PASSWORD_FORMAT);
     
-        else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
-             context.error(Messages.INVALID_PASSWORD_FORMAT);
+        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
+        //      context.error(Messages.INVALID_PASSWORD_FORMAT);
        
     }
     @Override
