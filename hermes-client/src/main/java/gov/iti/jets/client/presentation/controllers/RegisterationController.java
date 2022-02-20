@@ -15,6 +15,8 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.validation.Messages;
 import gov.iti.jets.client.presentation.util.validation.Validators;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,10 +81,10 @@ public class RegisterationController implements Initializable {
 
     private Validator validator = new Validator();
     private ToggleGroup toggleGendGroup = new ToggleGroup();
+    UserModel userModel = modelsFactory.getUserModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        UserModel userModel = modelsFactory.getUserModel();
         fillCountryComboBox();
 
         maleRadioButton.setToggleGroup(toggleGendGroup);
@@ -91,6 +93,8 @@ public class RegisterationController implements Initializable {
 
         birthDateFeild.valueProperty().setValue(LocalDate.now().minusYears(20));
         birthDateFeild.setEditable(false);
+
+        getFormsValues();
 
         validator.createCheck()
                 .dependsOn("username", userNameTextField.textProperty())
@@ -158,8 +162,15 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
-        System.out.println(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
-        stageCoordinator.switchtoHomePageScene();
+        userModel.setGender(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
+        System.out.println(userModel.getUserName());
+        System.out.println(userModel.getEmail());
+        System.out.println(userModel.getPassword());
+        System.out.println(userModel.getPhoneNumber());
+        System.out.println(userModel.getCountry());
+        System.out.println(userModel.getDateOfBirth());
+        System.out.println(userModel.getGender());
+        // stageCoordinator.switchtoHomePageScene();
     }
 
     @FXML
@@ -244,6 +255,16 @@ public class RegisterationController implements Initializable {
             context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
         else if (!phoneToCheck.startsWith("01"))
             context.error("Phone not correct");
+    }
+    
+    private void getFormsValues(){
+        userModel.countryProperty().bind(countryComboBox.getSelectionModel().selectedItemProperty());
+        userModel.dateOfBirthProperty().bind(birthDateFeild.valueProperty().asString());
+        userModel.emailProperty().bindBidirectional(emailTextField.textProperty());
+        // userModel.genderpProperty().bind(((RadioButton) toggleGendGroup.getSelectedToggle()).getText()); //????
+        userModel.passwordProperty().bindBidirectional(passwordTextField.textProperty());
+        userModel.phoneNumberProperty().bindBidirectional(phoneNumberTextField.textProperty());
+        userModel.userNameProperty().bindBidirectional(userNameTextField.textProperty());
     }
 
 }

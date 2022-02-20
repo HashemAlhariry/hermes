@@ -67,8 +67,13 @@ public class UserModel {
 		this.phoneNumber.set(phoneNumber);
 	}
 
-	public StringProperty getBio() {
+
+	public StringProperty bioProperty() {
 		return bio;
+	}
+
+	public String getBio() {
+		return bio.get();
 	}
 
 	public void setBio(StringProperty bio) {
@@ -79,8 +84,12 @@ public class UserModel {
 		this.bio.set(bio);
 	}
 
-	public StringProperty getCountry() {
+	public StringProperty countryProperty() {
 		return country;
+	}
+
+	public String getCountry() {
+		return country.get();
 	}
 
 	public void setCountry(StringProperty country) {
@@ -91,8 +100,12 @@ public class UserModel {
 		this.country.set(country);
 	}
 
-	public StringProperty getDateOfBirth() {
+	public StringProperty dateOfBirthProperty() {
 		return dateOfBirth;
+	}
+
+	public String getDateOfBirth() {
+		return dateOfBirth.get();
 	}
 
 	public void setDateOfBirth(StringProperty dateOfBirth) {
@@ -103,8 +116,12 @@ public class UserModel {
 		this.dateOfBirth.set(dateOfBirth);
 	}
 
-	public StringProperty getGender() {
+	public StringProperty genderpProperty() {
 		return gender;
+	}
+
+	public String getGender() {
+		return gender.get();
 	}
 
 	public void setGender(StringProperty gender) {
@@ -115,8 +132,12 @@ public class UserModel {
 		this.gender.set(gender);
 	}
 
-	public ObjectProperty getPicture() {
+	public ObjectProperty picturepProperty() {
 		return picture;
+	}
+
+	public Object getPicture() {
+		return picture.get();
 	}
 
 	public void setPicture(ObjectProperty picture) {
