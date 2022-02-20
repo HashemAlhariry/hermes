@@ -85,47 +85,6 @@ public class RegisterationController implements Initializable {
     @FXML
     private ImageView wrongImage;
 
-    // Validator validator = new Validator();
-
-    private void fillCountryComboBox() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
-        try {
-            InputStreamReader streamReader = new InputStreamReader(inputStream);
-            BufferedReader reader = new BufferedReader(streamReader);
-            String line;
-            while ((line = reader.readLine()) != null) {
-                countryComboBox.getItems().add(line);
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        countryComboBox.getSelectionModel().select("Egypt");
-        countryComboBox.setPromptText("Country");
-    }
-
-    private void validatePassword(Context context)
-    {
-        String passwordToCheck = context.get(PASSWORD);  
-        if(passwordToCheck == null ||passwordToCheck.isBlank())
-            //context.error(Messages.PASSWORD_EMPTY);
-            return;
-        else if (passwordToCheck.matches("[a-zA-Z]+"))
-             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
-        else if(passwordToCheck.matches("[0-9]+"))
-             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
-        else if (passwordToCheck.length()<7)
-            context.error(Messages.INSTANCE.PASSWORDS_MUST_MORETHAN_7);
-    } 
-
-    private void validateConfirmationPassword(Context context){
-        String passwordToCheck = context.get(PASSWORD_CONFIRMATION);
-        String originPassword =context.get(PASSWORD);
-        if(passwordToCheck==null || originPassword==null)
-            return;
-        if(!passwordToCheck.equals(originPassword))
-            context.error(Messages.INSTANCE.PASSWORDS_MUST_MATCH);
-    }
-
     @FXML
     private Button registerationButton;
 
@@ -133,24 +92,11 @@ public class RegisterationController implements Initializable {
     private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
     private ToggleGroup toggleGendGroup = new ToggleGroup();
 
-    private void validatePhoneNumber(Context context){
-        String phoneToCheck = context.get(PHONE_NUMBER);
-        if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
-            return;
-        else if(phoneToCheck.contains(" "))
-            context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
-        else if(phoneToCheck.length()<11 || phoneToCheck.length()>11)
-            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_11_NUMBER);
-        else if (!phoneToCheck.matches("[0-9]+"))
-            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
-        else if(!phoneToCheck.startsWith("01"))
-            context.error("Phone not correct");
-    }
+    
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserModel userModel = modelsFactory.getUserModel();
-        ToggleGroup toggleGendGroup = new ToggleGroup();
         maleRadioButton.setToggleGroup(toggleGendGroup);
         femaleRadioButton.setToggleGroup(toggleGendGroup);
         fillCountryComboBox();
@@ -181,15 +127,15 @@ public class RegisterationController implements Initializable {
                 .decorates(birthDateFeild)
                 .immediate();
 
-        // TooltipWrapper<Button> registerWrapper = new TooltipWrapper<>(
-        // registerationButton,
-        // checkIsNull.or(validator.containsErrorsProperty()),
-        // Bindings.concat("Can't login:\n", validator.createStringBinding()));
-
         checkIsNull.bind(userNameTextField.textProperty().isNull());
         checkIsNull.bind(emailTextField.textProperty().isNull());
-
-        // mainPane.getChildren().add(registerWrapper);
+        
+        TooltipWrapper<Button> registerWrapper = new TooltipWrapper<>(
+        registerationButton,
+        validator.containsErrorsProperty(),
+        Bindings.concat("Can't login:\n", validator.createStringBinding()));
+        
+        mainPane.getChildren().add(registerWrapper);
         checkIsNull.or(validator.containsErrorsProperty()).addListener((listener) -> {
             System.out.println(listener);
             System.out.println(checkIsNull.get());
@@ -227,7 +173,7 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
-        System.out.println(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
+       // System.out.println(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
         // stageCoordinator.switchtoHomePageScene();
     }
 
@@ -237,7 +183,6 @@ public class RegisterationController implements Initializable {
     }
 
     private void validateDateOfBirth(Context context) {
-        System.out.println("" + context.get("dateOfBirth"));
         if (Validators.INSTANCE.isDateOfBirthNotValid(birthDateFeild.valueProperty().get())) {
             context.error(Messages.INSTANCE.INVALID_DATE);
         }
@@ -253,9 +198,8 @@ public class RegisterationController implements Initializable {
             context.error(Messages.INSTANCE.INVALID_USER_NAME);
     }
 
-    private void validateEmail(Context context) { /////// don't enter this method
+    private void validateEmail(Context context) {
         String email = context.get("email");
-        System.out.println(email);
         if (email == null)
             return;
         if (email.isBlank()) {
@@ -263,6 +207,59 @@ public class RegisterationController implements Initializable {
         } else if (!Validators.INSTANCE.isEmailValidFormat(email)) {
             context.error(Messages.INSTANCE.INVALID_EMAIL_FORMAT);
         }
+    }
+
+    private void fillCountryComboBox() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
+        try {
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader reader = new BufferedReader(streamReader);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                countryComboBox.getItems().add(line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        countryComboBox.getSelectionModel().select("Egypt");
+        countryComboBox.setPromptText("Country");
+    }
+
+    private void validatePassword(Context context)
+    {
+        String passwordToCheck = context.get(PASSWORD);  
+        if(passwordToCheck == null ||passwordToCheck.isBlank())
+            context.error(Messages.INSTANCE.PASSWORD_EMPTY);
+           
+        else if (passwordToCheck.matches("[a-zA-Z]+"))
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
+        else if(passwordToCheck.matches("[0-9]+"))
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
+        else if (passwordToCheck.length()<7)
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MORETHAN_7);
+    } 
+
+    private void validateConfirmationPassword(Context context){
+        String passwordToCheck = context.get(PASSWORD_CONFIRMATION);
+        String originPassword =context.get(PASSWORD);
+        if(passwordToCheck==null || originPassword==null)
+            return;
+        if(!passwordToCheck.equals(originPassword))
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MATCH);
+    }
+
+    private void validatePhoneNumber(Context context){
+        String phoneToCheck = context.get(PHONE_NUMBER);
+        if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
+            return;
+        else if(phoneToCheck.contains(" "))
+            context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
+        else if(phoneToCheck.length()<11 || phoneToCheck.length()>11)
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_11_NUMBER);
+        else if (!phoneToCheck.matches("[0-9]+"))
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
+        else if(!phoneToCheck.startsWith("01"))
+            context.error("Phone not correct");
     }
 
 }

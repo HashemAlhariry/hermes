@@ -7,7 +7,7 @@ public enum Messages {
 	public final String EMAIL_EMPTY = "Email can't be empty";
 	public final String INVALID_EMAIL_FORMAT = "Invalid email format";
 	public final String INVALID_PASSWORD_FORMAT = "Password must contain characters and digits";
-	public final String PASSWORD_EMPTY = "Password can't be empty";
+	public final  String PASSWORD_EMPTY = "Password can't be empty";
 
 	public final String INVALID_DATE = "Date of birth is not valid";
 	public final String PASSWORDS_MUST_MATCH = "Password fields need to be identical";
