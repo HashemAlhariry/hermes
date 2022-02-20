@@ -8,7 +8,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
-import net.synedra.validatorfx.TooltipWrapper;
 import net.synedra.validatorfx.Validator;
 import net.synedra.validatorfx.Check.Context;
 import gov.iti.jets.client.presentation.models.UserModel;
@@ -20,9 +19,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
@@ -82,7 +78,6 @@ public class RegisterationController implements Initializable {
     private Button registerationButton;
 
     private Validator validator = new Validator();
-    private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
     private ToggleGroup toggleGendGroup = new ToggleGroup();
 
     @Override
@@ -240,7 +235,6 @@ public class RegisterationController implements Initializable {
     private void validatePhoneNumber(Context context) {
         String phoneToCheck = context.get(PHONE_NUMBER);
         if (phoneToCheck.isEmpty() || phoneToCheck.isBlank())
-            // return;
             context.error(Messages.INSTANCE.PHONE_MUSTNOT_EMPTY);
         else if (phoneToCheck.contains(" "))
             context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
