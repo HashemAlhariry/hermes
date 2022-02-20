@@ -85,7 +85,129 @@ public class RegisterationController implements Initializable {
     @FXML
     private ImageView wrongImage;
 
-    // Validator validator = new Validator();
+    @FXML
+    private Button registerationButton;
+
+    private Validator validator = new Validator();
+    private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
+    private ToggleGroup toggleGendGroup = new ToggleGroup();
+
+    
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        UserModel userModel = modelsFactory.getUserModel();
+        maleRadioButton.setToggleGroup(toggleGendGroup);
+        femaleRadioButton.setToggleGroup(toggleGendGroup);
+        fillCountryComboBox();
+
+        maleRadioButton.setToggleGroup(toggleGendGroup);
+        femaleRadioButton.setToggleGroup(toggleGendGroup);
+        maleRadioButton.setSelected(true);
+        System.out.println(toggleGendGroup.getSelectedToggle().getUserData());
+
+        birthDateFeild.valueProperty().setValue(LocalDate.now().minusYears(20));
+        birthDateFeild.setEditable(false);
+
+        validator.createCheck()
+                .dependsOn("username", userNameTextField.textProperty())
+                .withMethod(this::validateUserName)
+                .decorates(userNameTextField)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("email", emailTextField.textProperty())
+                .withMethod(this::validateEmail)
+                .decorates(emailTextField)
+                .immediate();
+
+        validator.createCheck()
+                .dependsOn("dateOfBirth", birthDateFeild.valueProperty())
+                .withMethod(this::validateDateOfBirth)
+                .decorates(birthDateFeild)
+                .immediate();
+
+        checkIsNull.bind(userNameTextField.textProperty().isNull());
+        checkIsNull.bind(emailTextField.textProperty().isNull());
+        
+        TooltipWrapper<Button> registerWrapper = new TooltipWrapper<>(
+        registerationButton,
+        validator.containsErrorsProperty(),
+        Bindings.concat("Can't login:\n", validator.createStringBinding()));
+        
+        mainPane.getChildren().add(registerWrapper);
+        checkIsNull.or(validator.containsErrorsProperty()).addListener((listener) -> {
+            System.out.println(listener);
+            System.out.println(checkIsNull.get());
+        });
+        validator.createCheck()
+                .dependsOn(PASSWORD, passwordTextField.textProperty())
+                .withMethod(this::validatePassword)
+                .decorates(passwordTextField)
+                .immediate();
+
+        validator.createCheck()
+        .dependsOn(PASSWORD, passwordTextField.textProperty())
+        .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
+        .withMethod(this::validateConfirmationPassword)
+        .decorates(confirmPasswordTextField)
+        .immediate(); 
+
+        validator.createCheck()
+        .dependsOn(PHONE_NUMBER, phoneNumberTextField.textProperty())
+        .withMethod(this::validatePhoneNumber)
+        .decorates(phoneNumberTextField)
+        .immediate();
+    }
+
+    @FXML
+    void eyeImageMouseClicked(MouseEvent event) {
+
+    }
+
+
+    @FXML
+    void loginAction(MouseEvent event) {
+        stageCoordinator.switchToLoginScene();
+    }
+
+    @FXML
+    void registerationAction(ActionEvent event) {
+       // System.out.println(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
+        // stageCoordinator.switchtoHomePageScene();
+    }
+
+    @FXML
+    void registerationKeyPressed(KeyEvent event) {
+        stageCoordinator.switchtoHomePageScene();
+    }
+
+    private void validateDateOfBirth(Context context) {
+        if (Validators.INSTANCE.isDateOfBirthNotValid(birthDateFeild.valueProperty().get())) {
+            context.error(Messages.INSTANCE.INVALID_DATE);
+        }
+    }
+
+    private void validateUserName(Context context) {
+        String userNameToCheck = context.get("username");
+        if (userNameToCheck == null)
+            return;
+        if (userNameToCheck.isBlank()) {
+            context.error(Messages.INSTANCE.USER_NAME_EMPTY);
+        } else if (!Validators.INSTANCE.isUserNameValid(userNameToCheck))
+            context.error(Messages.INSTANCE.INVALID_USER_NAME);
+    }
+
+    private void validateEmail(Context context) {
+        String email = context.get("email");
+        if (email == null)
+            return;
+        if (email.isBlank()) {
+            context.error(Messages.INSTANCE.EMAIL_EMPTY);
+        } else if (!Validators.INSTANCE.isEmailValidFormat(email)) {
+            context.error(Messages.INSTANCE.INVALID_EMAIL_FORMAT);
+        }
+    }
 
     private void fillCountryComboBox() {
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
@@ -126,13 +248,6 @@ public class RegisterationController implements Initializable {
             context.error(Messages.INSTANCE.PASSWORDS_MUST_MATCH);
     }
 
-    @FXML
-    private Button registerationButton;
-
-    private Validator validator = new Validator();
-    private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
-    private ToggleGroup toggleGendGroup = new ToggleGroup();
-
     private void validatePhoneNumber(Context context){
         String phoneToCheck = context.get(PHONE_NUMBER);
         if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
@@ -145,124 +260,6 @@ public class RegisterationController implements Initializable {
             context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
         else if(!phoneToCheck.startsWith("01"))
             context.error("Phone not correct");
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        UserModel userModel = modelsFactory.getUserModel();
-        ToggleGroup toggleGendGroup = new ToggleGroup();
-        maleRadioButton.setToggleGroup(toggleGendGroup);
-        femaleRadioButton.setToggleGroup(toggleGendGroup);
-        fillCountryComboBox();
-
-        maleRadioButton.setToggleGroup(toggleGendGroup);
-        femaleRadioButton.setToggleGroup(toggleGendGroup);
-        maleRadioButton.setSelected(true);
-        System.out.println(toggleGendGroup.getSelectedToggle().getUserData());
-
-        birthDateFeild.valueProperty().setValue(LocalDate.now().minusYears(20));
-        birthDateFeild.setEditable(false);
-
-        validator.createCheck()
-                .dependsOn("username", userNameTextField.textProperty())
-                .withMethod(this::validateUserName)
-                .decorates(userNameTextField)
-                .immediate();
-
-        validator.createCheck()
-                .dependsOn("email", emailTextField.textProperty())
-                .withMethod(this::validateEmail)
-                .decorates(emailTextField)
-                .immediate();
-
-        validator.createCheck()
-                .dependsOn("dateOfBirth", birthDateFeild.valueProperty())
-                .withMethod(this::validateDateOfBirth)
-                .decorates(birthDateFeild)
-                .immediate();
-
-        // TooltipWrapper<Button> registerWrapper = new TooltipWrapper<>(
-        // registerationButton,
-        // checkIsNull.or(validator.containsErrorsProperty()),
-        // Bindings.concat("Can't login:\n", validator.createStringBinding()));
-
-        checkIsNull.bind(userNameTextField.textProperty().isNull());
-        checkIsNull.bind(emailTextField.textProperty().isNull());
-
-        // mainPane.getChildren().add(registerWrapper);
-        checkIsNull.or(validator.containsErrorsProperty()).addListener((listener) -> {
-            System.out.println(listener);
-            System.out.println(checkIsNull.get());
-        });
-        validator.createCheck()
-                .dependsOn(PASSWORD, passwordTextField.textProperty())
-                .withMethod(this::validatePassword)
-                .decorates(passwordTextField)
-                .immediate();
-
-        validator.createCheck()
-        .dependsOn(PASSWORD, passwordTextField.textProperty())
-        .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
-        .withMethod(this::validateConfirmationPassword)
-        .decorates(confirmPasswordTextField)
-        .immediate(); 
-
-        validator.createCheck()
-        .dependsOn(PHONE_NUMBER, phoneNumberTextField.textProperty())
-        .withMethod(this::validatePhoneNumber)
-        .decorates(phoneNumberTextField)
-        .immediate();
-    }
-
-    @FXML
-    void eyeImageMouseClicked(MouseEvent event) {
-
-    }
-
-
-    @FXML
-    void loginAction(MouseEvent event) {
-        stageCoordinator.switchToLoginScene();
-    }
-
-    @FXML
-    void registerationAction(ActionEvent event) {
-        System.out.println(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
-        // stageCoordinator.switchtoHomePageScene();
-    }
-
-    @FXML
-    void registerationKeyPressed(KeyEvent event) {
-        stageCoordinator.switchtoHomePageScene();
-    }
-
-    private void validateDateOfBirth(Context context) {
-        System.out.println("" + context.get("dateOfBirth"));
-        if (Validators.INSTANCE.isDateOfBirthNotValid(birthDateFeild.valueProperty().get())) {
-            context.error(Messages.INSTANCE.INVALID_DATE);
-        }
-    }
-
-    private void validateUserName(Context context) {
-        String userNameToCheck = context.get("username");
-        if (userNameToCheck == null)
-            return;
-        if (userNameToCheck.isBlank()) {
-            context.error(Messages.INSTANCE.USER_NAME_EMPTY);
-        } else if (!Validators.INSTANCE.isUserNameValid(userNameToCheck))
-            context.error(Messages.INSTANCE.INVALID_USER_NAME);
-    }
-
-    private void validateEmail(Context context) { /////// don't enter this method
-        String email = context.get("email");
-        System.out.println(email);
-        if (email == null)
-            return;
-        if (email.isBlank()) {
-            context.error(Messages.INSTANCE.EMAIL_EMPTY);
-        } else if (!Validators.INSTANCE.isEmailValidFormat(email)) {
-            context.error(Messages.INSTANCE.INVALID_EMAIL_FORMAT);
-        }
     }
 
 }
