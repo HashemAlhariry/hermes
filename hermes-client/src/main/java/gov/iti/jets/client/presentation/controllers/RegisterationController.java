@@ -49,6 +49,7 @@ public class RegisterationController implements Initializable {
     private static final String PASSWORD_CONFIRMATION = "password_confirmation";
     private static final String PHONE_NUMBER = "phone_number";
 
+    
     @FXML
     private BorderPane mainPane;
 
@@ -86,6 +87,45 @@ public class RegisterationController implements Initializable {
 
     // Validator validator = new Validator();
 
+    private void fillCountryComboBox() {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
+        try {
+            InputStreamReader streamReader = new InputStreamReader(inputStream);
+            BufferedReader reader = new BufferedReader(streamReader);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                countryComboBox.getItems().add(line);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        countryComboBox.getSelectionModel().select("Egypt");
+        countryComboBox.setPromptText("Country");
+    }
+
+    private void validatePassword(Context context)
+    {
+        String passwordToCheck = context.get(PASSWORD);  
+        if(passwordToCheck == null ||passwordToCheck.isBlank())
+            //context.error(Messages.PASSWORD_EMPTY);
+            return;
+        else if (passwordToCheck.matches("[a-zA-Z]+"))
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
+        else if(passwordToCheck.matches("[0-9]+"))
+             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
+        else if (passwordToCheck.length()<7)
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MORETHAN_7);
+    } 
+
+    private void validateConfirmationPassword(Context context){
+        String passwordToCheck = context.get(PASSWORD_CONFIRMATION);
+        String originPassword =context.get(PASSWORD);
+        if(passwordToCheck==null || originPassword==null)
+            return;
+        if(!passwordToCheck.equals(originPassword))
+            context.error(Messages.INSTANCE.PASSWORDS_MUST_MATCH);
+    }
+
     @FXML
     private Button registerationButton;
 
@@ -93,39 +133,35 @@ public class RegisterationController implements Initializable {
     private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
     private ToggleGroup toggleGendGroup = new ToggleGroup();
 
+    private void validatePhoneNumber(Context context){
+        String phoneToCheck = context.get(PHONE_NUMBER);
+        if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
+            return;
+        else if(phoneToCheck.contains(" "))
+            context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
+        else if(phoneToCheck.length()<11 || phoneToCheck.length()>11)
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_11_NUMBER);
+        else if (!phoneToCheck.matches("[0-9]+"))
+            context.error(Messages.INSTANCE.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
+        else if(!phoneToCheck.startsWith("01"))
+            context.error("Phone not correct");
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
         UserModel userModel = modelsFactory.getUserModel();
-
+        ToggleGroup toggleGendGroup = new ToggleGroup();
+        maleRadioButton.setToggleGroup(toggleGendGroup);
+        femaleRadioButton.setToggleGroup(toggleGendGroup);
         fillCountryComboBox();
-
-        birthDateFeild.valueProperty().setValue(LocalDate.now().minusYears(20));
-        birthDateFeild.setEditable(false);
 
         maleRadioButton.setToggleGroup(toggleGendGroup);
         femaleRadioButton.setToggleGroup(toggleGendGroup);
         maleRadioButton.setSelected(true);
         System.out.println(toggleGendGroup.getSelectedToggle().getUserData());
 
-        validator.createCheck()
-                .dependsOn(PASSWORD, passwordTextField.textProperty())
-                .withMethod(this::validatePassword)
-                .decorates(passwordTextField)
-                .immediate();
-
-        validator.createCheck()
-                .dependsOn(PASSWORD, passwordTextField.textProperty())
-                .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
-                .withMethod(this::validateConfirmationPassword)
-                .decorates(confirmPasswordTextField)
-                .immediate();
-
-        validator.createCheck()
-                .dependsOn(PHONE_NUMBER, phoneNumberTextField.textProperty())
-                .withMethod(this::validatePhoneNumber)
-                .decorates(phoneNumberTextField)
-                .immediate();
+        birthDateFeild.valueProperty().setValue(LocalDate.now().minusYears(20));
+        birthDateFeild.setEditable(false);
 
         validator.createCheck()
                 .dependsOn("username", userNameTextField.textProperty())
@@ -158,65 +194,31 @@ public class RegisterationController implements Initializable {
             System.out.println(listener);
             System.out.println(checkIsNull.get());
         });
+        validator.createCheck()
+                .dependsOn(PASSWORD, passwordTextField.textProperty())
+                .withMethod(this::validatePassword)
+                .decorates(passwordTextField)
+                .immediate();
 
-    }
+        validator.createCheck()
+        .dependsOn(PASSWORD, passwordTextField.textProperty())
+        .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
+        .withMethod(this::validateConfirmationPassword)
+        .decorates(confirmPasswordTextField)
+        .immediate(); 
 
-    private void validatePhoneNumber(Context context) {
-        String phoneToCheck = context.get(PHONE_NUMBER);
-        if (phoneToCheck.isEmpty() || phoneToCheck.isBlank())
-            return;
-        else if (phoneToCheck.contains(" "))
-            context.error(Messages.PHONE_MUSTNOT_CONTAIN_SPACES);
-        else if (phoneToCheck.length() < 11 || phoneToCheck.length() > 11)
-            context.error(Messages.PHONE_MUST_CONTAIN_11_NUMBER);
-        else if (!phoneToCheck.matches("[0-9]+"))
-            context.error(Messages.PHONE_MUST_CONTAIN_NUMBERS_ONLY);
-        else if (!phoneToCheck.startsWith("01"))
-            context.error("Phone not correct");
-    }
-
-    private void fillCountryComboBox() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
-        try {
-            InputStreamReader streamReader = new InputStreamReader(inputStream);
-            BufferedReader reader = new BufferedReader(streamReader);
-            String line;
-            while ((line = reader.readLine()) != null) {
-                countryComboBox.getItems().add(line);
-            }
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        countryComboBox.getSelectionModel().select("Egypt");
-        countryComboBox.setPromptText("Country");
-    }
-
-    private void validatePassword(Context context) {
-        String passwordToCheck = context.get(PASSWORD);
-        if (passwordToCheck == null || passwordToCheck.isBlank())
-            // context.error(Messages.PASSWORD_EMPTY);
-            return;
-        else if (passwordToCheck.matches("[a-zA-Z]+"))
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
-        else if (passwordToCheck.matches("[0-9]+"))
-            context.error(Messages.INVALID_PASSWORD_FORMAT);
-        else if (passwordToCheck.length() < 7)
-            context.error(Messages.PASSWORDS_MUST_MORETHAN_7);
-    }
-
-    private void validateConfirmationPassword(Context context) {
-        String passwordToCheck = context.get(PASSWORD_CONFIRMATION);
-        String originPassword = context.get(PASSWORD);
-        if (passwordToCheck == null || originPassword == null)
-            return;
-        if (!passwordToCheck.equals(originPassword))
-            context.error(Messages.PASSWORDS_MUST_MATCH);
+        validator.createCheck()
+        .dependsOn(PHONE_NUMBER, phoneNumberTextField.textProperty())
+        .withMethod(this::validatePhoneNumber)
+        .decorates(phoneNumberTextField)
+        .immediate();
     }
 
     @FXML
     void eyeImageMouseClicked(MouseEvent event) {
 
     }
+
 
     @FXML
     void loginAction(MouseEvent event) {
@@ -235,6 +237,7 @@ public class RegisterationController implements Initializable {
     }
 
     private void validateDateOfBirth(Context context) {
+        System.out.println("" + context.get("dateOfBirth"));
         if (Validators.INSTANCE.isDateOfBirthNotValid(birthDateFeild.valueProperty().get())) {
             context.error(Messages.INSTANCE.INVALID_DATE);
         }
@@ -250,8 +253,9 @@ public class RegisterationController implements Initializable {
             context.error(Messages.INSTANCE.INVALID_USER_NAME);
     }
 
-    private void validateEmail(Context context) {
+    private void validateEmail(Context context) { /////// don't enter this method
         String email = context.get("email");
+        System.out.println(email);
         if (email == null)
             return;
         if (email.isBlank()) {

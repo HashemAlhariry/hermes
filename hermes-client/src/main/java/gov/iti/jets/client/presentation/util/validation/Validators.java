@@ -47,6 +47,4 @@ public enum Validators {
 		return false;
 	}
 
-
-	
 }
