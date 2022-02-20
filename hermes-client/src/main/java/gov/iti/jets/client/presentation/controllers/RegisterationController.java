@@ -102,17 +102,8 @@ public class RegisterationController implements Initializable {
         countryComboBox.getSelectionModel().select("Egypt");
         countryComboBox.setPromptText("Country");
     }
-<<<<<<< Updated upstream
-    private void validatePassword(net.synedra.validatorfx.Check.Context context)
-=======
-       catch(IOException ex){
-           ex.printStackTrace();
-       }
-       countryComboBox.getSelectionModel().select("Egypt");
-       countryComboBox.setPromptText("Country");
-   }
+    
     private void validatePassword(Context context)
->>>>>>> Stashed changes
     {
         String passwordToCheck = context.get(PASSWORD);  
         if(passwordToCheck == null ||passwordToCheck.isBlank())
@@ -135,20 +126,6 @@ public class RegisterationController implements Initializable {
             context.error(Messages.PASSWORDS_MUST_MATCH);
     }
 
-<<<<<<< Updated upstream
-    private void validateConfirmationPassword(net.synedra.validatorfx.Check.Context context) {
-        String confirmationPasswordToCheck = context.get(PASSWORD_CONFIRMATION);
-        if (confirmationPasswordToCheck == null || confirmationPasswordToCheck.isBlank())
-            context.error(Messages.PASSWORD_EMPTY);
-        
-        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck) )
-        //     context.error(Messages.INVALID_PASSWORD_FORMAT);
-    
-        // else if(!Validators.INSTANCE.isContainCharacters(confirmationPasswordToCheck))
-        //      context.error(Messages.INVALID_PASSWORD_FORMAT);
-       
-    }
-
     @FXML
     private Button registerationButton;
 
@@ -156,7 +133,6 @@ public class RegisterationController implements Initializable {
     private BooleanProperty checkIsNull = new SimpleBooleanProperty(false);
     private ToggleGroup toggleGendGroup = new ToggleGroup();
 
-=======
     private void validatePhoneNumber(Context context){
         String phoneToCheck = context.get(PHONE_NUMBER);
         if(phoneToCheck.isEmpty()||phoneToCheck.isBlank())
@@ -171,7 +147,6 @@ public class RegisterationController implements Initializable {
             context.error("Phone not correct");
     }
 
->>>>>>> Stashed changes
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         UserModel userModel = modelsFactory.getUserModel();
@@ -179,19 +154,6 @@ public class RegisterationController implements Initializable {
         maleRadioButton.setToggleGroup(toggleGendGroup);
         femaleRadioButton.setToggleGroup(toggleGendGroup);
         fillCountryComboBox();
-
-        validator.createCheck()
-                .dependsOn(PASSWORD, passwordTextField.textProperty())
-                .withMethod(this::validatePassword)
-                .decorates(passwordTextField)
-                .immediate();
-
-        validator.createCheck()
-<<<<<<< Updated upstream
-                .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
-                .withMethod(this::validateConfirmationPassword)
-                .decorates(confirmPasswordTextField)
-                .immediate();
 
         maleRadioButton.setToggleGroup(toggleGendGroup);
         femaleRadioButton.setToggleGroup(toggleGendGroup);
@@ -232,8 +194,13 @@ public class RegisterationController implements Initializable {
             System.out.println(listener);
             System.out.println(checkIsNull.get());
         });
+        validator.createCheck()
+                .dependsOn(PASSWORD, passwordTextField.textProperty())
+                .withMethod(this::validatePassword)
+                .decorates(passwordTextField)
+                .immediate();
 
-=======
+        validator.createCheck()
         .dependsOn(PASSWORD, passwordTextField.textProperty())
         .dependsOn(PASSWORD_CONFIRMATION, confirmPasswordTextField.textProperty())
         .withMethod(this::validateConfirmationPassword)
@@ -245,7 +212,6 @@ public class RegisterationController implements Initializable {
         .withMethod(this::validatePhoneNumber)
         .decorates(phoneNumberTextField)
         .immediate();
->>>>>>> Stashed changes
     }
 
     @FXML
