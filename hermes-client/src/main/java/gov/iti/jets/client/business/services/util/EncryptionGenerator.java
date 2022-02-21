@@ -1,4 +1,4 @@
-package gov.iti.jets.client.presentation.util;
+package gov.iti.jets.client.business.services.util;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

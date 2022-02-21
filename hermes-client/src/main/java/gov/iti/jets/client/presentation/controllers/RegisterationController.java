@@ -5,18 +5,21 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import common.business.dtos.UserDto;
 import net.synedra.validatorfx.Validator;
 import net.synedra.validatorfx.Check.Context;
+import gov.iti.jets.client.business.services.impl.MapperImpl;
+import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.validation.Messages;
 import gov.iti.jets.client.presentation.util.validation.Validators;
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
+import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -27,7 +30,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -133,17 +135,9 @@ public class RegisterationController implements Initializable {
                 .decorates(phoneNumberTextField)
                 .immediate();
 
-        // TooltipWrapper<Button> registerWrapper = new TooltipWrapper<>(
-        // registerationButton,
-        // validator.containsErrorsProperty(),
-        // Bindings.concat("Can't login:\n", validator.createStringBinding())
-        // );
-
         validator.containsErrorsProperty().addListener((listener) -> {
-            // System.out.println(validator.containsErrorsProperty());
             if (validator.containsErrors()) {
                 registerationButton.setDisable(true);
-                registerationButton.setTooltip(new Tooltip("Can't Login:\n" + validator.createStringBinding().get()));
             } else {
                 registerationButton.setDisable(false);
             }
@@ -152,7 +146,7 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void eyeImageMouseClicked(MouseEvent event) {
-
+        //
     }
 
     @FXML
@@ -162,14 +156,17 @@ public class RegisterationController implements Initializable {
 
     @FXML
     void registerationAction(ActionEvent event) {
-        userModel.setGender(((RadioButton) toggleGendGroup.getSelectedToggle()).getText());
-        System.out.println(userModel.getUserName());
-        System.out.println(userModel.getEmail());
-        System.out.println(userModel.getPassword());
-        System.out.println(userModel.getPhoneNumber());
-        System.out.println(userModel.getCountry());
-        System.out.println(userModel.getDateOfBirth());
-        System.out.println(userModel.getGender());
+        // map uesrmodel to userDto
+        // call register function
+        String selectedGender = ((RadioButton) toggleGendGroup.getSelectedToggle()).getText();
+        Boolean  gender = selectedGender.equals("Male")? true : false;
+        userModel.setGender(gender);
+        UserDto userDto =  MapperImpl.INSTANCE.mapToUserDto(userModel);
+        try {
+            RMIConnection.INSTANCE.getServer().register(ServiceFactory.INSTANCE.getClientImpl(), userDto);
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
         // stageCoordinator.switchtoHomePageScene();
     }
 
@@ -256,15 +253,15 @@ public class RegisterationController implements Initializable {
         else if (!phoneToCheck.startsWith("01"))
             context.error("Phone not correct");
     }
-    
-    private void getFormsValues(){
+
+    private void getFormsValues() {
         userModel.countryProperty().bind(countryComboBox.getSelectionModel().selectedItemProperty());
         userModel.dateOfBirthProperty().bind(birthDateFeild.valueProperty().asString());
         userModel.emailProperty().bindBidirectional(emailTextField.textProperty());
-        // userModel.genderpProperty().bind(((RadioButton) toggleGendGroup.getSelectedToggle()).getText()); //????
         userModel.passwordProperty().bindBidirectional(passwordTextField.textProperty());
         userModel.phoneNumberProperty().bindBidirectional(phoneNumberTextField.textProperty());
         userModel.userNameProperty().bindBidirectional(userNameTextField.textProperty());
     }
+
 
 }

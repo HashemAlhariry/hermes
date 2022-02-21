@@ -1,9 +1,12 @@
 package gov.iti.jets.client.presentation.models;
 
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.image.Image;
 
 public class UserModel {
 // 	(Phone Number, Display Name, email, picture, password, confirmation password, 
@@ -13,8 +16,8 @@ public class UserModel {
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
 	private StringProperty phoneNumber = new SimpleStringProperty();
-	private ObjectProperty picture = new SimpleObjectProperty();
-	private StringProperty gender = new SimpleStringProperty();
+	private Property<Image> picture = new SimpleObjectProperty<>();
+	private BooleanProperty gender = new SimpleBooleanProperty();
 	private StringProperty country = new SimpleStringProperty();
 	private StringProperty dateOfBirth = new SimpleStringProperty();
 	private StringProperty bio = new SimpleStringProperty();
@@ -116,35 +119,31 @@ public class UserModel {
 		this.dateOfBirth.set(dateOfBirth);
 	}
 
-	public StringProperty genderpProperty() {
+	public BooleanProperty genderpProperty() {
 		return gender;
 	}
 
-	public String getGender() {
+	public Boolean getGender() {
 		return gender.get();
 	}
 
-	public void setGender(StringProperty gender) {
+	public void setGender(BooleanProperty gender) {
 		this.gender = gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Boolean gender) {
 		this.gender.set(gender);
 	}
 
-	public ObjectProperty picturepProperty() {
+	public Property<Image> picturepProperty() {
 		return picture;
 	}
 
-	public Object getPicture() {
-		return picture.get();
+	public Image getPicture() {
+		return picture.getValue();
 	}
 
-	public void setPicture(ObjectProperty picture) {
-		this.picture = picture;
-	}
-
-	public void setPicture(Object picture) {
-		this.picture.set(picture);
+	public void setPicture(Image picture) {
+		this.picture.setValue(picture);
 	}
 }

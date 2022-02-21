@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				userEntity.name = resultSet.getString("name");
-				userEntity.phone = resultSet.getString("phone");
+				userEntity.phoneNumber = resultSet.getString("phone");
 				userEntities.add(userEntity);
 			}
 		} catch (Exception e) {
@@ -41,8 +41,27 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void insertUser(UserEntity user) {
-
+	public UserEntity insertUser(UserEntity user) {
+		UserEntity insertedUser = new UserEntity();
+		int gender = user.gender ? 1 : 0;
+		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES ('"
+				+ user.name + "','" + user.phoneNumber + "','" + user.email + "','" + user.password + "'," + gender
+				+ ",'" + user.dateOfBirth + "','" + user.country + "');";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
+			insertedUser.name = resultSet.getString("name");
+			insertedUser.phoneNumber = resultSet.getString("phone");
+			insertedUser.bio = resultSet.getString("bio");
+			insertedUser.country = resultSet.getString("country");
+			insertedUser.dateOfBirth = resultSet.getString("dob");
+			insertedUser.email = resultSet.getString("email");
+			insertedUser.gender = resultSet.getString("gender").equals("1");
+			insertedUser.password = resultSet.getString("password");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return insertedUser;
 	}
 
 	@Override
@@ -53,12 +72,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteUser(UserEntity user) {
 
-	}
-
-	@Override
-	public UserEntity getUserRegistered(UserDto userDto) {
-		String query = "Select * from user where phone = ? and password = ?";
-		return null;
 	}
 
 }

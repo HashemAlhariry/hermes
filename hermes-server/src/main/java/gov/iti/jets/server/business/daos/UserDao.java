@@ -11,12 +11,10 @@ public interface UserDao {
 
 	UserEntity getUserByPhone(UserDto userDto);
 
-	void insertUser(UserEntity user);
+	UserEntity insertUser(UserEntity user);
 
 	void updateUser(UserEntity user);
 
 	void deleteUser(UserEntity user);
-
-	UserEntity getUserRegistered(UserDto userDto);
 
 }
