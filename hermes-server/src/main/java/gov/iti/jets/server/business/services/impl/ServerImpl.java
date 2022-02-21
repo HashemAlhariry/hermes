@@ -4,7 +4,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
-import common.business.dtos.InvitationDto;
+import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.services.Client;
@@ -69,7 +69,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
     }
 
     @Override
-    public void sendInvitation(InvitationDto invitationDto) {
+    public void sendInvitation(InvitationSentDto invitationDto) {
 
         // getting from db to check all avaialble numbers in database
         // delegate the calling and bussiness to another class

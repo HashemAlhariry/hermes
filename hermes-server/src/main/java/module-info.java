@@ -6,13 +6,14 @@ module gov.iti.jets.server {
 	requires mysql.connector.java;
 	requires java.sql;
 	requires java.rmi;
-    requires transitive common.mod;
+	requires transitive common.mod;
 	requires java.management;
-    opens gov.iti.jets.server.presentation.gui.controllers to javafx.fxml;
+
+	opens gov.iti.jets.server.presentation.gui.controllers to javafx.fxml;
 
 	exports gov.iti.jets.server;
 	exports gov.iti.jets.server.business.services.impl;
-	
+
 	provides common.business.services.Server with gov.iti.jets.server.business.services.impl.ServerImpl;
- 
+
 }

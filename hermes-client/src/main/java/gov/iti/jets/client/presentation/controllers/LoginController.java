@@ -1,11 +1,9 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
-import java.rmi.AccessException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
+
 import common.business.dtos.UserAuthDto;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
