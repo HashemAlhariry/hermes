@@ -8,10 +8,14 @@ import java.util.Map;
 import common.business.dtos.InvitationDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
+import common.business.dtos.UserDto;
 import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
+import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
+import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.util.DaosFactory;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -39,7 +43,20 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void register(Client connectedClient) {
+	public void register(Client connectedClient, UserDto userDto) {
+		// registered user will be connected?
+		// map userDto to userEntity
+		// call userDao to insert user data
+		UserDao userDao= DaosFactory.INSTANCE.getUserDao();
+		connectedClients.put(userDto.phoneNumber, connectedClient);
+		UserEntity userEntity = MapperImpl.INSTANCE.mapFromUserDto(userDto);
+		if(userDao.insertUser(userEntity) != 0){
+			try {
+				connectedClient.registerationSuccess();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override

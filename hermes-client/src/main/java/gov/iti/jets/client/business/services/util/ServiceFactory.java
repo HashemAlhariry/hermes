@@ -1,7 +1,8 @@
 package gov.iti.jets.client.business.services.util;
 
 import java.rmi.RemoteException;
-import gov.iti.jets.client.business.services.ClientImpl;
+
+import gov.iti.jets.client.business.services.impl.ClientImpl;
 
 public enum ServiceFactory {
 	INSTANCE;

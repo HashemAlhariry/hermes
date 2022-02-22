@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				userEntity.name = resultSet.getString("name");
-				userEntity.phone = resultSet.getString("phone");
+				userEntity.phoneNumber = resultSet.getString("phone");
 				userEntities.add(userEntity);
 			}
 		} catch (Exception e) {
@@ -41,8 +41,26 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void insertUser(UserEntity user) {
-
+	public int insertUser(UserEntity user) {
+		int gender = user.gender ? 1 : 0;
+		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);
+				) {
+					preparedStatement.setString(1, user.name);
+					preparedStatement.setString(2, user.phoneNumber);
+					preparedStatement.setString(3, user.email);
+					preparedStatement.setString(4, user.password);
+					preparedStatement.setInt(5, gender);
+					preparedStatement.setString(6, user.dateOfBirth);
+					preparedStatement.setString(7, user.country);
+					// System.out.println(preparedStatement.executeUpdate());
+					return preparedStatement.executeUpdate();
+			// System.out.println(resultSet);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return 0;
+		}
 	}
 
 	@Override
@@ -53,12 +71,6 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public void deleteUser(UserEntity user) {
 
-	}
-
-	@Override
-	public UserEntity getUserRegistered(UserDto userDto) {
-		String query = "Select * from user where phone = ? and password = ?";
-		return null;
 	}
 
 }

@@ -1,4 +1,4 @@
-package gov.iti.jets.client.business.services;
+package gov.iti.jets.client.business.services.impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -31,6 +31,11 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 	@Override
 	public void loginSuccess() {
 		System.out.println("AMIRA IS HERE");
+	}
+
+	@Override
+	public void registerationSuccess() throws RemoteException {
+		System.out.println("User Registered Succefully");
 	}
 
 }

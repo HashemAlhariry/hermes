@@ -1,26 +1,25 @@
 package gov.iti.jets.client.presentation.models;
 
- 
+import java.time.LocalDate;
 
-import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 
 public class UserModel {
-	// 	(Phone Number, Display Name, email, picture, password, confirmation password, 
-	// gender, country, date of birth, bio.)
 
 	private StringProperty userName = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
 	private StringProperty phoneNumber = new SimpleStringProperty();
 	private Property<Image> picture = new SimpleObjectProperty<>();
-	private StringProperty gender = new SimpleStringProperty();
+	private BooleanProperty gender = new SimpleBooleanProperty();
 	private StringProperty country = new SimpleStringProperty();
-	private StringProperty dateOfBirth = new SimpleStringProperty();
+	private Property<LocalDate> dateOfBirth = new SimpleObjectProperty<>();
 	private StringProperty bio = new SimpleStringProperty();
 
 	public String getUserName() {
@@ -104,35 +103,35 @@ public class UserModel {
 		this.country.set(country);
 	}
 
-	public StringProperty dateOfBirthProperty() {
+	public Property<LocalDate> dateOfBirthProperty() {
 		return dateOfBirth;
 	}
 
-	public String getDateOfBirth() {
-		return dateOfBirth.get();
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth.getValue();
 	}
 
-	public void setDateOfBirth(StringProperty dateOfBirth) {
+	public void setDateOfBirth(Property<LocalDate> dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth.set(dateOfBirth);
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth.setValue(dateOfBirth);
 	}
 
-	public StringProperty genderpProperty() {
+	public BooleanProperty genderpProperty() {
 		return gender;
 	}
 
-	public String getGender() {
+	public Boolean getGender() {
 		return gender.get();
 	}
 
-	public void setGender(StringProperty gender) {
+	public void setGender(BooleanProperty gender) {
 		this.gender = gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Boolean gender) {
 		this.gender.set(gender);
 	}
 
@@ -140,12 +139,8 @@ public class UserModel {
 		return picture;
 	}
 
-	public Object getPicture() {
-		return picture.getBean();
-	}
-
-	public void setPicture(ObjectProperty picture) {
-		this.picture = picture;
+	public Image getPicture() {
+		return picture.getValue();
 	}
 
 	public void setPicture(Image picture) {
