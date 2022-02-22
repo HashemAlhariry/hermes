@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				userEntity.name = resultSet.getString("name");
-				userEntity.phoneNumber = resultSet.getString("phone");
+				userEntity.phone = resultSet.getString("phone");
 				userEntities.add(userEntity);
 			}
 		} catch (Exception e) {
@@ -48,11 +48,11 @@ public class UserDaoImpl implements UserDao {
 				var preparedStatement = connection.prepareStatement(query);
 				) {
 					preparedStatement.setString(1, user.name);
-					preparedStatement.setString(2, user.phoneNumber);
+					preparedStatement.setString(2, user.phone);
 					preparedStatement.setString(3, user.email);
 					preparedStatement.setString(4, user.password);
 					preparedStatement.setInt(5, gender);
-					preparedStatement.setString(6, user.dateOfBirth);
+					preparedStatement.setDate(6, user.dob);
 					preparedStatement.setString(7, user.country);
 					// System.out.println(preparedStatement.executeUpdate());
 					return preparedStatement.executeUpdate();

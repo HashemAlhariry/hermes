@@ -22,8 +22,8 @@ public enum MapperImpl implements Mapper<UserEntity> {
                 userDto.name,
                 userDto.email,
                 userDto.gender,
+                java.sql.Date.valueOf(userDto.dateOfBirth),
                 userDto.country,
-                userDto.dateOfBirth,
                 userDto.bio);
     }
 
