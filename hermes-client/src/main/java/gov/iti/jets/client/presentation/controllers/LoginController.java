@@ -21,11 +21,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class LoginController implements Initializable {
+public class LoginController {
 
+<<<<<<< Updated upstream
   @FXML
   private TextField emailTextField;
 
@@ -37,6 +39,13 @@ public class LoginController implements Initializable {
 
   @FXML
   private PasswordField passwordTextField;
+=======
+	@FXML
+    private TextField phoneTextField;
+	
+	@FXML
+	private Button nextButton;
+>>>>>>> Stashed changes
 
   @FXML
   private Button signInButton;
@@ -45,6 +54,7 @@ public class LoginController implements Initializable {
   private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
   private Login loginService;
 
+<<<<<<< Updated upstream
   private UserModel userModel = modelsFactory.getUserModel();
 
   @Override
@@ -70,9 +80,32 @@ public class LoginController implements Initializable {
 
     // nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
     // passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+=======
+	// @Override
+	// public void initialize(URL location, ResourceBundle resources) {
+
+	// 	try {
+	// 		// lookup("Login") = Login same interface name.
+	// 		Registry registry = LocateRegistry.getRegistry();
+	// 		for (var s : registry.list()) {
+	// 			System.out.println(s);
+	// 		}
+
+	// 	} catch (AccessException e) {
+	// 		e.printStackTrace();
+	// 	} catch (RemoteException e) {
+	// 		e.printStackTrace();
+	// 	}
+
+	// 	// nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+	// 	// passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+
+	// }
+>>>>>>> Stashed changes
 
   }
 
+<<<<<<< Updated upstream
   @FXML
   void eyeImageMouseClicked(MouseEvent event) {
 
@@ -110,7 +143,23 @@ public class LoginController implements Initializable {
    
 	  
   }
+=======
+	@FXML
+	void nextButtonAction(ActionEvent event) {
+		stageCoordinator.switchToNextLoginScene();
+
+		
+>>>>>>> Stashed changes
 
 
+<<<<<<< Updated upstream
+=======
+	@FXML
+	void nextKeyPressed(KeyEvent event) {
+		if(event.getCode()==KeyCode.ENTER){
+			stageCoordinator.switchToNextLoginScene();
+		}
+	}
+>>>>>>> Stashed changes
 
 }
