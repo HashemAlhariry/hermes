@@ -9,7 +9,7 @@ import java.util.Random;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-public enum EncryptionGenerator {
+public enum HashManager {
     INSTANCE;
     /* Declaration of variables */
     private final Random random = new SecureRandom();

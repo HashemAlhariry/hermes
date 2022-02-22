@@ -41,27 +41,26 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public UserEntity insertUser(UserEntity user) {
-		UserEntity insertedUser = new UserEntity();
+	public int insertUser(UserEntity user) {
 		int gender = user.gender ? 1 : 0;
-		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES ('"
-				+ user.name + "','" + user.phoneNumber + "','" + user.email + "','" + user.password + "'," + gender
-				+ ",'" + user.dateOfBirth + "','" + user.country + "');";
+		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
 		try (var connection = dataSource.getDataSource().getConnection();
 				var preparedStatement = connection.prepareStatement(query);
-				var resultSet = preparedStatement.executeQuery()) {
-			insertedUser.name = resultSet.getString("name");
-			insertedUser.phoneNumber = resultSet.getString("phone");
-			insertedUser.bio = resultSet.getString("bio");
-			insertedUser.country = resultSet.getString("country");
-			insertedUser.dateOfBirth = resultSet.getString("dob");
-			insertedUser.email = resultSet.getString("email");
-			insertedUser.gender = resultSet.getString("gender").equals("1");
-			insertedUser.password = resultSet.getString("password");
+				) {
+					preparedStatement.setString(1, user.name);
+					preparedStatement.setString(2, user.phoneNumber);
+					preparedStatement.setString(3, user.email);
+					preparedStatement.setString(4, user.password);
+					preparedStatement.setInt(5, gender);
+					preparedStatement.setString(6, user.dateOfBirth);
+					preparedStatement.setString(7, user.country);
+					// System.out.println(preparedStatement.executeUpdate());
+					return preparedStatement.executeUpdate();
+			// System.out.println(resultSet);
 		} catch (Exception e) {
 			e.printStackTrace();
+			return 0;
 		}
-		return insertedUser;
 	}
 
 	@Override
