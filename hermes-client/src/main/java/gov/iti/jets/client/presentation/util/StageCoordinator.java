@@ -28,6 +28,10 @@ public enum StageCoordinator {
 		this.primaryStage = primaryStage;
 	}
 
+	public void switchToNextLoginScene() {
+		prepareScene("nextloginScene", "/views/login/NextloginView.fxml");
+	}
+
 	public void switchToLoginScene() {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
