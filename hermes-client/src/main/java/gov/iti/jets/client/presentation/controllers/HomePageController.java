@@ -203,7 +203,7 @@ public class HomePageController implements Initializable {
 
 			try {
 
-				System.out.print("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
+				System.out.println("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
 						+ " Sending all invitation ...");
 
 				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));

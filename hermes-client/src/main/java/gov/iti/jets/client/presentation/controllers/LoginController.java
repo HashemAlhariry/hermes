@@ -62,7 +62,8 @@ public class LoginController implements Initializable {
 			try {
 				ModelsFactory.INSTANCE.getUserModel().setPhoneNumber("01149056691");
 				ModelsFactory.INSTANCE.getUserModel().setPassword("456");
-				RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
+				RMIConnection.INSTANCE.getServer().login(
+						ServiceFactory.INSTANCE.getClientImpl(),
 						new UserAuthDto("01149056691", "456"));
 
 			} catch (RemoteException e) {
