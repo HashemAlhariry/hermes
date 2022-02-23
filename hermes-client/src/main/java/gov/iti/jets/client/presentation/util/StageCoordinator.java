@@ -43,6 +43,7 @@ public enum StageCoordinator {
 		prepareScene("profileScene", "/views/profile/ProfileView.fxml");
 	}
 
+	 
 	private void prepareScene(String sceneName, String fxmlLocation) {
 		if (sceneMap.get(sceneName) == null) {
 			try {

@@ -5,6 +5,7 @@ import java.rmi.server.UnicastRemoteObject;
 import common.business.dtos.MessageDto;
 import common.business.services.Client;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
+import gov.iti.jets.client.presentation.util.Utils;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
 
@@ -13,7 +14,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 		super();
 	}
 
-	@Override
+	@Override	
 	public void recieveMessage(MessageDto message) {
 		System.out.println("MESSAGE RECIEVED" + message.content);
 	}
@@ -21,6 +22,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 	@Override
 	public void recieveInvitation(String sender) {
 		System.out.println("INVITATION RECIEVED FROM " + sender);
+		Utils.INSTANCE.invitationNotification(sender);
 	}
 
 	@Override
@@ -30,7 +32,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 	@Override
 	public void loginSuccess() {
-		System.out.println("AMIRA IS HERE");
+		 
 	}
 
 	@Override

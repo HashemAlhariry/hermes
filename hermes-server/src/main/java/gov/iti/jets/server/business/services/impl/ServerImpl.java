@@ -3,10 +3,13 @@ package gov.iti.jets.server.business.services.impl;
 import common.business.dtos.GroupDto;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import common.business.dtos.InvitationDto;
+import common.business.dtos.InvitationResponse;
+import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
@@ -15,6 +18,7 @@ import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.business.services.GroupService;
+import gov.iti.jets.server.business.services.InvitationService;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
@@ -22,7 +26,8 @@ import gov.iti.jets.server.business.services.MessageService;
 import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-
+   
+	// connected Clients will be used for getting online users
 	private Map<String, Client> connectedClients;
 
 	public ServerImpl() throws RemoteException {
@@ -30,20 +35,21 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		connectedClients = new HashMap<>();
 	}
 
-	@Override
-	public void login(Client connectedClient, UserAuthDto userAuthDto) {
+    @Override
+    public void login(Client connectedClient, UserAuthDto userAuthDto) {
 
-		// call another class for authenicating db
-		// checking if user exists or not
-		connectedClients.put(userAuthDto.phoneNumber, connectedClient);
-		System.out.println("HELLO FROM SERVER");
-		try {
-			connectedClient.loginSuccess();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+        // call another class for authenticating db
+        // checking if user exists or not
+        
+        connectedClients.put(userAuthDto.phoneNumber, connectedClient);
+        System.out.println("User phone added to online users " + userAuthDto.phoneNumber);
+        try {
+            connectedClient.loginSuccess();
+        } catch (RemoteException e) {
+     
+            e.printStackTrace();
+        }
+    }
 
 	@Override
 	public void register(Client connectedClient, UserDto userDto) {
@@ -103,6 +109,20 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		});
 
 	}
+
+ 
+    @Override
+    public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+        InvitationService invitation = new InvitationServiceImpl();
+        invitation.updatingInvitation(invitationResponse);
+    }
+
+
+    @Override
+    public void sendInvitation(InvitationSentDto invitationDto) {
+       InvitationService invitation = new InvitationServiceImpl();
+       invitation.sendInvitation(invitationDto,connectedClients);
+    }
 
 	@Override
 	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {

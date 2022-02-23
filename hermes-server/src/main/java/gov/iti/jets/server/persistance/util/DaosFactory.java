@@ -5,15 +5,17 @@ import gov.iti.jets.server.persistance.daos.impl.*;
 
 public enum DaosFactory {
 
-	INSTANCE;
-	private UserDao userDao = new UserDaoImpl();
-	private GroupDao GroupDao = new GroupDaoImpl();
-	private MessageDao messageDao = new MessageDaoImpl();
+    INSTANCE;
+    private UserDao userDao = new UserDaoImpl();
+    private GroupDao GroupDao = new GroupDaoImpl();
+    private MessageDao messageDao = new MessageDaoImpl();
+    private InvitationDao invitationDao = new InvitationDaoImpl();
 
-	public UserDao getUserDao() {
-		return userDao;
-	}
+    public UserDao getUserDao() {
+        return userDao;
+    }
 
+ 
 	public GroupDao getGroupDao() {
 		return GroupDao;
 	}
@@ -22,4 +24,5 @@ public enum DaosFactory {
 		return messageDao;
 	}
 
+    public InvitationDao getInvitationDao (){return  invitationDao;}
 }
