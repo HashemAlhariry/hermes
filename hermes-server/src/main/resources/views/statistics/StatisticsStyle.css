@@ -2,36 +2,38 @@
     -fx-background-color:#363A54;
 }
 .white-background{
-  -fx-background-color: FFFFFF;
+    -fx-background-color: FFFFFF;
 }
 Button{
- -fx-text-fill: black;
- -fx-font-family: Arial,Helvetica,sans-serif;
- -fx-font-size: 14px;
- -fx-background-color:white;
- -fx-border-color:white;
+    -fx-text-fill: black;
+    -fx-font-family: Arial,Helvetica,sans-serif;
+    -fx-font-size: 14px;
+    -fx-background-color:white;
+    -fx-border-color:white;
 }
 Button:hover {
-  -fx-background-color: #C2C7FF;
-   -fx-text-fill: white;
+    -fx-background-color: #C2C7FF;
+    -fx-text-fill: white;
 }
 Label{
- -fx-text-fill: white;
- -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-font-size: 20px;
 }
-.chart-legend { -fx-background-color: #363A54; }
+.chart-legend {
+    -fx-background-color: #363A54;
+}
 .chart-content {
     -fx-padding: 30px;
     -fx-background-color: FFFFFF;
 }
 #back-stackpane:hover{
-	-fx-background-color: #49386b;
+    -fx-background-color: #49386b;
 }
 
 #backLabel {
-	-fx-font-size: 20px;
+    -fx-font-size: 20px;
 }
 
 #statisticsLabel {
-	-fx-font-size: 30px;
+    -fx-font-size: 30px;
 }

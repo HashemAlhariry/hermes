@@ -16,94 +16,89 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.net.URL;
 
-
 import java.util.ResourceBundle;
 
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
 
 public class AnnouncementController implements Initializable {
 
-    
-    @FXML
-    private Button sendMessageButton;
-    @FXML
-    private TextField messageTextField;
-    @FXML
-    private VBox announcementMessagesVBox;
-    @FXML
-    private ScrollPane mainScrollPane;
-    @FXML
-    private Button statisticsButton;
+	@FXML
+	private Button sendMessageButton;
+	@FXML
+	private TextField messageTextField;
+	@FXML
+	private VBox announcementMessagesVBox;
+	@FXML
+	private ScrollPane mainScrollPane;
+	@FXML
+	private Button statisticsButton;
 
-    private String broadcastTextMessages;
+	private String broadcastTextMessages;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+	@Override
+	public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        broadcastTextMessages="";
+		broadcastTextMessages = "";
 
-        announcementMessagesVBox.heightProperty().addListener(new ChangeListener<Number>() {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-                mainScrollPane.setVvalue((Double) t1);
-            }
-        });
+		announcementMessagesVBox.heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+				mainScrollPane.setVvalue((Double) t1);
+			}
+		});
 
-        sendMessageButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(!broadcastTextMessages.isEmpty())
-                       showAlert();
-            }
-        });
+		sendMessageButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				if (!broadcastTextMessages.isEmpty()) {
+					showAlert();
+				}
+			}
+		});
 
+		statisticsButton.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				StageCoordinator.INSTANCE.switchToStatisticsScene();
+			}
+		});
 
-        statisticsButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                StageCoordinator.INSTANCE.switchToStatisticsScene();
-            }
-        });
+	}
 
-    }
+	public void showAlert() {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle("SERVER ANNOUNCEMENT");
+		alert.setHeaderText("Broadcast");
+		alert.setContentText(broadcastTextMessages);
+		alert.showAndWait();
+	}
 
+	@FXML
+	public void stageMessages(ActionEvent e) {
 
-    public void showAlert() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("SERVER ANNOUNCEMENT");
-        alert.setHeaderText("Broadcast");
-        alert.setContentText(broadcastTextMessages);
-        alert.showAndWait();
-    }
+		String messageToSend = messageTextField.getText();
+		if (!messageToSend.isEmpty()) {
+			HBox hBox = new HBox();
+			hBox.setAlignment(Pos.CENTER_LEFT);
+			hBox.setPadding(new Insets(5, 5, 5, 10));
+			Text text = new Text(messageToSend);
 
-    @FXML
-    public void stageMessages(ActionEvent e) {
+			broadcastTextMessages += messageToSend;
+			broadcastTextMessages += " \n";
 
-        String messageToSend = messageTextField.getText();
-        if(!messageToSend.isEmpty()) {
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER_LEFT);
-            hBox.setPadding(new Insets(5, 5, 5, 10));
-            Text text = new Text(messageToSend);
+			TextFlow textFlow = new TextFlow(text);
+			textFlow.setStyle("-fx-background-color:rgb(233,233,235); " + "-fx-background-radius: 20px;");
+			textFlow.setPadding(new Insets(5, 10, 5, 10));
+			hBox.getChildren().add(textFlow);
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					announcementMessagesVBox.getChildren().add(hBox);
+				}
+			});
 
-            broadcastTextMessages+=messageToSend;
-            broadcastTextMessages+=" \n";
-
-            TextFlow textFlow = new TextFlow(text);
-            textFlow.setStyle("-fx-background-color:rgb(233,233,235); " + "-fx-background-radius: 20px;");
-            textFlow.setPadding(new Insets(5, 10, 5, 10));
-            hBox.getChildren().add(textFlow);
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    announcementMessagesVBox.getChildren().add(hBox);
-                }
-            });
-
-            messageTextField.clear();
-        }
-    }
-
-
+			messageTextField.clear();
+		}
+	}
 
 }

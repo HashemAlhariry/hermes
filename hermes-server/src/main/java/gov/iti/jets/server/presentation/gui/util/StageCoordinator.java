@@ -12,15 +12,15 @@ public enum StageCoordinator {
 	INSTANCE;
 
     private final Map<String,Scene> sceneMap = new HashMap<>();
-    private Stage primaryStage;
+	private Stage primaryStage;
 
     private StageCoordinator(){
 
-    }
+	}
 
     public void initStage(Stage primaryStage){
-        this.primaryStage = primaryStage;
-    }
+		this.primaryStage = primaryStage;
+	}
 
 	public Stage getPrimaryStage() {
 		return primaryStage;
@@ -28,23 +28,23 @@ public enum StageCoordinator {
 
     public void switchToAnnouncementScene(){
         prepareScene("announcement","/views/announcement/AnnouncementView.fxml");
-    }
+	}
     public void switchToStatisticsScene(){
         prepareScene("statistics","/views/statistics/StatisticsView.fxml");
-    }
+	}
 
-    private void prepareScene(String sceneName, String fxmlLocation) {
-        if (sceneMap.get(sceneName) == null) {
-            try {
-                Pane root = FXMLLoader.load(getClass().getResource(fxmlLocation));
-                Scene scene = new Scene(root);
-                sceneMap.put(sceneName, scene);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        primaryStage.setScene(sceneMap.get(sceneName));
-    }
+	private void prepareScene(String sceneName, String fxmlLocation) {
+		if (sceneMap.get(sceneName) == null) {
+			try {
+				Pane root = FXMLLoader.load(getClass().getResource(fxmlLocation));
+				Scene scene = new Scene(root);
+				sceneMap.put(sceneName, scene);
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+		}
+		primaryStage.setScene(sceneMap.get(sceneName));
+	}
 
     
-}   
+}

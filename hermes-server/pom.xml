@@ -1,69 +1,69 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>gov.iti.jets</groupId>
-		<artifactId>hermes</artifactId>
-		<version>1.0.0</version>
-	</parent>
+    <parent>
+        <groupId>gov.iti.jets</groupId>
+        <artifactId>hermes</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
-	<groupId>gov.iti.jets.server</groupId>
-	<artifactId>hermes-server</artifactId>
-	<version>1.0.0</version>
-	<name>hermes-server</name>
+    <groupId>gov.iti.jets.server</groupId>
+    <artifactId>hermes-server</artifactId>
+    <version>1.0.0</version>
+    <name>hermes-server</name>
 
-	<url>https://github.com/amiraElmergawy/hermes</url>
+    <url>https://github.com/amiraElmergawy/hermes</url>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-controls</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.openjfx</groupId>
-			<artifactId>javafx-fxml</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-api</artifactId>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.28</version>
-		</dependency>
-		<dependency>
-			<groupId>com.zaxxer</groupId>
-			<artifactId>HikariCP</artifactId>
-			<version>5.0.1</version>
-		</dependency>
-		<dependency>
-			<groupId>common</groupId>
-			<artifactId>hermes-common</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-	</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>common</groupId>
+            <artifactId>hermes-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<plugins>
+    <build>
+        <plugins>
 
-			<plugin>
-				<groupId>org.openjfx</groupId>
-				<artifactId>javafx-maven-plugin</artifactId>
-				<configuration>
-					<stripDebug>true</stripDebug>
-					<compress>2</compress>
-					<noHeaderFiles>true</noHeaderFiles>
-					<launcher>hremes-server</launcher>
-					<jlinkImageName>hermes-server-image</jlinkImageName>
-					<jlinkZipName>serverzip</jlinkZipName>
-					<mainClass>gov.iti.jets.server/gov.iti.jets.server.App</mainClass>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <configuration>
+                    <stripDebug>true</stripDebug>
+                    <compress>2</compress>
+                    <noHeaderFiles>true</noHeaderFiles>
+                    <launcher>hremes-server</launcher>
+                    <jlinkImageName>hermes-server-image</jlinkImageName>
+                    <jlinkZipName>serverzip</jlinkZipName>
+                    <mainClass>gov.iti.jets.server/gov.iti.jets.server.App</mainClass>
+                </configuration>
+            </plugin>
 
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 
 </project>

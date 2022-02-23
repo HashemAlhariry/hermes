@@ -40,9 +40,6 @@ public enum RMIConnection {
 		}
 	}
 
-
-
-	
 	public void close() throws AccessException, RemoteException, NotBoundException {
 		for (var service : registry.list()) {
 			registry.unbind(service);

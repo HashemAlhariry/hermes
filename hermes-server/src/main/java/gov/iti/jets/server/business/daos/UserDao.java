@@ -11,7 +11,7 @@ public interface UserDao {
 
 	UserEntity getUserByPhone(UserDto userDto);
 
-	int insertUser(UserEntity user);
+	void insertUser(UserEntity user);
 
 	void updateUser(UserEntity user);
 

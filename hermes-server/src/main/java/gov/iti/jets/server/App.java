@@ -15,7 +15,6 @@ public class App extends Application {
 	private StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 	Registry registry;
 
-
 	public static void main(String[] args) throws AlreadyBoundException {
 		UserDao dao = new UserDaoImpl();
 		try {

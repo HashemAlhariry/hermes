@@ -1,5 +1,6 @@
 package gov.iti.jets.server.business.services.impl;
 
+import common.business.dtos.GroupDto;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -13,9 +14,12 @@ import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
+import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
+import gov.iti.jets.server.business.services.MessageService;
+import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -31,7 +35,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 		// call another class for authenicating db
 		// checking if user exists or not
-
 		connectedClients.put(userAuthDto.phoneNumber, connectedClient);
 		System.out.println("HELLO FROM SERVER");
 		try {
@@ -47,10 +50,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		// registered user will be connected?
 		// map userDto to userEntity
 		// call userDao to insert user data
-		UserDao userDao= DaosFactory.INSTANCE.getUserDao();
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
-		UserEntity userEntity = MapperImpl.INSTANCE.mapFromUserDto(userDto);
-		if(userDao.insertUser(userEntity) != 0){
+		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
+		userDao.insertUser(userEntity);
+		if (true) {
 			try {
 				connectedClient.registerationSuccess();
 			} catch (RemoteException e) {
@@ -98,6 +102,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 			}
 		});
 
+	}
+
+	@Override
+	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
+		GroupService groupService = new GroupServiceImpl();
+		return groupService.getAllGroupsByUser(userDto);
+	}
+
+
+	@Override
+	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
+		MessageService messageService = new MessageServiceImpl();
+		return messageService.getAllMessagesByGroup(groupId);
 	}
 
 }

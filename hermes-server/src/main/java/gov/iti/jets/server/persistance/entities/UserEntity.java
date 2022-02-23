@@ -14,10 +14,11 @@ public class UserEntity {
 	public String country;
 	public String bio;
 
-	public UserEntity(){}
+	public UserEntity() {
+	}
 
 	public UserEntity(String phone, String name, String email, String password, boolean gender, Date dob,
-			String country, String bio) {
+		String country, String bio) {
 		this.phone = phone;
 		this.name = name;
 		this.email = email;

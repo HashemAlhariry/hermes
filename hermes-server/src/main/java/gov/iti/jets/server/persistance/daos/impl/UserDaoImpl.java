@@ -6,6 +6,7 @@ import common.business.dtos.UserDto;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.UserEntity;
+import java.sql.SQLException;
 
 public class UserDaoImpl implements UserDao {
 
@@ -20,15 +21,15 @@ public class UserDaoImpl implements UserDao {
 		List<UserEntity> userEntities = new ArrayList<>();
 		String query = "Select * from user";
 		try (var connection = dataSource.getDataSource().getConnection();
-				var preparedStatement = connection.prepareStatement(query);
-				var resultSet = preparedStatement.executeQuery()) {
+			var preparedStatement = connection.prepareStatement(query);
+			var resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				userEntity.name = resultSet.getString("name");
 				userEntity.phone = resultSet.getString("phone");
 				userEntities.add(userEntity);
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return userEntities;
@@ -41,25 +42,23 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public int insertUser(UserEntity user) {
+	public void insertUser(UserEntity user) {
 		int gender = user.gender ? 1 : 0;
 		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
 		try (var connection = dataSource.getDataSource().getConnection();
-				var preparedStatement = connection.prepareStatement(query);
-				) {
-					preparedStatement.setString(1, user.name);
-					preparedStatement.setString(2, user.phone);
-					preparedStatement.setString(3, user.email);
-					preparedStatement.setString(4, user.password);
-					preparedStatement.setInt(5, gender);
-					preparedStatement.setDate(6, user.dob);
-					preparedStatement.setString(7, user.country);
-					// System.out.println(preparedStatement.executeUpdate());
-					return preparedStatement.executeUpdate();
+			var preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setString(1, user.name);
+			preparedStatement.setString(2, user.phone);
+			preparedStatement.setString(3, user.email);
+			preparedStatement.setString(4, user.password);
+			preparedStatement.setInt(5, gender);
+			preparedStatement.setDate(6, user.dob);
+			preparedStatement.setString(7, user.country);
+			// System.out.println(preparedStatement.executeUpdate());
+			preparedStatement.executeUpdate();
 			// System.out.println(resultSet);
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
-			return 0;
 		}
 	}
 
