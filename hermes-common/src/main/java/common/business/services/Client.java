@@ -10,4 +10,5 @@ public interface Client extends Remote {
     public String getPhoneNumber()throws RemoteException ;
     public void loginSuccess()throws RemoteException ;
 
+
 }

@@ -35,4 +35,6 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 		 
 	}
 
+
+
 }

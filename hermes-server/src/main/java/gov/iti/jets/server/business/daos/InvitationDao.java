@@ -11,4 +11,5 @@ public interface InvitationDao {
 	void deleteInvitation(InvitationEntity invitationEntity);
 
 	List<InvitationEntity> getPendingInvitationsByReciever(InvitationEntity invitationEntity);
+	boolean checkInvitationAvailability(InvitationEntity invitationEntity);
 }

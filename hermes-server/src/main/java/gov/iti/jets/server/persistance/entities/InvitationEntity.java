@@ -3,6 +3,7 @@ package gov.iti.jets.server.persistance.entities;
 import gov.iti.jets.server.persistance.entities.enums.InvitationStatus;
 
 public class InvitationEntity {
+	
 	private long id;
 	private String senderPhone;
 	private String recieverPhone;

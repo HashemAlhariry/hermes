@@ -38,7 +38,8 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Optional<UserEntity> getUserByPhone(String phone) {
-		String sql = "Select * from user where id = ?";
+
+		String sql = "Select * from user where phone = ?";
 		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
 			preparedStmt.setString(1, phone);
 			var resultSet = preparedStmt.executeQuery();
@@ -51,6 +52,7 @@ public class UserDaoImpl implements UserDao {
 			e.printStackTrace();
 		}
 		return Optional.<UserEntity>of(null);
+
 	}
 
 	private void fillUserEntity(ResultSet resultSet, UserEntity userEntity) throws SQLException {

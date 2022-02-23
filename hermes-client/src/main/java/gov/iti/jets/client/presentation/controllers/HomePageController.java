@@ -148,6 +148,7 @@ public class HomePageController implements Initializable {
 		ButtonType loginButtonType = new ButtonType("Add Contact/Contacts", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
+
 		GridPane gridPane = new GridPane();
 		gridPane.setStyle("-fx-background-color: #363A54; "
 				+ "-fx-font-style: italic;");
@@ -205,8 +206,7 @@ public class HomePageController implements Initializable {
 				System.out.print("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
 						+ " Sending all invitation ...");
 
-				RMIConnection.INSTANCE.getServer().sendInvitation(
-						new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
+				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
 
 			} catch (RemoteException e) {
 
