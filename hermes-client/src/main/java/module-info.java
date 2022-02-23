@@ -6,6 +6,7 @@ module gov.iti.jets.client {
 	requires common.mod;
 	requires validatorfx;
 	requires java.sql;
+	requires javafx.swing;
 
 	opens gov.iti.jets.client.presentation.controllers to javafx.fxml;
 	provides common.business.services.Client with  gov.iti.jets.client.business.services.impl.ClientImpl;
