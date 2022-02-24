@@ -20,7 +20,7 @@ public interface Server extends Remote {
 
 	public void sendMessage(MessageDto message) throws RemoteException;
 
-	public void sendInvitation(InvitationDto invitationDto) throws RemoteException;
+	public void sendInvitation(InvitationSentDto invitationDto) throws RemoteException;
 
 	public void logout(UserAuthDto userAuthDto) throws RemoteException;
 
@@ -28,13 +28,7 @@ public interface Server extends Remote {
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
-	public void login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
-
 	public void register(Client connectedClient) throws RemoteException;
-
-	public void sendInvitation(InvitationSentDto invitationDto) throws RemoteException;
-
-	public void logout(UserAuthDto userAuthDto) throws RemoteException;
 
 	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
 }
