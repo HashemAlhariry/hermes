@@ -57,15 +57,15 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	private void fillUserEntity(ResultSet resultSet, UserEntity userEntity) throws SQLException {
-		userEntity.setPhone(resultSet.getString("phone"));
-		userEntity.setName(resultSet.getString("name"));
-		userEntity.setEmail(resultSet.getString("email"));
-		userEntity.setPassword(resultSet.getString("password"));
-		userEntity.setImage(resultSet.getString("image"));
-		userEntity.setGender(resultSet.getBoolean("gender"));
-		userEntity.setDob(resultSet.getDate("dob"));
-		userEntity.setCountry(resultSet.getString("country"));
-		userEntity.setBio(resultSet.getString("bio"));
+		userEntity.phone = resultSet.getString("phone");
+		userEntity.name = resultSet.getString("name");
+		userEntity.email = resultSet.getString("email");
+		userEntity.password = resultSet.getString("password");
+		// userEntity.image = resultSet.getString("image");
+		userEntity.gender = resultSet.getBoolean("gender");
+		userEntity.dob = resultSet.getDate("dob");
+		userEntity.country = resultSet.getString("country");
+		userEntity.bio = resultSet.getString("bio");
 	}
 
 	@Override
