@@ -1,5 +1,6 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -18,12 +19,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -34,10 +32,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.FileChooser;
 
 public class HomePageController implements Initializable {
 
 	Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
+
+	private final FileChooser fileChooser = new FileChooser();
 
 	@FXML
 	private ImageView searchImageView;
@@ -59,6 +60,8 @@ public class HomePageController implements Initializable {
 	private VBox messagesVerticalBox;
 	@FXML
 	private ImageView contactImageView;
+	@FXML
+	private ImageView addGroupView;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -140,33 +143,39 @@ public class HomePageController implements Initializable {
 	void onAddContactClicked(MouseEvent mouseEvent) {
 
 		// contact list to send invitation to all users
-		List<String> invitedContacts = new ArrayList<String>();
+		List<String> invitedContacts = new ArrayList<>();
 
 		Dialog<Integer> dialog = new Dialog<>();
 		dialog.setTitle("Enter Phone Number");
 
-		ButtonType loginButtonType = new ButtonType("Add Contact/Contacts", ButtonData.OK_DONE);
+		ButtonType loginButtonType = new ButtonType("Add Contacts", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
 
 		GridPane gridPane = new GridPane();
+		Button addOneContact = new Button("Add contact");
+		TextField newContact = new TextField();
+		newContact.setPromptText("Add Numbers");
+		TextArea addedContacts = new TextArea();
+		addedContacts.setPrefHeight(100);
+		addedContacts.setPrefWidth(100);
+		addedContacts.setEditable(false);
+		addedContacts.setPromptText("Added Contacts");
+
+
 		gridPane.setStyle("-fx-background-color: #363A54; "
 				+ "-fx-font-style: italic;");
 		gridPane.setHgap(10);
 		gridPane.setVgap(10);
 		gridPane.setPadding(new Insets(20, 150, 10, 10));
-		Button addOneContact = new Button("Add contact");
-		TextField newContact = new TextField();
-		newContact.setPromptText("Add Numbers");
-		TextArea addedContacts = new TextArea();
-		addedContacts.setEditable(false);
-		addedContacts.setPromptText("Added Contacts");
+		gridPane.setPadding(new Insets(20, 150, 10, 10));
+
 		gridPane.add(newContact, 0, 0);
 		gridPane.add(addOneContact, 0, 1);
-		gridPane.add(addedContacts, 6, 0);
+		gridPane.add(addedContacts, 4, 0);
+
 
 		dialog.getDialogPane().setContent(gridPane);
-
 		Platform.runLater(() -> addOneContact.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
@@ -183,24 +192,19 @@ public class HomePageController implements Initializable {
 
 		// Request focus on the newContact field by default.
 		Platform.runLater(() -> newContact.requestFocus());
-
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == loginButtonType) {
 				return invitedContacts.size();
 			}
 			return null;
 		});
-
 		Optional<Integer> result = dialog.showAndWait();
 		result.ifPresent(length -> {
 			System.out.println(length);
 		});
-
 		if (!invitedContacts.isEmpty()) {
-
 			// calling RMI SERVICE TO ADD CONTACTS if list is not empty
 			// SEND USER PHONE AND LIST OF ADDED CONTACT BY USER
-
 			try {
 
 				System.out.println("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
@@ -215,5 +219,121 @@ public class HomePageController implements Initializable {
 		}
 
 	}
+
+
+	@FXML
+	void onAddGroupClicked(MouseEvent mouseEvent){
+
+		// contact list to send invitation group to all users
+		List<String> invitedContacts = new ArrayList<>();
+
+		Dialog<Integer> dialog = new Dialog<>();
+		dialog.setTitle("Create Group");
+
+		ButtonType loginButtonType = new ButtonType("Create Group", ButtonData.OK_DONE);
+		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+		GridPane gridPane = new GridPane();
+		Button addOneContact = new Button("Add contact");
+
+		TextField newContact = new TextField();
+		newContact.setPromptText("Add Numbers");
+
+		TextArea addedContacts = new TextArea();
+		addedContacts.setEditable(false);
+		addedContacts.setPromptText("Added Contacts");
+		addedContacts.setPrefHeight(100);
+		addedContacts.setPrefWidth(150);
+
+		gridPane.setStyle("-fx-background-color: #363A54; "
+				+ "-fx-font-style: italic;");
+		gridPane.setHgap(10);
+		gridPane.setVgap(10);
+		gridPane.setPadding(new Insets(20, 150, 10, 10));
+		gridPane.setPadding(new Insets(20, 150, 10, 10));
+
+		ImageView defaultImageView = new ImageView();
+		defaultImageView.setFitHeight(100);
+		defaultImageView.setFitWidth(100);
+		Button chooseImageButton = new Button("Choose Image");
+		ImageView temp = new ImageView();
+		temp.setFitHeight(100);
+		temp.setFitWidth(100);
+		gridPane.add(newContact, 0, 1);
+		gridPane.add(addOneContact, 0, 2);
+
+		Label groupNameLabel = new Label("Group Name");
+		groupNameLabel.setTextFill(Color.WHITE);
+		gridPane.add(groupNameLabel,1 , 0);
+
+		TextField groupNameField = new TextField();
+		groupNameField.setPromptText("Group Name");
+		gridPane.add(groupNameField,1 , 1);
+		gridPane.add(addedContacts, 1, 2);
+		gridPane.add(temp,2 , 1);
+		gridPane.add(defaultImageView,3 , 1);
+		gridPane.add(chooseImageButton, 3, 2);
+
+		Platform.runLater(() -> addOneContact.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+
+				if (!newContact.getText().isEmpty()
+						&& Utils.INSTANCE.checkNumberInString(newContact.getText().trim())) {
+					invitedContacts.add(newContact.getText().trim());
+					addedContacts.appendText(newContact.getText() + " \n");
+					newContact.clear();
+				}
+			}
+		}));
+		Platform.runLater(() -> chooseImageButton.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				loadPicture(defaultImageView);
+
+			}
+		}));
+
+		dialog.getDialogPane().setContent(gridPane);
+		// Request focus on the newContact field by default.
+
+		Platform.runLater(() -> newContact.requestFocus());
+		dialog.setResultConverter(dialogButton -> {
+			if (dialogButton == loginButtonType) {
+				return invitedContacts.size();
+			}
+			return null;
+		});
+		Optional<Integer> result = dialog.showAndWait();
+		result.ifPresent(length -> {
+			System.out.println(length);
+		});
+		if (!invitedContacts.isEmpty() && !groupNameField.getText().isEmpty()) {
+
+			 System.out.println("ALL THINGS GOOD");
+
+		}
+
+	}
+
+
+
+	public void loadPicture(ImageView imageView)
+	{
+
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+		fileChooser.getExtensionFilters().clear();
+		fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.gif","*.jpeg"));
+		File file =  fileChooser.showOpenDialog(null);
+		if(file!=null){
+			imageView.setImage(new Image(file.toURI().toString()));
+		}else{
+			System.out.println("InvalidImage");
+		}
+
+	}
+
 
 }
