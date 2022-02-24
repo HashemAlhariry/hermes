@@ -45,4 +45,5 @@ public enum RMIConnection {
 		getServer().logout(new UserAuthDto("01149056691", "456"));
 	}
 
+
 }

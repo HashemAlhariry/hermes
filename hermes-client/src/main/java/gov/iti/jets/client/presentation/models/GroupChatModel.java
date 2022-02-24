@@ -19,11 +19,11 @@ public class GroupChatModel {
     public  List<MessageDto> getMessageDtos() {
         return messageDtos;
     }
-    
+
     public void setGroupID(String groupID) {
         this.groupID.set(groupID) ;
     }
-    
+
     public void setMessageDtos(List<MessageDto> messageDtos) {
         this.messageDtos.setAll(messageDtos);
     }

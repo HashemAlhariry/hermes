@@ -23,10 +23,18 @@
                <children>
                   <ImageView fx:id="profileImageView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../images/icons8-iOS%20Filled-User.png" />
+                        <Image url="@../../images/profile-screen.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="40.0" left="5.0" top="10.0" />
+                        <Insets bottom="20.0" left="5.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
+                  <ImageView fx:id="addContactView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onAddContactClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/add-contact.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="5.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />
@@ -44,7 +52,7 @@
                <children>
                   <HBox prefHeight="20.0" prefWidth="154.0">
                      <children>
-                        <ImageView fitHeight="15.0" fitWidth="15.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="searchImageView" onMouseClicked="#onSearchContactList" fitHeight="15.0" fitWidth="15.0" pickOnBounds="true"  preserveRatio="true">
                            <image>
                               <Image url="@../../images/icons8-iOS%20Glyph-Search.png" />
                            </image>
@@ -52,7 +60,7 @@
                               <Insets left="4.0" right="2.0" top="3.0" />
                            </HBox.margin>
                         </ImageView>
-                        <TextField fx:id="searchTextField" alignment="BASELINE_LEFT" onAction="#onSearchTextFieldClick" prefHeight="17.0" prefWidth="152.0" styleClass="transparent-background">
+                        <TextField fx:id="searchTextField" alignment="BASELINE_LEFT" onAction="#onSearchTextFieldClick" prefHeight="17.0" prefWidth="152.0" styleClass="transparent-background " style="-fx-text-fill: #FFFFFF;"  >
                            <padding>
                               <Insets left="10.0" />
                            </padding>
@@ -74,6 +82,7 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Pane>
+                  <!--
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="184.0">
                      <children>
                         <ImageView fx:id="profileImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
@@ -162,6 +171,9 @@
                      </opaqueInsets>
                   </HBox>
                   <HBox alignment="CENTER" layoutX="10.0" layoutY="211.0" prefHeight="50.0" prefWidth="184.0">
+
+
+
                      <children>
                         <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -245,6 +257,8 @@
                         <Insets />
                      </opaqueInsets>
                   </HBox>
+                  -->
+
                </children>
             </VBox>
          </children>

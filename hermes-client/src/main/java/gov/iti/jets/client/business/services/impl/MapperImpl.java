@@ -26,8 +26,8 @@ public enum MapperImpl implements Mapper<UserModel> {
                 userModel.getUserName(),
                 userModel.getEmail(),
                 userModel.getGender(),
-                userModel.getCountry(),
                 userModel.getDateOfBirth(),
+                userModel.getCountry(),
                 userModel.getBio());
     }
 

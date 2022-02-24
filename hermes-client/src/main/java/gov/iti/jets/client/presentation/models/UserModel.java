@@ -1,5 +1,7 @@
 package gov.iti.jets.client.presentation.models;
 
+import java.time.LocalDate;
+
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -9,8 +11,6 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.image.Image;
 
 public class UserModel {
-// 	(Phone Number, Display Name, email, picture, password, confirmation password, 
-// gender, country, date of birth, bio.)
 
 	private StringProperty userName = new SimpleStringProperty();
 	private StringProperty password = new SimpleStringProperty();
@@ -19,7 +19,7 @@ public class UserModel {
 	private Property<Image> picture = new SimpleObjectProperty<>();
 	private BooleanProperty gender = new SimpleBooleanProperty();
 	private StringProperty country = new SimpleStringProperty();
-	private StringProperty dateOfBirth = new SimpleStringProperty();
+	private Property<LocalDate> dateOfBirth = new SimpleObjectProperty<>();
 	private StringProperty bio = new SimpleStringProperty();
 
 	public String getUserName() {
@@ -103,20 +103,20 @@ public class UserModel {
 		this.country.set(country);
 	}
 
-	public StringProperty dateOfBirthProperty() {
+	public Property<LocalDate> dateOfBirthProperty() {
 		return dateOfBirth;
 	}
 
-	public String getDateOfBirth() {
-		return dateOfBirth.get();
+	public LocalDate getDateOfBirth() {
+		return dateOfBirth.getValue();
 	}
 
-	public void setDateOfBirth(StringProperty dateOfBirth) {
+	public void setDateOfBirth(Property<LocalDate> dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
 
-	public void setDateOfBirth(String dateOfBirth) {
-		this.dateOfBirth.set(dateOfBirth);
+	public void setDateOfBirth(LocalDate dateOfBirth) {
+		this.dateOfBirth.setValue(dateOfBirth);
 	}
 
 	public BooleanProperty genderpProperty() {

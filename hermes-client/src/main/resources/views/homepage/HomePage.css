@@ -1,7 +1,7 @@
 .mainbackground-color{
   -fx-background-color:'#2B233C';
-  
 }
+
 .background-color{
     -fx-background-color:'#2B233C';
  }
@@ -9,39 +9,38 @@
 .third-background{
    -fx-background-color:'#307686'
 }
-  .fourth-background{
+.fourth-background{
     -fx-background-color:'#FFFFFF'
     
-  }
-  .gray-background{
+}
+.gray-background{
     -fx-background-color:'#363A54'
-  }
+}
   
-  .transparent-background{
+.transparent-background{
     -fx-background-color:rgba(0,0,0,0);
-  }
+}
  
-  .radius{
+.radius{
     -fx-background-radius:10px;
-  }
+}
   
-  .light-gray-background{
+.light-gray-background{
     -fx-background-color:'#E7E7E7';
-  }
+}
   
-  .incoming-bubble{
+.incoming-bubble{
     -fx-background-color:'#FFFFFF';
-      -fx-background-radius:10px;
-  
-  }
-  .outgoing-bubble{
+    -fx-background-radius:10px;
+}
+.outgoing-bubble{
     -fx-background-color:'#7192D9';
     -fx-background-radius:10px;
-  }
+}
 
-  .testing-font{
+.testing-font{
     -fx-font-family: "Fresca-Regular";
-  }
+}
 
 Button{
  -fx-text-fill: black;
@@ -50,7 +49,8 @@ Button{
  -fx-background-color:white;
  -fx-border-color:white;
 }
+
 Button:hover {
   -fx-background-color: #CCA4FF;
-   -fx-text-fill: white;
+  -fx-text-fill: white;
 }
