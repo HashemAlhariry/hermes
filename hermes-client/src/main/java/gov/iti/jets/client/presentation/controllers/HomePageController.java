@@ -1,7 +1,9 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -258,7 +260,7 @@ public class HomePageController implements Initializable {
 		Button chooseImageButton = new Button("Choose Image");
 		ImageView temp = new ImageView();
 		temp.setFitHeight(100);
-		temp.setFitWidth(100);
+		temp.setFitWidth(120);
 		gridPane.add(newContact, 0, 1);
 		gridPane.add(addOneContact, 0, 2);
 
@@ -291,7 +293,11 @@ public class HomePageController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				loadPicture(defaultImageView);
+				try {
+					System.out.println(loadPicture(defaultImageView));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 
 			}
 		}));
@@ -320,19 +326,24 @@ public class HomePageController implements Initializable {
 
 
 
-	public void loadPicture(ImageView imageView)
-	{
-
+	private byte[] loadPicture(ImageView imageView) throws IOException {
+		
+		byte [] imageBytes;
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().clear();
 		fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.gif","*.jpeg"));
 		File file =  fileChooser.showOpenDialog(null);
+
 		if(file!=null){
+
 			imageView.setImage(new Image(file.toURI().toString()));
+			imageBytes=Files.readAllBytes(file.toPath());
+			return imageBytes;
+
 		}else{
 			System.out.println("InvalidImage");
 		}
-
+	return null;
 	}
 
 
