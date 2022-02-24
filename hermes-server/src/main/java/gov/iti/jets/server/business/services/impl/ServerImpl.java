@@ -94,21 +94,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		 */
 	}
 
-	@Override
-	public void sendInvitation(InvitationDto invitationDto) {
-
-		// getting from db to check all avaialble numbers in database
-		// delegate the calling and bussiness to another class
-		invitationDto.invitedPhones.forEach(x -> {
-			try {
-				connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
-
-	}
 
  
     @Override
@@ -135,6 +120,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
 		MessageService messageService = new MessageServiceImpl();
 		return messageService.getAllMessagesByGroup(groupId);
+	}
+
+	@Override
+	public void register(Client connectedClient) throws RemoteException {
+
 	}
 
 }
