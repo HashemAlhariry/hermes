@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.StringTokenizer;
 
 import org.w3c.dom.Document;
 
@@ -91,47 +92,15 @@ public class HomePageController implements Initializable {
 					messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
 					messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
-					// HTMLEditor msg = new HTMLEditor();
-					// msg.setHtmlText(messageToSend);
-					// msg.lookup(".top-toolbar").setManaged(false);
-					// msg.lookup(".top-toolbar").setVisible(false);
-
-					// msg.lookup(".bottom-toolbar").setManaged(false);
-					// msg.lookup(".bottom-toolbar").setVisible(false);
-					// msg.setDisable(true);
+					formatMessage(messageToSend);
 
 					WebView msg = new WebView();
-					msg.getEngine().loadContent(messageToSend.replace("contenteditable=\"true\"", "contenteditable=\"false\""));
-					
-					System.out.println(messageToSend);
-					// msg.getEngine().getDocument().getElementsByTagName("span").item(0).
+					msg.getEngine().loadContent(
+							messageToSend.replace("contenteditable=\"true\"", "contenteditable=\"false\""));
+
 					messageHorizontalBox.getChildren().add(msg);
 					messageHorizontalBox.getChildren().add(imageView);
 					messagesVerticalBox.getChildren().add(messageHorizontalBox);
-
-					msg.getEngine().documentProperty().addListener(new ChangeListener<Document>() {
-						@Override
-						public void changed(ObservableValue<? extends Document> prop, Document oldDoc,
-								Document newDoc) {
-
-							// newDoc.getElementsByTagName("body").item(0).
-							String heightText = msg.getEngine().executeScript(
-									"window.getComputedStyle(document.body, null).getPropertyValue('height')")
-									.toString();
-							double height = Double.valueOf(heightText.replace("px", ""));
-
-							String widthText = msg.getEngine().executeScript(
-									"window.getComputedStyle(document.body, null).getPropertyValue('width')")
-									.toString();
-							double width = Double.valueOf(widthText.replace("px", ""));
-
-							System.out.println(height);
-							System.out.println(width);
-							msg.setMinSize(width + 50, height + 50);
-							msg.setPrefSize(width+50, height+50);
-							msg.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-						}
-					});
 
 					// SEND MESSAGE TO SPECIFIC USER
 
@@ -143,9 +112,29 @@ public class HomePageController implements Initializable {
 
 	}
 
+	private void formatMessage(String htmlMessage) {
+		// style="font-family: &quot;&quot;;"
+		String messageStyle = htmlMessage.substring(htmlMessage.indexOf("style=\"") + 7, htmlMessage.lastIndexOf("\""));
+		System.out.println(messageStyle);
+		// style="font-family: &quot;&quot;;">knasknds<span style="background-color:
+		// rgb(179, 102, 128);
+		StringTokenizer st = new StringTokenizer(messageStyle, ";");
+		int index = 0;
+		while (st.hasMoreTokens()) {
+			String currentToken = st.nextToken();
+			//font-family: &quot;&quot;;
+			if(!(currentToken.equals("font-family: &quot") || currentToken.equals("&quot"))){
+				if (index == 0)
+					System.out.println("-fx-" + currentToken);
+				else System.out.println("-fx-" + currentToken.substring(1));
+			}
+			index++;
+		}
+	}
+
 	@FXML
 	void onSearchTextFieldClick(ActionEvent event) {
-
+		//
 	}
 
 	@FXML
