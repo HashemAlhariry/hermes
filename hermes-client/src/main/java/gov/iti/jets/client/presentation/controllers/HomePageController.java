@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.StringTokenizer;
 
+import javax.swing.text.rtf.RTFEditorKit;
+
 import org.w3c.dom.Document;
 
 import common.business.dtos.InvitationSentDto;
@@ -92,19 +94,20 @@ public class HomePageController implements Initializable {
 					messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
 					messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
-					formatMessage(messageToSend);
+					if (formatMessage(messageToSend) != null) {
+						messageHorizontalBox.getChildren().add(formatMessage(messageToSend));
+						messageHorizontalBox.getChildren().add(imageView);
+						messagesVerticalBox.getChildren().add(messageHorizontalBox);
 
-					WebView msg = new WebView();
-					msg.getEngine().loadContent(
-							messageToSend.replace("contenteditable=\"true\"", "contenteditable=\"false\""));
+						// SEND MESSAGE TO SPECIFIC USER As HTML
 
-					messageHorizontalBox.getChildren().add(msg);
-					messageHorizontalBox.getChildren().add(imageView);
-					messagesVerticalBox.getChildren().add(messageHorizontalBox);
+						messagHtmlEditor.setHtmlText("");
+					}
 
-					// SEND MESSAGE TO SPECIFIC USER
-
-					messagHtmlEditor.setHtmlText("");
+					// WebView msg = new WebView();
+					// msg.getEngine().loadContent(
+					// messageToSend.replace("contenteditable=\"true\"",
+					// "contenteditable=\"false\""));
 
 				}
 			}
@@ -112,24 +115,64 @@ public class HomePageController implements Initializable {
 
 	}
 
-	private void formatMessage(String htmlMessage) {
+	private TextFlow formatMessage(String htmlMessage) {
+
+		// extract message content ==> done
+		// extracy message style ==> done
+		// add them to new textFlow
+
+		System.out.println(htmlMessage);
 		// style="font-family: &quot;&quot;;"
+		if(htmlMessage.contains("span")) return null;
 		String messageStyle = htmlMessage.substring(htmlMessage.indexOf("style=\"") + 7, htmlMessage.lastIndexOf("\""));
 		System.out.println(messageStyle);
-		// style="font-family: &quot;&quot;;">knasknds<span style="background-color:
-		// rgb(179, 102, 128);
+		String messageContent = htmlMessage.substring(htmlMessage.indexOf(messageStyle) + messageStyle.length() + 2,
+				htmlMessage.indexOf("</span>"));
+		System.out.println(messageContent);
+		Text textMessage = new Text(messageContent);
+		if (messageContent.isBlank())
+			return null;
+		TextFlow messageTextFlow = new TextFlow(textMessage);
+		// "-fx-background-color: #685490; "
+		messageTextFlow.setPadding(new Insets(5, 10, 5, 10));
+		// textMessage.setFill(Color.color(0.934, 0.945, 0.996));
+
 		StringTokenizer st = new StringTokenizer(messageStyle, ";");
 		int index = 0;
+		String style = "";
 		while (st.hasMoreTokens()) {
 			String currentToken = st.nextToken();
-			//font-family: &quot;&quot;;
-			if(!(currentToken.equals("font-family: &quot") || currentToken.equals("&quot"))){
-				if (index == 0)
-					System.out.println("-fx-" + currentToken);
-				else System.out.println("-fx-" + currentToken.substring(1));
+			// to ignore this case (font-family: &quot;&quot;;) ==>
+			if (!(currentToken.equals(" font-family: &quot") || currentToken.equals("font-family: &quot")
+					|| currentToken.equals("&quot"))) {
+				if (index == 0) {
+					style = "-fx-" + currentToken;
+				} else {
+					style = "-fx-" + currentToken.substring(1);
+				}
+				// -fx-color ==> -fx-text-fill: white
+				if (style.contains("-fx-color:")){
+					System.out.println(style);
+					String red = style.substring("-fx-color: rgb(".length(), style.indexOf(","));
+					String green = style.substring(style.indexOf(",")+2, style.lastIndexOf(","));
+					String blue = style.substring(style.lastIndexOf(",")+2, style.lastIndexOf(")"));
+					// messageTextFlow.
+					// textMessage.setTextFill(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
+					// textMessage.setStyle(style.replace("-fx-color:", "-fx-text-fill:"));
+					textMessage.setFill(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
+					System.out.println(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
+				} else if(style.contains("underline")){
+					textMessage.setStyle("-fx-underline: true");
+					messageTextFlow.setStyle("-fx-underline: true");
+				}else
+					messageTextFlow.setStyle(style);
+				System.out.println(style);
 			}
 			index++;
 		}
+		return messageTextFlow;
+		// style="font-family: &quot;&quot;;">knasknds<span style="background-color:
+		// rgb(179, 102, 128):
 	}
 
 	@FXML
