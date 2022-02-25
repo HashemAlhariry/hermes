@@ -34,9 +34,7 @@ public enum StageCoordinator {
 	public void switchToLoginScene() {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
-	public void switchToNextLoginScene() {
-		prepareScene("nextloginScene", "/views/login/NextLoginView.fxml");
-	}
+
 	public void switchtoHomePageScene() {
 		prepareScene("homepagaScene", "/views/homepage/HomePageView.fxml");
 	}

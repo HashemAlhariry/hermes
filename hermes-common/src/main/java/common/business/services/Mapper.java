@@ -8,5 +8,5 @@ public interface Mapper<T> {
     public T mapFromUserDto(UserDto userDto);
     public UserAuthDto mapToUserAuthDto(T userData);
     public T mapFromUserAuthDto(UserAuthDto ustherAuDto);
-    
+
 }

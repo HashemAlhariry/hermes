@@ -121,10 +121,6 @@ public class HomePageController implements Initializable {
 
 	}
 
-	@FXML
-	void onContactClicked(MouseEvent mouseEvent) {
-		// stageCoordinator.switchToContactScene();
-	}
 
 	@FXML
 	void onLogoutClicked(MouseEvent mouseEvent) {
@@ -172,8 +168,7 @@ public class HomePageController implements Initializable {
 			@Override
 			public void handle(ActionEvent event) {
 
-				if (!newContact.getText().isEmpty()
-						&& Utils.INSTANCE.checkNumberInString(newContact.getText().trim())) {
+				if (!newContact.getText().isEmpty() && Utils.INSTANCE.checkNumberInString(newContact.getText().trim())) {
 					invitedContacts.add(newContact.getText().trim());
 					addedContacts.appendText(newContact.getText() + " \n");
 					newContact.clear();
