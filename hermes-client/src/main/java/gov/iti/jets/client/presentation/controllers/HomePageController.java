@@ -1,5 +1,6 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -22,6 +24,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -29,6 +32,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -59,9 +63,23 @@ public class HomePageController implements Initializable {
 	private VBox messagesVerticalBox;
 	@FXML
 	private ImageView contactImageView;
+	@FXML
+    private ListView<String> contactsListView;
+
+	@FXML
+    private Pane contactsListPane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		try {
+			System.out.println("from home initializer");
+			// contactsListView = FXMLLoader.load(getClass().getResource("/views/contactsList/ContactsListView.fxml"));
+			contactsListPane.getChildren().setAll(FXMLLoader.load(getClass().getResource("/views/contactsList/ContactsListView.fxml")));
+			System.out.println(contactsListView.getItems());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 
 		// Sending message to vbox in chat box to a specific contact
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
