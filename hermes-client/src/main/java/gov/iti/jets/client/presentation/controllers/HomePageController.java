@@ -3,6 +3,7 @@ package gov.iti.jets.client.presentation.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import common.business.dtos.UserDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
@@ -56,6 +57,7 @@ public class HomePageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+      
         // Sending message to vbox in chat box to a specific contact
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -113,5 +115,4 @@ public class HomePageController implements Initializable {
 		stageCoordinator.switchToLoginScene();
     }
 
-    
 }
