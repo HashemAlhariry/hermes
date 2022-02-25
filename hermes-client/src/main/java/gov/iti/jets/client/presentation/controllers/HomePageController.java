@@ -3,6 +3,8 @@ package gov.iti.jets.client.presentation.controllers;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.client.presentation.models.UserModel;
+import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -44,6 +47,12 @@ public class HomePageController implements Initializable {
     private VBox messagesVerticalBox;
     @FXML
     private ImageView contactImageView;
+    @FXML
+    private Label nameTextField;
+
+  private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+  
+  private UserModel userModel = modelsFactory.getUserModel();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
