@@ -24,6 +24,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -34,6 +35,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebView;
 
 public class HomePageController implements Initializable {
 
@@ -43,8 +46,12 @@ public class HomePageController implements Initializable {
 	private ImageView searchImageView;
 	@FXML
 	private BorderPane mainBorderPane;
+	// @FXML
+	// private TextField messageTextField;
+
 	@FXML
-	private TextField messageTextField;
+	private HTMLEditor messagHtmlEditor;
+
 	@FXML
 	private TextField searchTextField;
 	@FXML
@@ -67,7 +74,7 @@ public class HomePageController implements Initializable {
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				String messageToSend = messageTextField.getText();
+				String messageToSend = messagHtmlEditor.getHtmlText();
 				if (!messageToSend.isEmpty()) {
 
 					ImageView imageView = new ImageView(contactImageView.getImage());
@@ -78,20 +85,27 @@ public class HomePageController implements Initializable {
 					messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
 					messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
-					Text textMessage = new Text(messageToSend);
-					TextFlow messageTextFlow = new TextFlow(textMessage);
-					messageTextFlow.setStyle("-fx-color: rgb(255,255,255); " + "-fx-background-color:  #685490; "
-							+ " -fx-background-radius: 20px; ");
-					messageTextFlow.setPadding(new Insets(5, 10, 5, 10));
-					textMessage.setFill(Color.color(0.934, 0.945, 0.996));
-
-					messageHorizontalBox.getChildren().add(messageTextFlow);
+					// HTMLEditor msg = new HTMLEditor();
+					// msg.setHtmlText(messageToSend);
+					// msg.lookup(".top-toolbar").setManaged(false);
+					// msg.lookup(".top-toolbar").setVisible(false);
+				
+					// msg.lookup(".bottom-toolbar").setManaged(false);
+					// msg.lookup(".bottom-toolbar").setVisible(false);
+					// msg.setDisable(true);
+					
+					
+			
+					WebView msg = new WebView();
+					msg.getEngine().loadContent(messageToSend);
+					System.out.println(messageToSend);
+					messageHorizontalBox.getChildren().add(msg);
 					messageHorizontalBox.getChildren().add(imageView);
 					messagesVerticalBox.getChildren().add(messageHorizontalBox);
 
 					// SEND MESSAGE TO SPECIFIC USER
 
-					messageTextField.clear();
+					messagHtmlEditor.setHtmlText("");
 
 				}
 			}
@@ -147,7 +161,6 @@ public class HomePageController implements Initializable {
 
 		ButtonType loginButtonType = new ButtonType("Add Contact/Contacts", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
 
 		GridPane gridPane = new GridPane();
 		gridPane.setStyle("-fx-background-color: #363A54; "
@@ -206,7 +219,8 @@ public class HomePageController implements Initializable {
 				System.out.println("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
 						+ " Sending all invitation ...");
 
-				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
+				RMIConnection.INSTANCE.getServer().sendInvitation(
+						new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
 
 			} catch (RemoteException e) {
 

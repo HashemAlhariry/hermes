@@ -23,10 +23,15 @@
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-fxml</artifactId>
 		</dependency>
-                <dependency>
+		<dependency>
 			<groupId>org.openjfx</groupId>
 			<artifactId>javafx-swing</artifactId>
-                        <version>17.0.2</version>
+			<version>17.0.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx-web</artifactId>
+			<version>17.0.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
@@ -42,7 +47,7 @@
 			<groupId>net.synedra</groupId>
 			<artifactId>validatorfx</artifactId>
 			<version>0.2.1</version>
-		 </dependency>
+		</dependency>
 	</dependencies>
 
 	<build>
