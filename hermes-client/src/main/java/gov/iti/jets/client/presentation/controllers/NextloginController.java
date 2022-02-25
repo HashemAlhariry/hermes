@@ -21,6 +21,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
@@ -68,6 +69,10 @@ public class NextloginController implements Initializable {
                 if(userDto!=null){
                     System.out.println("YESS");
                     stageCoordinator.switchtoHomePageScene();
+               }
+               else{
+                   
+                   stagestageCoordinator.switchToLoginScene();
                }
                
             } catch (RemoteException e) {
