@@ -34,10 +34,8 @@ import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
 import gov.iti.jets.server.business.services.MessageService;
 import java.util.List;
-
 public class ServerImpl extends UnicastRemoteObject implements Server {
-   
-	// connected Clients will be used for getting online users
+
 	private Map<String, Client> connectedClients;
 
 	public ServerImpl() throws RemoteException {
@@ -55,7 +53,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 			try{
 				//userDao.getUserByPhone(userAuthDto.phoneNumber);
 				
-				//user entity from 
+				//user entity to dto
 				System.out.println("YYYYY");
 				//UserDto userDto = MapperImpl.INSTANCE.mapToUserDto(userEntity);
 				connectedClient.loginSuccess();
@@ -115,9 +113,27 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		 */
 	}
 
+	@Override
+	public void sendInvitation(InvitationDto invitationDto) {
 
- 
-    @Override
+		// getting from db to check all avaialble numbers in database
+		// delegate the calling and bussiness to another class
+		invitationDto.invitedPhones.forEach(x -> {
+			try {
+				connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+
+
+			}
+
+
+		});
+
+	}
+
+	@Override
     public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
         InvitationService invitation = new InvitationServiceImpl();
         invitation.updatingInvitation(invitationResponse);
@@ -147,5 +163,4 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public void register(Client connectedClient) throws RemoteException {
 
 	}
-
 }
