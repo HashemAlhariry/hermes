@@ -34,7 +34,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void login(Client connectedClient, UserAuthDto userAuthDto) {
+	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
 		System.out.println("loginserver");
@@ -42,28 +42,22 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		
 		if(userDao.loginUser(userEntity)){
 			try{
-				//userDao.getUserByPhone(userAuthDto.phoneNumber);
-				//user entity to dto
-				System.out.println("YYYYY");
-				//UserDto userDto = MapperImpl.INSTANCE.mapToUserDto(userEntity);
 				Optional<UserEntity> usOptional = userDao.getUserByPhone(userAuthDto.phoneNumber);
-				//System.out.println(usOptional.get());
 				UserEntity userEntity2 = usOptional.get();
-				
 				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
-				System.out.println(userDto);
-				//connectedClient.loginSuccess(userDto);
 				connectedClients.put(userAuthDto.phoneNumber, connectedClient);
-				System.out.println("YESSSSSS");
+				connectedClient.loginSuccess(userDto);
+				return userDto;
 			}
 			catch(Exception e){
 				e.printStackTrace();
 			}
+			
 		}
 		else{
 			System.out.println("NOOO");
 		}
-	
+		return null;
 		
 	}
 

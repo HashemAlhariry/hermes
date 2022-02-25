@@ -63,8 +63,13 @@ public class NextloginController implements Initializable {
     void signinButtonAction(ActionEvent event) {
         UserAuthDto useraAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(userModel);
             try {
-                RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), useraAuthDto);
-               // stageCoordinator.switchtoHomePageScene();
+                UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), useraAuthDto);
+                 userModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
+                if(userDto!=null){
+                    System.out.println("YESS");
+                    stageCoordinator.switchtoHomePageScene();
+               }
+               
             } catch (RemoteException e) {
     
                 e.printStackTrace();

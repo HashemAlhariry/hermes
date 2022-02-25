@@ -14,7 +14,7 @@ import java.util.List;
 // This will be implemented on serverSide
 public interface Server extends Remote {
 
-	public void login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
+	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
 
 	public void register(Client connectedClient, UserDto userDto) throws RemoteException;
 

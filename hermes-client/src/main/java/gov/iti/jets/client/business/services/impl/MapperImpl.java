@@ -42,13 +42,10 @@ public enum MapperImpl implements Mapper<UserModel> {
         if (userModel == null) {
             return null;
         }
-        String saltValue = HashManager.INSTANCE.getSaltvalue(15);
-        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword(),
-                saltValue);
-
+        
         return new UserAuthDto(
             userModel.getPhoneNumber()
-            ,encryptedPassword);
+            ,userModel.getPassword());
     }
 
     @Override
