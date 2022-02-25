@@ -9,6 +9,10 @@ public class UserModel {
 	private StringProperty password = new SimpleStringProperty();
 	private StringProperty email = new SimpleStringProperty();
 	private StringProperty phoneNumber = new SimpleStringProperty();
+	// private StringProperty gender = new SimpleStringProperty();
+	// private StringProperty country = new SimpleStringProperty();
+	// private StringProperty bio = new SimpleStringProperty();
+	
 
 	public String getUserName() {
 		return userName.get();

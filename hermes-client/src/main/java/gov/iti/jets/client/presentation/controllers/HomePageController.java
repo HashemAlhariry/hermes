@@ -57,7 +57,7 @@ public class HomePageController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-      
+      getFormsValues();
         // Sending message to vbox in chat box to a specific contact
         sendButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -115,4 +115,9 @@ public class HomePageController implements Initializable {
 		stageCoordinator.switchToLoginScene();
     }
 
+    private void getFormsValues() {
+      userModel.userNameProperty().bindBidirectional(nameTextField.textProperty());
+      
+      
+  }
 }

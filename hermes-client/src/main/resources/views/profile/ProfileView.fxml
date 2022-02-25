@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
@@ -12,12 +14,13 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
-<AnchorPane fx:controller="gov.iti.jets.client.presentation.controllers.ProfileController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@ProfileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="1024.0" stylesheets="@ProfileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.ProfileController">
 	<children>
 		<HBox alignment="CENTER" layoutY="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
 			<children>
@@ -31,7 +34,7 @@
 						<RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<TextField id="user-name" fx:id="userNameTextField" alignment="BOTTOM_RIGHT" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="321.0" text="Mina Talaat Noman" GridPane.columnIndex="1" />
+            						<TextField id="user-name" fx:id="userNameTextField" alignment="BOTTOM_RIGHT" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="42.0" prefWidth="321.0" text="Mina Talaat Noman" GridPane.columnIndex="1" />
 						<Circle id="circle" fill="DODGERBLUE" radius="20.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" GridPane.columnIndex="2" />
 						<ImageView fx:id="changeNameImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#editUserNameTextField" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2">
 							<image>
@@ -51,14 +54,14 @@
 					<children>
 						<StackPane prefHeight="150.0" prefWidth="200.0">
 							<children>
-								<ImageView id="profilePic" fx:id="profilePictureImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-									<image>
-										<Image url="@../../images/profiletemp.jpg" />
-									</image>
+                  								<ImageView id="profilePic" fx:id="profilePictureImageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  									<image>
+                  										<Image url="@../../images/profiletemp.jpg" />
+                  									</image>
 									<StackPane.margin>
 										<Insets bottom="20.0" />
 									</StackPane.margin>
-								</ImageView>
+                  								</ImageView>
 							</children>
 						</StackPane>
 						<Circle id="circle" fill="#167ad7" radius="25.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" StackPane.alignment="BOTTOM_RIGHT">
@@ -93,6 +96,7 @@
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="243.75297172097316" minWidth="0.0" prefWidth="58.84496378130352" />
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="451.8096422073336" minWidth="10.0" prefWidth="392.96467842603005" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.8096422073336" minWidth="10.0" prefWidth="392.96467842603005" />
 					</columnConstraints>
 					<rowConstraints>
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -133,14 +137,20 @@
 						<DatePicker fx:id="birthdayDatePicker" maxWidth="1.7976931348623157E308" promptText="22/07/1998" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
 						<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
 							<children>
-								<RadioButton fx:id="maleRadioButton" mnemonicParsing="false" selected="true" text="Male">
+      								<RadioButton fx:id="maleRadioButton" mnemonicParsing="false" selected="true" text="Male">
 									<toggleGroup>
 										<ToggleGroup fx:id="genderGroup" />
 									</toggleGroup>
-								</RadioButton>
+      								</RadioButton>
 								<RadioButton fx:id="femaleRadioButton" mnemonicParsing="false" text="Female" toggleGroup="$genderGroup" />
 							</children>
 						</HBox>
+                  <Pane prefHeight="28.0" prefWidth="326.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+                     <children>
+                        <ButtonBar layoutX="192.0" layoutY="-20.0" prefHeight="40.0" prefWidth="200.0" />
+                      <Button fx:id="saveChangesButton" layoutX="272.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#saveChangesClicked" prefHeight="30.0" prefWidth="150.0" text="Save Changes" />
+                     </children>
+                  </Pane>
 					</children>
 					<VBox.margin>
 						<Insets />
@@ -151,7 +161,7 @@
 				</GridPane>
 			</children>
 		</VBox>
-		<StackPane id="back-stackpane" onMouseClicked="#backToPreviousScene" layoutX="30.0" layoutY="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+		<StackPane id="back-stackpane" layoutX="30.0" layoutY="30.0" onMouseClicked="#backToPreviousScene" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
 			<children>
 				<ImageView fx:id="previousImageView" fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
 					<image>

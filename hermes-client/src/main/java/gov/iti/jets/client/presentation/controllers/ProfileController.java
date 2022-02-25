@@ -6,7 +6,10 @@ import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import gov.iti.jets.client.presentation.models.UserModel;
+import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -19,7 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
-public class ProfileController implements Initializable {
+public class ProfileController<ValidatorHandler> implements Initializable {
 
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
@@ -64,9 +67,15 @@ public class ProfileController implements Initializable {
 
 	private boolean isNameBeingEdited;
 
+	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+  
+   private UserModel userModel = modelsFactory.getUserModel();
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		userNameTextField.setFocusTraversable(false);
+		getFormsValues();
+		
 	}
 
 	@FXML
@@ -97,5 +106,20 @@ public class ProfileController implements Initializable {
 	@FXML
 	void backToPreviousScene(MouseEvent event) {
 		stageCoordinator.switchtoHomePageScene();
+	}
+	@FXML
+    void saveChangesClicked(MouseEvent event) {
+		userModel.setUserName(userNameTextField.getText());
+		userModel.setEmail(emailTextField.getText());
+		userModel.setUserName(userNameTextField.getText());
+		
+    }
+
+	private void getFormsValues() {
+		//userModel.userNameProperty().bindBidirectional(nameTextField.textProperty());   
+		userModel.phoneNumberProperty().bindBidirectional(phoneTextField.textProperty());
+		userModel.userNameProperty().bindBidirectional(userNameTextField.textProperty());
+		userModel.emailProperty().bindBidirectional(emailTextField.textProperty());
+		
 	}
 }
