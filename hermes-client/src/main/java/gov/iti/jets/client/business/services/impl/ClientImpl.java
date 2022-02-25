@@ -6,6 +6,7 @@ import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
+import common.business.services.Mapper;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
@@ -37,8 +38,13 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 	}
 
 	@Override
-	public void loginSuccess() {
+	public void loginSuccess(UserDto userDto) {
+		ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+		 UserModel userModel = modelsFactory.getUserModel();
+		
 		System.out.println("User Login Successfully");
+		userModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
+	
 	}
 
 	@Override

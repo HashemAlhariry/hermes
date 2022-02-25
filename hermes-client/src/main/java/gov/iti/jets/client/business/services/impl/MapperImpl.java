@@ -38,12 +38,17 @@ public enum MapperImpl implements Mapper<UserModel> {
     }
     @Override
      public UserAuthDto mapToUserAuthDto(UserModel userModel) {
+         
         if (userModel == null) {
             return null;
         }
+        String saltValue = HashManager.INSTANCE.getSaltvalue(15);
+        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword(),
+                saltValue);
+
         return new UserAuthDto(
             userModel.getPhoneNumber()
-            ,userModel.getPassword());
+            ,encryptedPassword);
     }
 
     @Override

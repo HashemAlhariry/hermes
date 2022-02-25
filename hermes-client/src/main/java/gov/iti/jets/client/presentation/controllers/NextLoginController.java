@@ -19,6 +19,7 @@ import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
@@ -39,6 +40,7 @@ public class NextloginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+        
         getFormsValues();
 		try {
 			// lookup("Login") = Login same interface name.
@@ -60,10 +62,9 @@ public class NextloginController implements Initializable {
     @FXML
     void signinButtonAction(ActionEvent event) {
         UserAuthDto useraAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(userModel);
-       
-
             try {
                 RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), useraAuthDto);
+               // stageCoordinator.switchtoHomePageScene();
             } catch (RemoteException e) {
     
                 e.printStackTrace();

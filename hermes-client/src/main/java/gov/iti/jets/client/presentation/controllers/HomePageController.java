@@ -133,7 +133,7 @@ public class HomePageController implements Initializable {
 
 	// Added Contact/Contacts feature
 	@FXML
-	void onAddContactClicked(MouseEvent mouseEvent) {
+	void onContactClicked(MouseEvent mouseEvent) {
 
 		// contact list to send invitation to all users
 		List<String> invitedContacts = new ArrayList<String>();

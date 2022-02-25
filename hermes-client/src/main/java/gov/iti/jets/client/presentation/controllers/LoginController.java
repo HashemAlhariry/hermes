@@ -1,11 +1,14 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.Serializable;
 import java.net.URL;
 import java.rmi.AccessException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
+import java.util.function.IntBinaryOperator;
+
 import common.business.dtos.UserAuthDto;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
@@ -24,7 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
-public class LoginController {
+public class LoginController implements Initializable {
 
 	@FXML
     private TextField phoneTextField;
@@ -36,28 +39,13 @@ public class LoginController {
 	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
 
 	private UserModel userModel = modelsFactory.getUserModel();
-
-	// @Override
-	// public void initialize(URL location, ResourceBundle resources) {
-
-	// 	try {
-	// 		// lookup("Login") = Login same interface name.
-	// 		Registry registry = LocateRegistry.getRegistry();
-	// 		for (var s : registry.list()) {
-	// 			System.out.println(s);
-	// 		}
-
-	// 	} catch (AccessException e) {
-	// 		e.printStackTrace();
-	// 	} catch (RemoteException e) {
-	// 		e.printStackTrace();
-	// 	}
-
-	// 	// nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-	// 	// passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-
-	// }
-
+	
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		getFormsValues();
+		
+	}
+	
 	@FXML
 	void signUpHyperLinkAction(ActionEvent event) {
 		stageCoordinator.switchToRegisterationScene();
@@ -77,5 +65,11 @@ public class LoginController {
 			stageCoordinator.switchToNextLoginScene();
 		}
 	}
+	private void getFormsValues(){
+		userModel.phoneNumberProperty().bindBidirectional(phoneTextField.textProperty());
+	 }
+
+	
+ 
 
 }

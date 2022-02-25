@@ -8,11 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< Updated upstream
 <BorderPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.NextloginController">
-=======
-<BorderPane prefHeight="720.0" prefWidth="1024.0" style="-fx-background-color: #2B233C;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.NextLoginController">
->>>>>>> Stashed changes
    <center>
       <Pane id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="364.0" style="-fx-background-color: #2B233C;">
          <children>
@@ -25,11 +21,7 @@
                               <Image url="@../../images/icons8-password-48.png" />
                            </image>
                         </ImageView>
-<<<<<<< Updated upstream
-                        <PasswordField id="passwordTextField" layoutX="57.0" layoutY="3.0" prefHeight="32.0" prefWidth="163.0" promptText="Password" style="-fx-background-color: white;" />
-=======
                         <PasswordField id="passwordTextField" fx:id="passwordTextField" layoutX="57.0" layoutY="3.0" prefHeight="32.0" prefWidth="163.0" promptText="Password" style="-fx-background-color: white;" />
->>>>>>> Stashed changes
                      </children>
                   </Pane>
                   <Button id="signButton" fx:id="signinButton" layoutX="105.0" layoutY="273.0" mnemonicParsing="false" onAction="#signinButtonAction" onKeyPressed="#signinKeyPressed" prefHeight="42.0" prefWidth="120.0" style="-fx-background-color: white; -fx-background-radius: 100; -fx-font-weight: bold; -fx-background-size: 20px;" text="Sign in">

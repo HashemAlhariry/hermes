@@ -30,9 +30,9 @@ public class UserEntity {
 		this.bio = bio;
 	}
 
-	public UserEntity(String password, String phone){
-		this.password = password;
+	public UserEntity(String phone , String password){
 		this.phone = phone;
+		this.password = password;
 	}
 	@Override
 	public String toString() {

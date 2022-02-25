@@ -3,11 +3,11 @@ package gov.iti.jets.server.business.services.impl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import common.business.dtos.GroupDto;
-import java.util.List;
-
 import common.business.dtos.InvitationResponse;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
@@ -17,13 +17,12 @@ import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
-import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
-import gov.iti.jets.server.persistance.entities.UserEntity;
-import gov.iti.jets.server.persistance.util.DaosFactory;
-import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
 import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.business.services.InvitationService;
 import gov.iti.jets.server.business.services.MessageService;
+import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
+import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.util.DaosFactory;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -39,24 +38,33 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
 		System.out.println("loginserver");
-		System.out.println(userEntity.phone + " " + userEntity.password);
-		if (userDao.loginUser(userEntity)) {
-			try {
-				// userDao.getUserByPhone(userAuthDto.phoneNumber);
-
-				// user entity to dto
+		System.out.println("ph : "+userEntity.phone+" p: " +userEntity.password );
+		
+		if(userDao.loginUser(userEntity)){
+			try{
+				//userDao.getUserByPhone(userAuthDto.phoneNumber);
+				//user entity to dto
 				System.out.println("YYYYY");
-				// UserDto userDto = MapperImpl.INSTANCE.mapToUserDto(userEntity);
-				connectedClient.loginSuccess();
+				//UserDto userDto = MapperImpl.INSTANCE.mapToUserDto(userEntity);
+				Optional<UserEntity> usOptional = userDao.getUserByPhone(userAuthDto.phoneNumber);
+				//System.out.println(usOptional.get());
+				UserEntity userEntity2 = usOptional.get();
+				
+				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
+				System.out.println(userDto);
+				//connectedClient.loginSuccess(userDto);
 				connectedClients.put(userAuthDto.phoneNumber, connectedClient);
 				System.out.println("YESSSSSS");
-			} catch (RemoteException e) {
+			}
+			catch(Exception e){
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else{
 			System.out.println("NOOO");
 		}
-
+	
+		
 	}
 
 	@Override
@@ -64,10 +72,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		// registered user will be connected?
 		// map userDto to userEntity
 		// call userDao to insert user data
-		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		UserDao userDao= DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
-		if (true) {
+		if(true){
 			try {
 				connectedClient.registerationSuccess();
 			} catch (RemoteException e) {
@@ -102,22 +110,23 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void sendInvitation(InvitationSentDto invitationDto) {
-		InvitationService invitation = new InvitationServiceImpl();
-		invitation.sendInvitation(invitationDto, connectedClients);
-	}
+    public void sendInvitation(InvitationSentDto invitationDto) {
+       InvitationService invitation = new InvitationServiceImpl();
+       invitation.sendInvitation(invitationDto,connectedClients);
+    }
 
 	@Override
-	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
-		InvitationService invitation = new InvitationServiceImpl();
-		invitation.updatingInvitation(invitationResponse);
-	}
+    public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+        InvitationService invitation = new InvitationServiceImpl();
+        invitation.updatingInvitation(invitationResponse);
+    }
 
 	@Override
 	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
 		GroupService groupService = new GroupServiceImpl();
 		return groupService.getAllGroupsByUser(userDto);
 	}
+
 
 	@Override
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {

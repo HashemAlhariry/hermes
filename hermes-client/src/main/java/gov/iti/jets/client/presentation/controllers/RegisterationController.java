@@ -174,7 +174,7 @@ public class RegisterationController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        stageCoordinator.switchtoHomePageScene();
+        stageCoordinator.switchToLoginScene();
     }
 
     @FXML

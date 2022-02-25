@@ -22,7 +22,8 @@ public enum UserMapperImpl implements Mapper<UserEntity> {
                 userData.gender,
                 userData.dob.toLocalDate(),
                 userData.country,
-                userData.bio);
+                userData.bio
+                );
     }
 
     @Override
@@ -40,7 +41,7 @@ public enum UserMapperImpl implements Mapper<UserEntity> {
                 userDto.bio
         );
     }
-
+    
     public UserEntity mapFromUserAuthDto(UserAuthDto userAuthDto) {
         if (userAuthDto == null)
             return null;
