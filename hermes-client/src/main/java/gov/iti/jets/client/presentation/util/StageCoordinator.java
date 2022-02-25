@@ -35,7 +35,9 @@ public enum StageCoordinator {
 	public void switchToLoginScene() {
 		prepareScene("loginScene", "/views/login/LoginView.fxml");
 	}
-
+	public void switchToNextLoginScene() {
+		prepareScene("nextloginScene", "/views/login/NextLoginView.fxml");
+	}
 	public void switchtoHomePageScene() {
 		prepareScene("homepagaScene", "/views/homepage/HomePageView.fxml");
 	}
@@ -47,7 +49,7 @@ public enum StageCoordinator {
 	public void switchToProfileScene() {
 		prepareScene("profileScene", "/views/profile/ProfileView.fxml");
 	}
-
+	
 	private void prepareScene(String sceneName, String fxmlLocation) {
 		if (sceneMap.get(sceneName) == null) {
 			try {

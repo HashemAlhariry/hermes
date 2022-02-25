@@ -25,6 +25,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 
+<<<<<<< Updated upstream
 public class LoginController {
 
 <<<<<<< Updated upstream
@@ -40,11 +41,18 @@ public class LoginController {
   @FXML
   private PasswordField passwordTextField;
 =======
+=======
+public class LoginController implements Initializable{
+
+>>>>>>> Stashed changes
 	@FXML
     private TextField phoneTextField;
 	
 	@FXML
 	private Button nextButton;
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 
   @FXML
@@ -55,12 +63,24 @@ public class LoginController {
   private Login loginService;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
   private UserModel userModel = modelsFactory.getUserModel();
 
   @Override
   public void initialize(URL location, ResourceBundle resources) {
   
 	
+=======
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		getFormsValues();
+		try {
+			// lookup("Login") = Login same interface name.
+			Registry registry = LocateRegistry.getRegistry();
+			for (var s : registry.list()) {
+				System.out.println(s);
+			}
+>>>>>>> Stashed changes
 
 	try {
 		//lookup("Login")  = Login same interface name.
@@ -68,6 +88,7 @@ public class LoginController {
 		for (var s : registry.list()) {
 			System.out.println(s);
 		}
+<<<<<<< Updated upstream
 		loginService = (Login) registry.lookup("Login");
 	} catch (AccessException e) {
 		e.printStackTrace();
@@ -151,6 +172,23 @@ public class LoginController {
 		
 >>>>>>> Stashed changes
 
+=======
+
+		// nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+		// passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
+
+	}
+
+	@FXML
+	void signUpHyperLinkAction(ActionEvent event) {
+		stageCoordinator.switchToRegisterationScene();
+	}
+
+	@FXML
+	void nextButtonAction(ActionEvent event) {
+		stageCoordinator.switchToNextLoginScene();
+	}
+>>>>>>> Stashed changes
 
 <<<<<<< Updated upstream
 =======
@@ -159,6 +197,12 @@ public class LoginController {
 		if(event.getCode()==KeyCode.ENTER){
 			stageCoordinator.switchToNextLoginScene();
 		}
+<<<<<<< Updated upstream
+=======
+	}
+	public void getFormsValues(){
+		userModel.phoneNumberProperty().bindBidirectional(phoneTextField.textProperty());
+>>>>>>> Stashed changes
 	}
 >>>>>>> Stashed changes
 

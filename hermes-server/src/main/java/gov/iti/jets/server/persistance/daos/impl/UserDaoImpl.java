@@ -1,10 +1,17 @@
 package gov.iti.jets.server.persistance.daos.impl;
 
+import java.lang.module.ResolutionException;
+import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
+<<<<<<< Updated upstream
+=======
+import common.business.dtos.UserAuthDto;
+>>>>>>> Stashed changes
 import common.business.dtos.UserDto;
 import gov.iti.jets.server.business.daos.UserDao;
+import gov.iti.jets.server.business.services.impl.MapperImpl;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 
@@ -34,11 +41,24 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userEntities;
 	}
-
+	
 	@Override
-	public UserEntity getUserByPhone(UserDto userDto) {
-		String query = "Select * from user where phone = ? and password = ?";
-		return null;
+	public boolean loginUser(UserEntity userEntity){
+		String query = "Select * from hermesdb.user where phone = ? and password = ?";
+		try(var connection = dataSource.getDataSource().getConnection();
+			var preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setString(1,userEntity.phone);
+				preparedStatement.setString(2, userEntity.password);
+				ResultSet rs = preparedStatement.executeQuery();
+					if(rs.next())
+						return true;
+					else
+					return false;
+					
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		return false;
 	}
 
 	@Override
@@ -57,7 +77,11 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+<<<<<<< Updated upstream
 	public UserEntity getUserRegistered(UserDto userDto) {
+=======
+	public UserEntity getUserByPhone(UserAuthDto userAuthDto) {
+>>>>>>> Stashed changes
 		String query = "Select * from user where phone = ? and password = ?";
 		return null;
 	}
