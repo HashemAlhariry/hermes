@@ -6,12 +6,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import org.w3c.dom.Document;
+
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -30,6 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -89,19 +95,43 @@ public class HomePageController implements Initializable {
 					// msg.setHtmlText(messageToSend);
 					// msg.lookup(".top-toolbar").setManaged(false);
 					// msg.lookup(".top-toolbar").setVisible(false);
-				
+
 					// msg.lookup(".bottom-toolbar").setManaged(false);
 					// msg.lookup(".bottom-toolbar").setVisible(false);
 					// msg.setDisable(true);
-					
-					
-			
+
 					WebView msg = new WebView();
-					msg.getEngine().loadContent(messageToSend);
+					msg.getEngine().loadContent(messageToSend.replace("contenteditable=\"true\"", "contenteditable=\"false\""));
+					
 					System.out.println(messageToSend);
+					// msg.getEngine().getDocument().getElementsByTagName("span").item(0).
 					messageHorizontalBox.getChildren().add(msg);
 					messageHorizontalBox.getChildren().add(imageView);
 					messagesVerticalBox.getChildren().add(messageHorizontalBox);
+
+					msg.getEngine().documentProperty().addListener(new ChangeListener<Document>() {
+						@Override
+						public void changed(ObservableValue<? extends Document> prop, Document oldDoc,
+								Document newDoc) {
+
+							// newDoc.getElementsByTagName("body").item(0).
+							String heightText = msg.getEngine().executeScript(
+									"window.getComputedStyle(document.body, null).getPropertyValue('height')")
+									.toString();
+							double height = Double.valueOf(heightText.replace("px", ""));
+
+							String widthText = msg.getEngine().executeScript(
+									"window.getComputedStyle(document.body, null).getPropertyValue('width')")
+									.toString();
+							double width = Double.valueOf(widthText.replace("px", ""));
+
+							System.out.println(height);
+							System.out.println(width);
+							msg.setMinSize(width + 50, height + 50);
+							msg.setPrefSize(width+50, height+50);
+							msg.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+						}
+					});
 
 					// SEND MESSAGE TO SPECIFIC USER
 
