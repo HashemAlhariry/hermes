@@ -1,6 +1,7 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
@@ -140,6 +141,7 @@ public class HomePageController implements Initializable {
 		// stageCoordinator.switchToLoginScene();
 	}
 
+
 	// Added Contact/Contacts feature
 	@FXML
 	void onAddContactClicked(MouseEvent mouseEvent) {
@@ -222,7 +224,6 @@ public class HomePageController implements Initializable {
 
 	}
 
-
 	@FXML
 	void onAddGroupClicked(MouseEvent mouseEvent){
 
@@ -289,12 +290,22 @@ public class HomePageController implements Initializable {
 				}
 			}
 		}));
+
+		//Image bytes
+		final byte[][] imageBytes = new byte[1][1];
 		Platform.runLater(() -> chooseImageButton.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					System.out.println(loadPicture(defaultImageView));
+					imageBytes[0] =loadPicture(defaultImageView);
+					//System.out.println(imageBytes[0]);
+					/*
+					try (FileOutputStream fos = new FileOutputStream("pathname")) {
+						fos.write(imageBytes[0]);
+						//fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
+					}
+					*/
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -316,18 +327,19 @@ public class HomePageController implements Initializable {
 		result.ifPresent(length -> {
 			System.out.println(length);
 		});
+
 		if (!invitedContacts.isEmpty() && !groupNameField.getText().isEmpty()) {
 
-			 System.out.println("ALL THINGS GOOD");
+			//SEND GROUP DETAILS TO BE SAVED TO SERVER
+			System.out.println("ALL THINGS GOOD");
 
 		}
 
 	}
 
 
-
 	private byte[] loadPicture(ImageView imageView) throws IOException {
-		
+
 		byte [] imageBytes;
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().clear();
