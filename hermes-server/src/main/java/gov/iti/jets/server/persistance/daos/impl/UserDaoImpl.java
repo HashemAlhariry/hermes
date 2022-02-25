@@ -11,7 +11,7 @@ import java.util.Optional;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import gov.iti.jets.server.business.daos.UserDao;
-import gov.iti.jets.server.business.services.impl.MapperImpl;
+import gov.iti.jets.server.business.services.impl.UserMapperImpl;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import java.sql.SQLException;

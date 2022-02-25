@@ -25,7 +25,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class NextLoginController implements Initializable {
+public class NextloginController implements Initializable {
     @FXML
     private PasswordField passwordTextField;
 

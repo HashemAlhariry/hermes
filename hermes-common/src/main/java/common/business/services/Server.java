@@ -28,7 +28,5 @@ public interface Server extends Remote {
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
-	public void register(Client connectedClient) throws RemoteException;
-
 	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
 }

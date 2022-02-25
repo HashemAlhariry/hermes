@@ -29,6 +29,11 @@ public class UserEntity {
 		this.country = country;
 		this.bio = bio;
 	}
+
+	public UserEntity(String password, String phone){
+		this.password = password;
+		this.phone = phone;
+	}
 	@Override
 	public String toString() {
 		return name + " : " + phone;
