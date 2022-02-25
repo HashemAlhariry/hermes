@@ -14,7 +14,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 		super();
 	}
 
-	@Override	
+	@Override
 	public void recieveMessage(MessageDto message) {
 		System.out.println("MESSAGE RECIEVED" + message.content);
 	}
@@ -32,7 +32,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 	@Override
 	public void loginSuccess() {
-		 
+
 	}
 
 	@Override

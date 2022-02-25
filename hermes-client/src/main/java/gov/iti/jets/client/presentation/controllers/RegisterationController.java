@@ -231,7 +231,6 @@ public class RegisterationController implements Initializable {
         String passwordToCheck = context.get(PASSWORD);
         if (passwordToCheck == null || passwordToCheck.isBlank())
             context.error(Messages.INSTANCE.PASSWORD_EMPTY);
-
         else if (passwordToCheck.matches("[a-zA-Z]+"))
             context.error(Messages.INSTANCE.INVALID_PASSWORD_FORMAT);
         else if (passwordToCheck.matches("[0-9]+"))
@@ -252,7 +251,7 @@ public class RegisterationController implements Initializable {
     private void validatePhoneNumber(Context context) {
         String phoneToCheck = context.get(PHONE_NUMBER);
         if (phoneToCheck.isEmpty() || phoneToCheck.isBlank())
-            return;
+            context.error(Messages.INSTANCE.PHONE_MUSTNOT_EMPTY);
         else if (phoneToCheck.contains(" "))
             context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
         else if (phoneToCheck.length() < 11 || phoneToCheck.length() > 11)
