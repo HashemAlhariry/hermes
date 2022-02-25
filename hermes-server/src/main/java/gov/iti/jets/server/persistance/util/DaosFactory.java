@@ -9,17 +9,20 @@ public enum DaosFactory {
     private UserDao userDao = new UserDaoImpl();
     private GroupDao GroupDao = new GroupDaoImpl();
     private MessageDao messageDao = new MessageDaoImpl();
-   
+    private InvitationDao invitationDao = new InvitationDaoImpl();
+
     public UserDao getUserDao() {
         return userDao;
     }
 
-    public GroupDao getGroupDao() {
-        return GroupDao;
-    }
-    
-    public MessageDao getMessageDao() {
-        return messageDao;
-    }
+ 
+	public GroupDao getGroupDao() {
+		return GroupDao;
+	}
 
+	public MessageDao getMessageDao() {
+		return messageDao;
+	}
+
+    public InvitationDao getInvitationDao (){return  invitationDao;}
 }

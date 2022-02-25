@@ -6,6 +6,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import common.business.dtos.InvitationDto;
+import common.business.dtos.GroupDto;
+import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import common.business.dtos.InvitationResponse;
+import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
@@ -17,9 +27,17 @@ import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
+import gov.iti.jets.server.business.services.GroupService;
+import gov.iti.jets.server.business.services.InvitationService;
+import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
+import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.util.DaosFactory;
+import gov.iti.jets.server.business.services.MessageService;
+import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-
+   
+	// connected Clients will be used for getting online users
 	private Map<String, Client> connectedClients;
 
 	public ServerImpl() throws RemoteException {
@@ -97,19 +115,36 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		 */
 	}
 
-	@Override
-	public void sendInvitation(InvitationDto invitationDto) {
 
-		// getting from db to check all avaialble numbers in database
-		// delegate the calling and bussiness to another class
-		invitationDto.invitedPhones.forEach(x -> {
-			try {
-				connectedClients.get(x).recieveInvitation(invitationDto.senderPhone);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		});
+ 
+    @Override
+    public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+        InvitationService invitation = new InvitationServiceImpl();
+        invitation.updatingInvitation(invitationResponse);
+    }
+
+
+    @Override
+    public void sendInvitation(InvitationSentDto invitationDto) {
+       InvitationService invitation = new InvitationServiceImpl();
+       invitation.sendInvitation(invitationDto,connectedClients);
+    }
+
+	@Override
+	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
+		GroupService groupService = new GroupServiceImpl();
+		return groupService.getAllGroupsByUser(userDto);
+	}
+
+
+	@Override
+	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
+		MessageService messageService = new MessageServiceImpl();
+		return messageService.getAllMessagesByGroup(groupId);
+	}
+
+	@Override
+	public void register(Client connectedClient) throws RemoteException {
 
 	}
 

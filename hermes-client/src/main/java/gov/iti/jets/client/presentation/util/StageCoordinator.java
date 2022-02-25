@@ -3,7 +3,6 @@ package gov.iti.jets.client.presentation.util;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;

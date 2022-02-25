@@ -2,7 +2,6 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

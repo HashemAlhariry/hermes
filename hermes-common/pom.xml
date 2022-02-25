@@ -1,29 +1,30 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>common</groupId>
-	<artifactId>hermes-common</artifactId>
-	<version>1.0.0</version>
-	<name>hermes-common</name>
-	<url>https://github.com/amiraElmergawy/hermes</url>
-	<packaging>jar</packaging>
+    <groupId>common</groupId>
+    <artifactId>hermes-common</artifactId>
+    <version>1.0.0</version>
+    <name>hermes-common</name>
+    <url>https://github.com/amiraElmergawy/hermes</url>
+    <packaging>jar</packaging>
 
-	<parent>
-		<groupId>gov.iti.jets</groupId>
-		<artifactId>hermes</artifactId>
-		<version>1.0.0</version>
-	</parent>
+    <parent>
+        <groupId>gov.iti.jets</groupId>
+        <artifactId>hermes</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
-	<build>
-		<plugins>
-			<plugin>
-				<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.2</version>
 
-			</plugin>
-		</plugins>
-	</build>
+    <build>
+        <plugins>
+            <plugin>
+                <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-jar-plugin -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.2</version>
+
+            </plugin>
+        </plugins>
+    </build>
 </project>

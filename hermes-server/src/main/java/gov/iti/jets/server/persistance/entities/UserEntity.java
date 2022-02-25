@@ -1,25 +1,4 @@
-<<<<<<< Updated upstream
-package gov.iti.jets.server.persistance.entities;
 
-public class UserEntity {
-	public String phone;
-	public String name;
-
-	public UserEntity() {
-
-	}
-
-	public UserEntity(String phone, String name) {
-		this.phone = phone;
-		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return name + " : " + phone;
-	}
-}
-=======
 package gov.iti.jets.server.persistance.entities;
 
 import java.sql.Date;
@@ -50,13 +29,8 @@ public class UserEntity {
 		this.country = country;
 		this.bio = bio;
 	}
-	public UserEntity (String phone , String password){
-		this.phone = phone;
-		this.password = password;
-	}
 	@Override
 	public String toString() {
 		return name + " : " + phone;
 	}
 }
->>>>>>> Stashed changes

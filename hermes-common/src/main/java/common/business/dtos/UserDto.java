@@ -1,13 +1,39 @@
 package common.business.dtos;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 public class UserDto implements Serializable {
-    String phone;
-    String password;
-    public UserDto(String phone, String password) {
-        this.phone = phone;
-        this.password = password;
-    }
+	// (Phone Number, Display Name, email, picture, password, confirmation password,
+	// gender, country, date of birth, bio.
+
+	public String phoneNumber;
+	public String password;
+	public String name;
+	public String email;
+	public Boolean gender;
+	public String country;
+	public LocalDate dateOfBirth;
+	public String bio;
+
+	public UserDto(
+		String phone,
+		String password,
+		String name,
+		String email,
+		Boolean gender,
+		LocalDate dateOfBirth,
+		String country,
+		String bio
+	) {
+		this.phoneNumber = phone;
+		this.password = password;
+		this.country = country;
+		this.gender = gender;
+		this.email = email;
+		this.name = name;
+		this.dateOfBirth = dateOfBirth;
+		this.bio = bio;
+	}
 
 }

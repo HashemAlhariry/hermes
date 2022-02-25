@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
