@@ -174,7 +174,9 @@ public class RegisterationController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        stageCoordinator.switchtoHomePageScene();
+        if (userModel.getBio() != null) {
+            stageCoordinator.switchtoHomePageScene();
+        }
     }
 
     @FXML
@@ -252,7 +254,7 @@ public class RegisterationController implements Initializable {
     private void validatePhoneNumber(Context context) {
         String phoneToCheck = context.get(PHONE_NUMBER);
         if (phoneToCheck.isEmpty() || phoneToCheck.isBlank())
-            return;
+            context.error(Messages.INSTANCE.PHONE_MUSTNOT_EMPTY);
         else if (phoneToCheck.contains(" "))
             context.error(Messages.INSTANCE.PHONE_MUSTNOT_CONTAIN_SPACES);
         else if (phoneToCheck.length() < 11 || phoneToCheck.length() > 11)

@@ -24,8 +24,8 @@ public class UserDaoImpl implements UserDao {
 		List<UserEntity> userEntities = new ArrayList<>();
 		String query = "Select * from user";
 		try (var connection = dataSource.getDataSource().getConnection();
-			var preparedStatement = connection.prepareStatement(query);
-			var resultSet = preparedStatement.executeQuery()) {
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
@@ -70,22 +70,34 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void insertUser(UserEntity user) {
-		int gender = user.gender ? 1 : 0;
-		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
-		try (var connection = dataSource.getDataSource().getConnection();
-			var preparedStatement = connection.prepareStatement(query);) {
-			preparedStatement.setString(1, user.name);
-			preparedStatement.setString(2, user.phone);
-			preparedStatement.setString(3, user.email);
-			preparedStatement.setString(4, user.password);
-			preparedStatement.setInt(5, gender);
-			preparedStatement.setDate(6, user.dob);
-			preparedStatement.setString(7, user.country);
-			// System.out.println(preparedStatement.executeUpdate());
-			preparedStatement.executeUpdate();
-			// System.out.println(resultSet);
-		} catch (SQLException e) {
-			e.printStackTrace();
+		boolean uniqueEmail = true;
+		boolean uniquePhone = true;
+		List<UserEntity> allUsers = getAllUsers();
+		for (UserEntity userEntity : allUsers) {
+			if (userEntity.phone.equals(user.phone))
+				uniquePhone = false;
+			if (userEntity.email.equals(user.email))
+				uniqueEmail = false;
+		}
+
+		if (uniquePhone && uniqueEmail) {
+			int gender = user.gender ? 1 : 0;
+			String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
+			try (var connection = dataSource.getDataSource().getConnection();
+					var preparedStatement = connection.prepareStatement(query);) {
+				preparedStatement.setString(1, user.name);
+				preparedStatement.setString(2, user.phone);
+				preparedStatement.setString(3, user.email);
+				preparedStatement.setString(4, user.password);
+				preparedStatement.setInt(5, gender);
+				preparedStatement.setDate(6, user.dob);
+				preparedStatement.setString(7, user.country);
+				// System.out.println(preparedStatement.executeUpdate());
+				preparedStatement.executeUpdate();
+				// System.out.println(resultSet);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
