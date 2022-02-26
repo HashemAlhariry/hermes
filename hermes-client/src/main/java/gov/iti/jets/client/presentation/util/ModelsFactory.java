@@ -15,4 +15,9 @@ public enum ModelsFactory {
 		return userModel;
 	}
 
+	public void setUserModel(UserModel userModel){
+		//this.userModel.getPhoneNumber()=userModel
+		
+	}
+
 }
