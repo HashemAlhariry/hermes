@@ -39,9 +39,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 	@Override
 	public void loginSuccess(UserDto userDto) {
-		ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
 		UserModel userModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
-		System.out.println("User Login Successfully");
+		ModelsFactory.INSTANCE.setUserModel(userModel);
 	}
 
 	@Override
