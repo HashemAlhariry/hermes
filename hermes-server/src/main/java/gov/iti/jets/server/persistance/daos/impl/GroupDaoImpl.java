@@ -2,7 +2,6 @@ package gov.iti.jets.server.persistance.daos.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.persistance.DataSource;

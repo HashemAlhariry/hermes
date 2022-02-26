@@ -1,7 +1,5 @@
 package gov.iti.jets.client.business.services.impl;
 
-import java.time.LocalDate;
-
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Mapper;
@@ -41,22 +39,21 @@ public enum MapperImpl implements Mapper<UserModel> {
 		}
 		UserModel userModel = new UserModel();
 
-		// TODO: Implement Image mapping  
+		// TODO: Implement Image mapping
 		if (userDto.phoneNumber != null && !userDto.phoneNumber.isBlank())
 			userModel.setPhoneNumber(userDto.phoneNumber);
 		if (userDto.name != null && !userDto.name.isBlank())
 			userModel.setUserName(userDto.name);
 		if (userDto.email != null && !userDto.email.isBlank())
 			userModel.setEmail(userDto.email);
-		// password should never be mapped
-		// if (userDto.password!= null && !userDto.password.isBlank())
-		// userModel.setPassword(userDto.password);
 		if (userDto.dateOfBirth != null)
 			userModel.setDateOfBirth(userDto.dateOfBirth);
 		if (userDto.country != null && !userDto.country.isBlank())
 			userModel.setCountry(userDto.country);
 		if (userDto.gender != null)
 			userModel.setGender(userDto.gender);
+		if (userDto.bio != null)
+			userModel.setBio(userDto.bio);
 		return userModel;
 	}
 

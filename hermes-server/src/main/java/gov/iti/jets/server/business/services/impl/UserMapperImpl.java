@@ -1,7 +1,5 @@
 package gov.iti.jets.server.business.services.impl;
 
-import java.time.LocalDate;
-
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Mapper;

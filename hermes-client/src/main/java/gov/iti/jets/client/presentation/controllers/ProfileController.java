@@ -12,7 +12,6 @@ import gov.iti.jets.client.presentation.util.StageCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -67,23 +66,23 @@ public class ProfileController implements Initializable {
 
 	private boolean isNameBeingEdited;
 
-	
 	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
 
 	private UserModel userModel = modelsFactory.getUserModel();
-    
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		userNameTextField.setFocusTraversable(false);
-		userNameTextField.setText(userModel.getUserName());
-		phoneTextField.setText(userModel.getPhoneNumber());
-		emailTextField.setText(userModel.getEmail());
-		bioTextArea.setText(userModel.getBio());
-		birthdayDatePicker.setValue(userModel.getDateOfBirth());
-		genderGroup.setUserData(userModel.getGender());
-		countryTextField.setText(userModel.getCountry());
-		profilePictureImageView.setImage(userModel.getPicture());
-		
+		// userNameTextField.setText(userModel.getUserName());
+		// phoneTextField.setText(userModel.getPhoneNumber());
+		// emailTextField.setText(userModel.getEmail());
+		// bioTextArea.setText(userModel.getBio());
+		// birthdayDatePicker.setValue(userModel.getDateOfBirth());
+		// genderGroup.setUserData(userModel.getGender());
+		// countryTextField.setText(userModel.getCountry());
+		// profilePictureImageView.setImage(userModel.getPicture());
+		binding();
+
 	}
 
 	@FXML
@@ -91,8 +90,12 @@ public class ProfileController implements Initializable {
 		FileChooser chooser = new FileChooser();
 		File newUserImage = chooser.showOpenDialog(stageCoordinator.getPrimaryStage());
 		try {
-			if (newUserImage != null)
+			if (newUserImage != null) {
 				profilePictureImageView.setImage(new Image(new FileInputStream(newUserImage)));
+				ModelsFactory.INSTANCE.getUserModel().setPicture(profilePictureImageView.getImage());
+
+			}
+
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -115,13 +118,20 @@ public class ProfileController implements Initializable {
 	void backToPreviousScene(MouseEvent event) {
 		stageCoordinator.switchtoHomePageScene();
 	}
-	public void binding(){
-		userModel.phoneNumberProperty().bindBidirectional(phoneTextField.textProperty());
-		userModel.emailProperty().bindBidirectional(emailTextField.textProperty());
-		userModel.bioProperty().bindBidirectional(bioTextArea.textProperty());
-		userModel.dateOfBirthProperty().bind(birthdayDatePicker.valueProperty());
-		userModel.genderpProperty().bindBidirectional(genderGroup.getSelectedToggle().selectedProperty());
-		userModel.countryProperty().bindBidirectional(countryTextField.textProperty());
-		userModel.picturepProperty().bindBidirectional(profilePictureImageView.imageProperty());
+
+	public void binding() {
+		
+		System.out.println("now user: " + userModel.getUserName());
+		System.out.println("now phone: " + userModel.getPhoneNumber());
+
+		userNameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
+		phoneTextField.textProperty().bindBidirectional(userModel.phoneNumberProperty());
+		emailTextField.textProperty().bindBidirectional(userModel.emailProperty());
+		bioTextArea.textProperty().bindBidirectional(userModel.bioProperty());
+		birthdayDatePicker.valueProperty().bindBidirectional(userModel.dateOfBirthProperty());
+		genderGroup.selectToggle(userModel.getGender() ? maleRadioButton : femaleRadioButton);
+		countryTextField.textProperty().bindBidirectional(userModel.countryProperty());
+		profilePictureImageView.imageProperty().bindBidirectional(userModel.picturepProperty());
+
 	}
 }

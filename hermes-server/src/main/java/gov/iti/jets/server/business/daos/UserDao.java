@@ -4,10 +4,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-
-import common.business.dtos.UserAuthDto;
-import common.business.dtos.UserDto;
-
 import gov.iti.jets.server.persistance.entities.UserEntity;
 
 public interface UserDao {

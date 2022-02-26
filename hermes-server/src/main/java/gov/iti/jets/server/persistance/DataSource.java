@@ -21,6 +21,8 @@ public enum DataSource {
 			var props = new File(getClass().getResource("/hikaricp.properties").toURI());
 			properties.load(new FileInputStream(props));
 			config = new HikariConfig(properties);
+			config.setMinimumIdle(8);
+			config.setMaximumPoolSize(10);
 			dataSource = new HikariDataSource(config);
 		} catch (IOException | URISyntaxException e) {
 			e.printStackTrace();

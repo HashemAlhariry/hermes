@@ -16,7 +16,7 @@ public interface Server extends Remote {
 
 	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
 
-	public UserDto checkPhone(Client connectedClient, UserAuthDto userAuthDto)  throws RemoteException;
+	public UserDto checkPhone(Client connectedClient, String phoneNumber)  throws RemoteException;
 
 	public void register(Client connectedClient, UserDto userDto) throws RemoteException;
 
@@ -24,11 +24,13 @@ public interface Server extends Remote {
 
 	public void sendInvitation(InvitationSentDto invitationDto) throws RemoteException;
 
-	public void logout(UserAuthDto userAuthDto) throws RemoteException;
+	public void logout(String phoneNumber) throws RemoteException;
 
 	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException;
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
 	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
+
+	public byte[] getUserImageByPhone(String phone) throws RemoteException;
 }

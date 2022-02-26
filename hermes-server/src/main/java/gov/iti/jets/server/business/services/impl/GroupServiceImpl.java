@@ -1,5 +1,8 @@
 package gov.iti.jets.server.business.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import common.business.dtos.GroupDto;
 import common.business.dtos.UserDto;
 import gov.iti.jets.server.business.daos.GroupDao;
@@ -7,8 +10,6 @@ import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.persistance.entities.GroupEntity;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GroupServiceImpl implements GroupService {
 

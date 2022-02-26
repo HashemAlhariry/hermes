@@ -2,15 +2,11 @@ package gov.iti.jets.client.business.services.impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
 import common.business.dtos.MessageDto;
-import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
-import common.business.services.Mapper;
 import gov.iti.jets.client.presentation.models.UserModel;
-import gov.iti.jets.client.presentation.util.ModelsFactory;
-import gov.iti.jets.client.presentation.util.StageCoordinator;
-import common.business.services.Client;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.Utils;
 

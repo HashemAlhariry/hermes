@@ -34,56 +34,54 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public UserDto checkPhone(Client connectedClient , UserAuthDto userAuthDto) {
+	public UserDto checkPhone(Client connectedClient, String phoneNumber) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
-		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
+		// userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
+		Optional<UserEntity> userEntity = userDao.getUserByPhone(phoneNumber);
 		System.out.println("loginserver");
-		if(userDao.checkPhone(userEntity)){
-			try{
-				Optional<UserEntity> usOptional = userDao.getUserByPhone(userAuthDto.phoneNumber);
-				UserEntity userEntity2 = usOptional.get();
-				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
+		if (userEntity.isPresent()) {
+			try {
+				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity.get());
 				connectedClient.loginSuccess(userDto);
 				return userDto;
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-		}
-		else{
-			System.out.println("NOOO");
+
+		} else {
+			System.out.println("NOOO Access: " + phoneNumber);
 		}
 		return null;
-		
+
 	}
 
 	@Override
 	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		System.out.println("userDto password: " + userAuthDto.password);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
 		System.out.println("loginserver");
-		System.out.println("ph : "+userEntity.phone+" p: " +userEntity.password );
-		
-		if(userDao.loginUser(userEntity)){
-			try{
+		System.out.println("ph : " + userEntity.phone + " p: " + userEntity.password);
+
+		if (userDao.loginUser(userEntity)) {
+			try {
 				Optional<UserEntity> usOptional = userDao.getUserByPhone(userAuthDto.phoneNumber);
 				UserEntity userEntity2 = usOptional.get();
 				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
 				connectedClients.put(userAuthDto.phoneNumber, connectedClient);
 				connectedClient.loginSuccess(userDto);
+				System.out.println(userDto.bio);
+				System.out.println(userDto.gender);
 				return userDto;
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
-		}
-		else{
+
+		} else {
 			System.out.println("NOOO");
 		}
 		return null;
-		
+
 	}
 
 	@Override
@@ -91,10 +89,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		// registered user will be connected?
 		// map userDto to userEntity
 		// call userDao to insert user data
-		UserDao userDao= DaosFactory.INSTANCE.getUserDao();
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
-		if(true){
+		if (true) {
 			try {
 				connectedClient.registerationSuccess();
 			} catch (RemoteException e) {
@@ -104,9 +102,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void logout(UserAuthDto userAuthDto) {
+	public void logout(String phoneNumber) {
 		// maybe add additional check to see if he is connected or not
-		connectedClients.remove(userAuthDto.phoneNumber);
+		connectedClients.remove(phoneNumber);
+		System.out.println("User: " + phoneNumber + " logged out");
 	}
 
 	@Override
@@ -129,16 +128,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-    public void sendInvitation(InvitationSentDto invitationDto) {
-       InvitationService invitation = new InvitationServiceImpl();
-       invitation.sendInvitation(invitationDto,connectedClients);
-    }
+	public void sendInvitation(InvitationSentDto invitationDto) {
+		InvitationService invitation = new InvitationServiceImpl();
+		invitation.sendInvitation(invitationDto, connectedClients);
+	}
 
 	@Override
-    public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
-        InvitationService invitation = new InvitationServiceImpl();
-        invitation.updatingInvitation(invitationResponse);
-    }
+	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+		InvitationService invitation = new InvitationServiceImpl();
+		invitation.updatingInvitation(invitationResponse);
+	}
 
 	@Override
 	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
@@ -146,11 +145,18 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		return groupService.getAllGroupsByUser(userDto);
 	}
 
-
 	@Override
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
 		MessageService messageService = new MessageServiceImpl();
 		return messageService.getAllMessagesByGroup(groupId);
+	}
+
+	@Override
+	public byte[] getUserImageByPhone(String phone) throws RemoteException {
+		// TODO: Create UserService that have method takes phone and returns the path
+		// userImages/picname.png
+		// TODO: Then we pass the path another method in UserService that returns the image bytes
+		return null;
 	}
 
 }
