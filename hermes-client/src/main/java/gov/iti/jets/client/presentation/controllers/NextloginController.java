@@ -49,21 +49,17 @@ public class NextloginController implements Initializable {
         getFormsValues();
         
 		try {
-			// lookup("Login") = Login same interface name.
-			Registry registry = LocateRegistry.getRegistry();
-			for (var s : registry.list()) {
-				System.out.println(s);
+                Registry registry = LocateRegistry.getRegistry();
+                for (var s : registry.list()) {
+                    System.out.println(s);
 			}
 
 		} catch (AccessException e) {
 			e.printStackTrace();
+            
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
-		// nameTextField.textProperty().bindBidirectional(userModel.userNameProperty());
-		// passwordTextField.textProperty().bindBidirectional(userModel.passwordProperty());
-
 	}
   
     @FXML
@@ -72,7 +68,6 @@ public class NextloginController implements Initializable {
                 UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(userModel);
                 UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), userAuthDto);
                 if(userDto!=null){
-                    System.out.println("YESS");
                     stageCoordinator.switchtoHomePageScene();
                }
                else{

@@ -41,7 +41,24 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userEntities;
 	}
-	
+	@Override
+	public boolean checkPhone(UserEntity userEntity){
+		String query = "Select * from hermesdb.user where phone = ?";
+		try(var connection = dataSource.getDataSource().getConnection();
+			var preparedStatement = connection.prepareStatement(query)){
+				preparedStatement.setString(1,userEntity.phone);
+				ResultSet rs = preparedStatement.executeQuery();
+					if(rs.next())
+						return true;
+					else
+					return false;
+					
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		return false;
+	}
+
 	@Override
 	public boolean loginUser(UserEntity userEntity){
 		String query = "Select * from hermesdb.user where phone = ? and password = ?";

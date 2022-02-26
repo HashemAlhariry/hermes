@@ -22,6 +22,8 @@ public interface UserDao {
 
 	boolean loginUser(UserEntity userEntity);
 
+	boolean checkPhone(UserEntity userEntity);
+
 	Optional<UserEntity> getUserByPhone(String phone);
 
 }

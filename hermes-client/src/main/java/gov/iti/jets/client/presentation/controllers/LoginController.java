@@ -10,6 +10,8 @@ import java.util.ResourceBundle;
 import java.util.function.IntBinaryOperator;
 
 import common.business.dtos.UserAuthDto;
+import common.business.dtos.UserDto;
+import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
@@ -19,6 +21,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -43,7 +46,19 @@ public class LoginController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		getFormsValues();
-		
+        
+		try {
+                Registry registry = LocateRegistry.getRegistry();
+                for (var s : registry.list()) {
+                    System.out.println(s);
+			}
+
+		} catch (AccessException e) {
+			e.printStackTrace();
+            
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@FXML
@@ -53,10 +68,24 @@ public class LoginController implements Initializable {
 
 	@FXML
 	void nextButtonAction(ActionEvent event) {
-		stageCoordinator.switchToNextLoginScene();
+		try {
+			UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(userModel);
+			UserDto userDto = RMIConnection.INSTANCE.getServer().checkPhone(ServiceFactory.INSTANCE.getClientImpl(), userAuthDto);
+			if(userDto!=null){
+				stageCoordinator.switchToNextLoginScene();
+		   }
+		   else{
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Hermes");
+			alert.setHeaderText(null);
+			alert.setContentText("Not found");
+			alert.showAndWait();
+		   }
+		   
+		} catch (RemoteException e) {
 
-		
-
+			e.printStackTrace();
+		}
 	}
 
 	@FXML

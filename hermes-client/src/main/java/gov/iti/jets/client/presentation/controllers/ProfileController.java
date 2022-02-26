@@ -5,10 +5,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import gov.iti.jets.client.presentation.models.UserModel;
+import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -63,9 +67,23 @@ public class ProfileController implements Initializable {
 
 	private boolean isNameBeingEdited;
 
+	
+	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+
+	private UserModel userModel = modelsFactory.getUserModel();
+    
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		userNameTextField.setFocusTraversable(false);
+		userNameTextField.setText(userModel.getUserName());
+		phoneTextField.setText(userModel.getPhoneNumber());
+		emailTextField.setText(userModel.getEmail());
+		bioTextArea.setText(userModel.getBio());
+		birthdayDatePicker.setValue(userModel.getDateOfBirth());
+		genderGroup.setUserData(userModel.getGender());
+		countryTextField.setText(userModel.getCountry());
+		profilePictureImageView.setImage(userModel.getPicture());
+		
 	}
 
 	@FXML
@@ -96,5 +114,14 @@ public class ProfileController implements Initializable {
 	@FXML
 	void backToPreviousScene(MouseEvent event) {
 		stageCoordinator.switchtoHomePageScene();
+	}
+	public void binding(){
+		userModel.phoneNumberProperty().bindBidirectional(phoneTextField.textProperty());
+		userModel.emailProperty().bindBidirectional(emailTextField.textProperty());
+		userModel.bioProperty().bindBidirectional(bioTextArea.textProperty());
+		userModel.dateOfBirthProperty().bind(birthdayDatePicker.valueProperty());
+		userModel.genderpProperty().bindBidirectional(genderGroup.getSelectedToggle().selectedProperty());
+		userModel.countryProperty().bindBidirectional(countryTextField.textProperty());
+		userModel.picturepProperty().bindBidirectional(profilePictureImageView.imageProperty());
 	}
 }

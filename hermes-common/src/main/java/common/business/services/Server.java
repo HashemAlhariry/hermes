@@ -16,6 +16,8 @@ public interface Server extends Remote {
 
 	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
 
+	public UserDto checkPhone(Client connectedClient, UserAuthDto userAuthDto)  throws RemoteException;
+
 	public void register(Client connectedClient, UserDto userDto) throws RemoteException;
 
 	public void sendMessage(MessageDto message) throws RemoteException;
