@@ -39,7 +39,7 @@ public enum Utils {
           LocalDateTime myObj = LocalDateTime.now();
           RMIConnection.INSTANCE.getServer().invitationResponse(new InvitationResponseDto(sender,ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),1));
           // CALL SERVICE TO ADD A PRIVATE CHAT TO DATA BASE BETWEEN SENDER AND RECEIVER
-          RMIConnection.INSTANCE.getServer().addPrivateChat(new PrivateGroupDetailsDto(sender,ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),myObj.toString()));
+          RMIConnection.INSTANCE.getServer().addPrivateChat(new PrivateGroupDetailsDto(sender,ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()+"_"+myObj));
         } catch (RemoteException e) {
           e.printStackTrace();
         }

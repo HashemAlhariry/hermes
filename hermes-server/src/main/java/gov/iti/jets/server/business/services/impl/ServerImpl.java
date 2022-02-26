@@ -9,6 +9,7 @@ import common.business.dtos.*;
 import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
+import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.business.services.InvitationService;
 import gov.iti.jets.server.business.services.PrivateGroupService;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
@@ -28,13 +29,12 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
         // call another class for authenticating db
         // checking if user exists or not
-        
+
         connectedClients.put(userAuthDto.phoneNumber, connectedClient);
         System.out.println("User phone added to online users " + userAuthDto.phoneNumber);
         try {
             connectedClient.loginSuccess();
         } catch (RemoteException e) {
-     
             e.printStackTrace();
         }
     }
@@ -63,18 +63,28 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
         privateGroupService.addNewPrivateGroupChat(privateGroupDetailsDto);
     }
 
+    @Override
+    public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException {
+        GroupService groupService = new GroupServiceImpl();
+        groupService.addNewGroupChat(groupDetailsDto);
+    }
+
 
     @Override
     public void sendMessage(MessageDto messageDto) {
+
         GroupDao group = new GroupDaoImpl();
         group.getUsersByGroupId(messageDto.groupID);
+
     }
 
 
     @Override
     public void sendInvitation(InvitationSentDto invitationDto) {
+
        InvitationService invitation = new InvitationServiceImpl();
        invitation.sendInvitation(invitationDto,connectedClients);
+
     }
 
 }

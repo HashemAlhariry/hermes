@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
@@ -217,7 +220,6 @@ public class HomePageController implements Initializable {
 				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
 
 			} catch (RemoteException e) {
-
 				e.printStackTrace();
 			}
 		}
@@ -281,7 +283,6 @@ public class HomePageController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-
 				if (!newContact.getText().isEmpty()
 						&& Utils.INSTANCE.checkNumberInString(newContact.getText().trim())) {
 					invitedContacts.add(newContact.getText().trim());
@@ -294,22 +295,13 @@ public class HomePageController implements Initializable {
 		//Image bytes
 		final byte[][] imageBytes = new byte[1][1];
 		Platform.runLater(() -> chooseImageButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				try {
 					imageBytes[0] =loadPicture(defaultImageView);
-					//System.out.println(imageBytes[0]);
-					/*
-					try (FileOutputStream fos = new FileOutputStream("pathname")) {
-						fos.write(imageBytes[0]);
-						//fos.close(); There is no more need for this line since you had created the instance of "fos" inside the try. And this will automatically close the OutputStream
-					}
-					*/
-				} catch (IOException e) {
+				 } catch (IOException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}));
 
@@ -329,9 +321,23 @@ public class HomePageController implements Initializable {
 		});
 
 		if (!invitedContacts.isEmpty() && !groupNameField.getText().isEmpty()) {
-
+			LocalDateTime myObj = LocalDateTime.now();
 			//SEND GROUP DETAILS TO BE SAVED TO SERVER
-			System.out.println("ALL THINGS GOOD");
+			System.out.println(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+			try {
+				RMIConnection.INSTANCE.getServer().addGroupChat(
+						new GroupDetailsDto(
+								groupNameField.getText(),
+								groupNameField.getText()+"_"+myObj,
+								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
+								invitedContacts,
+								imageBytes[0],
+								groupNameField.getText()+"_"+myObj
+								)
+				);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
 
 		}
 

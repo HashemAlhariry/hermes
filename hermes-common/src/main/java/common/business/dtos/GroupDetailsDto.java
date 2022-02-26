@@ -13,5 +13,13 @@ public class GroupDetailsDto implements Serializable {
     public byte[] image;
     public String imageName;
 
+    public GroupDetailsDto(String groupName, String groupFullName, String creatorPhone, List<String> contacts, byte[] image, String imageName) {
+        this.groupName = groupName;
+        this.groupFullName = groupFullName;
+        this.creatorPhone = creatorPhone;
+        this.contacts = contacts;
+        this.image = image;
+        this.imageName = imageName;
+    }
 
 }
