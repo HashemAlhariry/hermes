@@ -17,5 +17,6 @@ public interface Client extends Remote {
 
 	public void registerationSuccess() throws RemoteException;
 
+	public void registerationFail(String errorMessage) throws RemoteException;
 
 }

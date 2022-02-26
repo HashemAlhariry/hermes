@@ -69,15 +69,19 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void insertUser(UserEntity user) {
+	public String insertUser(UserEntity user) {
 		boolean uniqueEmail = true;
 		boolean uniquePhone = true;
 		List<UserEntity> allUsers = getAllUsers();
 		for (UserEntity userEntity : allUsers) {
-			if (userEntity.phone.equals(user.phone))
+			if (userEntity.phone.equals(user.phone)){
 				uniquePhone = false;
-			if (userEntity.email.equals(user.email))
+				return "Phone Number Must Be Unique";
+			}
+			if (userEntity.email.equals(user.email)){
 				uniqueEmail = false;
+				return "Email Must Be Unique";
+			}
 		}
 
 		if (uniquePhone && uniqueEmail) {
@@ -98,6 +102,7 @@ public class UserDaoImpl implements UserDao {
 				e.printStackTrace();
 			}
 		}
+		return null;
 	}
 
 	@Override

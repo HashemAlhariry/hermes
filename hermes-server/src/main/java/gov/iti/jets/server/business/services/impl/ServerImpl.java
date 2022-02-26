@@ -59,10 +59,17 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
-		userDao.insertUser(userEntity);
-		if (true) {
+
+		String insertionResponse = userDao.insertUser(userEntity);
+		if (insertionResponse == null) {
 			try {
 				connectedClient.registerationSuccess();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				connectedClient.registerationFail(insertionResponse);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
