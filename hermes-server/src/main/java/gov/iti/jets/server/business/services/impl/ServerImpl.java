@@ -3,9 +3,7 @@ package gov.iti.jets.server.business.services.impl;
 import common.business.dtos.GroupDto;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import common.business.dtos.InvitationResponse;
@@ -17,8 +15,13 @@ import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
+import common.business.dtos.*;
+import common.business.services.Client;
+import common.business.services.Server;
+import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.business.services.InvitationService;
+import gov.iti.jets.server.business.services.PrivateGroupService;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
@@ -37,10 +40,8 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public void login(Client connectedClient, UserAuthDto userAuthDto) {
-
 		// call another class for authenticating db
 		// checking if user exists or not
-
 		connectedClients.put(userAuthDto.phoneNumber, connectedClient);
 		System.out.println("User phone added to online users " + userAuthDto.phoneNumber);
 		try {
@@ -126,8 +127,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void register(Client connectedClient) throws RemoteException {
+	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException {
+		PrivateGroupService privateGroupService = new PrivateGroupServiceImpl();
+		privateGroupService.addNewPrivateGroupChat(privateGroupDetailsDto);
+	}
 
+	@Override
+	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException {
+		GroupService groupService = new GroupServiceImpl();
+		groupService.addNewGroupChat(groupDetailsDto);
 	}
 
 }

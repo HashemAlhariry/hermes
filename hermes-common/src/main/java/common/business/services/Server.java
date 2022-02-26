@@ -31,4 +31,8 @@ public interface Server extends Remote {
 	public void register(Client connectedClient) throws RemoteException;
 
 	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
+
+	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException;
+
+	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException;
 }
