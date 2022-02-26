@@ -6,7 +6,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
 
-import common.business.dtos.InvitationResponse;
+import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
@@ -103,9 +103,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+	public void invitationResponse(InvitationResponseDto invitationResponseDto) throws RemoteException {
 		InvitationService invitation = new InvitationServiceImpl();
-		invitation.updatingInvitation(invitationResponse);
+		invitation.updatingInvitation(invitationResponseDto);
 	}
 
 	@Override

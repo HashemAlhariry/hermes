@@ -1,14 +1,12 @@
 package common.business.services;
 
-import common.business.dtos.GroupDto;
+import common.business.dtos.*;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import common.business.dtos.InvitationResponse;
-import common.business.dtos.InvitationSentDto;
-import common.business.dtos.MessageDto;
-import common.business.dtos.UserAuthDto;
-import common.business.dtos.UserDto;
+import common.business.dtos.InvitationResponseDto;
+
 import java.util.List;
 
 // This will be implemented on serverSide
@@ -28,9 +26,7 @@ public interface Server extends Remote {
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
-	public void register(Client connectedClient) throws RemoteException;
-
-	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
+	public void invitationResponse(InvitationResponseDto invitationResponseDto) throws RemoteException;
 
 	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException;
 
