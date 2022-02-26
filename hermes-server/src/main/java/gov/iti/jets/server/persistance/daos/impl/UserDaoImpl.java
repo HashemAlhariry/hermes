@@ -94,7 +94,6 @@ public class UserDaoImpl implements UserDao {
 				preparedStatement.setString(7, user.country);
 				// System.out.println(preparedStatement.executeUpdate());
 				preparedStatement.executeUpdate();
-				// System.out.println(resultSet);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
