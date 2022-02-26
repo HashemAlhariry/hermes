@@ -71,7 +71,6 @@ public class NextloginController implements Initializable {
             try {
                 UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(userModel);
                 UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), userAuthDto);
-                 userModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
                 if(userDto!=null){
                     System.out.println("YESS");
                     stageCoordinator.switchtoHomePageScene();
