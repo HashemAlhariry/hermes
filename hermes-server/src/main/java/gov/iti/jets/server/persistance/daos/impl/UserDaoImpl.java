@@ -78,7 +78,7 @@ public class UserDaoImpl implements UserDao {
 				uniquePhone = false;
 				return "Phone Number Must Be Unique";
 			}
-			if (userEntity.email.equals(user.email)){
+			if (userEntity.email.equalsIgnoreCase(user.email)){
 				uniqueEmail = false;
 				return "Email Must Be Unique";
 			}
@@ -89,13 +89,13 @@ public class UserDaoImpl implements UserDao {
 			String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
 			try (var connection = dataSource.getDataSource().getConnection();
 					var preparedStatement = connection.prepareStatement(query);) {
-				preparedStatement.setString(1, user.name);
-				preparedStatement.setString(2, user.phone);
-				preparedStatement.setString(3, user.email);
-				preparedStatement.setString(4, user.password);
+				preparedStatement.setString(1, user.name.trim());
+				preparedStatement.setString(2, user.phone.trim());
+				preparedStatement.setString(3, user.email.trim());
+				preparedStatement.setString(4, user.password.trim());
 				preparedStatement.setInt(5, gender);
 				preparedStatement.setDate(6, user.dob);
-				preparedStatement.setString(7, user.country);
+				preparedStatement.setString(7, user.country.trim());
 				// System.out.println(preparedStatement.executeUpdate());
 				preparedStatement.executeUpdate();
 			} catch (SQLException e) {
