@@ -10,7 +10,7 @@ public interface UserDao {
 
 	List<UserEntity> getAllUsers() throws SQLException;
 
-	void insertUser(UserEntity user);
+	String insertUser(UserEntity user);
 
 	void updateUser(UserEntity user);
 

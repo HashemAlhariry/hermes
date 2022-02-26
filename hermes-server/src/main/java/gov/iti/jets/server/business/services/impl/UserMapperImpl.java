@@ -18,9 +18,9 @@ public enum UserMapperImpl implements Mapper<UserEntity> {
 			return null;
 		return new UserEntity(
 			userDto.phoneNumber,
-			userDto.password,
 			userDto.name,
 			userDto.email,
+			userDto.password,
 			userDto.gender,
 			java.sql.Date.valueOf(userDto.dateOfBirth),
 			userDto.country,

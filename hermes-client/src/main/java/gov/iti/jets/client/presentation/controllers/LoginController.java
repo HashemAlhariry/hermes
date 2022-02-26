@@ -23,27 +23,25 @@ import javafx.scene.input.MouseEvent;
 
 public class LoginController implements Initializable {
 
+	@FXML
+	private TextField emailTextField;
+	@FXML
+	private ImageView eyeImage;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private PasswordField passwordTextField;
+	@FXML
+	private Button signInButton;
 
-  @FXML
-  private TextField emailTextField;
-  @FXML
-  private ImageView eyeImage;
-  @FXML
-  private TextField nameTextField;
-  @FXML
-  private PasswordField passwordTextField;
-  @FXML
-  private Button signInButton;
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+	private UserModel userModel = modelsFactory.getUserModel();
 
-  
-  private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
-  private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
-  private UserModel userModel = modelsFactory.getUserModel();
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+	}
 
-
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-  }
 	@FXML
 	void eyeImageMouseClicked(MouseEvent event) {
 
@@ -82,4 +80,3 @@ public class LoginController implements Initializable {
 	}
 
 }
- 

@@ -26,7 +26,7 @@ import gov.iti.jets.server.business.services.MessageService;
 import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
-   
+
 	// connected Clients will be used for getting online users
 	private Map<String, Client> connectedClients;
 
@@ -35,34 +35,41 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		connectedClients = new HashMap<>();
 	}
 
-    @Override
-    public void login(Client connectedClient, UserAuthDto userAuthDto) {
+	@Override
+	public void login(Client connectedClient, UserAuthDto userAuthDto) {
 
-        // call another class for authenticating db
-        // checking if user exists or not
-        
-        connectedClients.put(userAuthDto.phoneNumber, connectedClient);
-        System.out.println("User phone added to online users " + userAuthDto.phoneNumber);
-        try {
-            connectedClient.loginSuccess();
-        } catch (RemoteException e) {
-     
-            e.printStackTrace();
-        }
-    }
+		// call another class for authenticating db
+		// checking if user exists or not
+
+		connectedClients.put(userAuthDto.phoneNumber, connectedClient);
+		System.out.println("User phone added to online users " + userAuthDto.phoneNumber);
+		try {
+			connectedClient.loginSuccess();
+		} catch (RemoteException e) {
+
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void register(Client connectedClient, UserDto userDto) {
-		// registered user will be connected?
+		// registered user will be connected
 		// map userDto to userEntity
 		// call userDao to insert user data
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
-		userDao.insertUser(userEntity);
-		if (true) {
+
+		String insertionResponse = userDao.insertUser(userEntity);
+		if (insertionResponse == null) {
 			try {
 				connectedClient.registerationSuccess();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				connectedClient.registerationFail(insertionResponse);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -94,27 +101,23 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		 */
 	}
 
+	@Override
+	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+		InvitationService invitation = new InvitationServiceImpl();
+		invitation.updatingInvitation(invitationResponse);
+	}
 
- 
-    @Override
-    public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
-        InvitationService invitation = new InvitationServiceImpl();
-        invitation.updatingInvitation(invitationResponse);
-    }
-
-
-    @Override
-    public void sendInvitation(InvitationSentDto invitationDto) {
-       InvitationService invitation = new InvitationServiceImpl();
-       invitation.sendInvitation(invitationDto,connectedClients);
-    }
+	@Override
+	public void sendInvitation(InvitationSentDto invitationDto) {
+		InvitationService invitation = new InvitationServiceImpl();
+		invitation.sendInvitation(invitationDto, connectedClients);
+	}
 
 	@Override
 	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
 		GroupService groupService = new GroupServiceImpl();
 		return groupService.getAllGroupsByUser(userDto);
 	}
-
 
 	@Override
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
