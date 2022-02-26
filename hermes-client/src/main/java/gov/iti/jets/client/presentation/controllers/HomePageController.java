@@ -115,7 +115,9 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	void onSearchContactList(MouseEvent mouseEvent) {
+
 		System.out.println("CLICKED");
+
 	}
 
 	@FXML

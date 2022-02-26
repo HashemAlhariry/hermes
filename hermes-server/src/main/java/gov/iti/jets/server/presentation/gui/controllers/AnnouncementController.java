@@ -1,5 +1,8 @@
 package gov.iti.jets.server.presentation.gui.controllers;
 
+import common.business.dtos.InvitationResponseDto;
+import common.business.dtos.PrivateGroupDetailsDto;
+import gov.iti.jets.server.presentation.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -16,9 +19,14 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import java.net.URL;
 
+import java.rmi.RemoteException;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
+import javafx.scene.web.HTMLEditor;
 
 public class AnnouncementController implements Initializable {
 
@@ -33,26 +41,24 @@ public class AnnouncementController implements Initializable {
 	@FXML
 	private Button statisticsButton;
 
+	@FXML
+	private HTMLEditor htmlEditor;
 	private String broadcastTextMessages;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-
+		htmlEditor.setHtmlText("<body text='#ffffff' style='background-color:#2B233C'/>");
 		broadcastTextMessages = "";
-
-		announcementMessagesVBox.heightProperty().addListener(new ChangeListener<Number>() {
-			@Override
-			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
-				mainScrollPane.setVvalue((Double) t1);
-			}
-		});
-
 		sendMessageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
+
+
+				broadcastTextMessages=htmlEditor.getHtmlText();
 				if (!broadcastTextMessages.isEmpty()) {
 					showAlert();
 				}
+
 			}
 		});
 
@@ -69,8 +75,20 @@ public class AnnouncementController implements Initializable {
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setTitle("SERVER ANNOUNCEMENT");
 		alert.setHeaderText("Broadcast");
-		alert.setContentText(broadcastTextMessages);
+		alert.setContentText(getText(htmlEditor.getHtmlText()));
 		alert.showAndWait();
+		if (alert.getResult() == ButtonType.OK) {
+
+			try {
+
+				RMIConnection.INSTANCE.getServer().sendBroadCastToOnlineUsers(htmlEditor.getHtmlText());
+
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			System.out.println("YES");
+
+		}
 	}
 
 	@FXML
@@ -99,6 +117,27 @@ public class AnnouncementController implements Initializable {
 
 			messageTextField.clear();
 		}
+	}
+
+	public static String getText(String htmlText) {
+
+		String result = "";
+
+		Pattern pattern = Pattern.compile("<[^>]*>");
+		Matcher matcher = pattern.matcher(htmlText);
+		final StringBuffer text = new StringBuffer(htmlText.length());
+
+		while (matcher.find()) {
+			matcher.appendReplacement(
+					text,
+					" ");
+		}
+
+		matcher.appendTail(text);
+
+		result = text.toString().trim();
+
+		return result;
 	}
 
 }

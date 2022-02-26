@@ -19,13 +19,11 @@ import common.business.dtos.*;
 import common.business.services.Client;
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
-import gov.iti.jets.server.business.services.GroupService;
-import gov.iti.jets.server.business.services.InvitationService;
-import gov.iti.jets.server.business.services.PrivateGroupService;
+import gov.iti.jets.server.business.services.*;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
-import gov.iti.jets.server.business.services.MessageService;
+
 import java.util.List;
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
@@ -137,5 +135,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		GroupService groupService = new GroupServiceImpl();
 		groupService.addNewGroupChat(groupDetailsDto);
 	}
+
+	@Override
+	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException {
+
+		BroadCastMessageService broadCastMessageService = new BroadCastMessageServiceImpl();
+		broadCastMessageService.sendMessageToAllOnlineUsers(broadCastMessage,connectedClients);
+
+	}
+
 
 }

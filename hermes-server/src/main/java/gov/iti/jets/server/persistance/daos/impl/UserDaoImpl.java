@@ -41,7 +41,8 @@ public class UserDaoImpl implements UserDao {
 	public Optional<UserEntity> getUserByPhone(String phone) {
 
 		String sql = "Select * from user where phone = ?";
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection(); var preparedStmt = connection.prepareStatement(sql)) {
 			preparedStmt.setString(1, phone);
 			var resultSet = preparedStmt.executeQuery();
 			if (resultSet.next()) {

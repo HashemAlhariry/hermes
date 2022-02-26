@@ -19,4 +19,6 @@ public interface Client extends Remote {
 
 	public void registerationFail(String errorMessage) throws RemoteException;
 
+	public void receiveBroadCastMessage(String broadCastMessage) throws RemoteException;
+
 }
