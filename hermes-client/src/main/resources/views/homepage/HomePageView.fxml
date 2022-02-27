@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.web.HTMLEditor?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
+<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
    <left>
       <HBox prefHeight="500.0" prefWidth="231.0" BorderPane.alignment="CENTER">
          <children>
@@ -324,10 +324,10 @@
                         <Insets left="15.0" top="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <HTMLEditor fx:id="messagHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="1.7976931348623157E308" prefHeight="100.0" />
-                  <Button fx:id="sendButton" mnemonicParsing="false" text="Send">
+                  <HTMLEditor fx:id="messagHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="1.7976931348623157E308" onKeyPressed="#sendMessageByEnterAction" prefHeight="100.0" prefWidth="2500.0" />
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessageAction" text="Send">
                      <HBox.margin>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets left="-32.0" right="5.0" top="5.0" />
                      </HBox.margin>
                   </Button>
                </children>

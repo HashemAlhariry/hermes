@@ -14,6 +14,7 @@ import org.w3c.dom.Document;
 
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
+import gov.iti.jets.client.presentation.util.HTMLMessageParser;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
@@ -34,6 +35,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -80,99 +83,47 @@ public class HomePageController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 
 		// Sending message to vbox in chat box to a specific contact
-		sendButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				String messageToSend = messagHtmlEditor.getHtmlText();
-				if (!messageToSend.isEmpty()) {
-
-					ImageView imageView = new ImageView(contactImageView.getImage());
-					imageView.setFitWidth(18);
-					imageView.setFitHeight(18);
-
-					HBox messageHorizontalBox = new HBox();
-					messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
-					messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
-
-					if (formatMessage(messageToSend) != null) {
-						messageHorizontalBox.getChildren().add(formatMessage(messageToSend));
-						messageHorizontalBox.getChildren().add(imageView);
-						messagesVerticalBox.getChildren().add(messageHorizontalBox);
-
-						// SEND MESSAGE TO SPECIFIC USER As HTML
-
-						messagHtmlEditor.setHtmlText("");
-					}
-
-					// WebView msg = new WebView();
-					// msg.getEngine().loadContent(
-					// messageToSend.replace("contenteditable=\"true\"",
-					// "contenteditable=\"false\""));
-
-				}
-			}
-		});
+		messagHtmlEditor.requestFocus();
 
 	}
 
-	private TextFlow formatMessage(String htmlMessage) {
+	@FXML
+	void sendMessageAction(ActionEvent event) {
+		sendMessageEventHandler();
+	}
 
-		// extract message content ==> done
-		// extracy message style ==> done
-		// add them to new textFlow
-
-		System.out.println(htmlMessage);
-		// style="font-family: &quot;&quot;;"
-		if(htmlMessage.contains("span")) return null;
-		String messageStyle = htmlMessage.substring(htmlMessage.indexOf("style=\"") + 7, htmlMessage.lastIndexOf("\""));
-		System.out.println(messageStyle);
-		String messageContent = htmlMessage.substring(htmlMessage.indexOf(messageStyle) + messageStyle.length() + 2,
-				htmlMessage.indexOf("</span>"));
-		System.out.println(messageContent);
-		Text textMessage = new Text(messageContent);
-		if (messageContent.isBlank())
-			return null;
-		TextFlow messageTextFlow = new TextFlow(textMessage);
-		// "-fx-background-color: #685490; "
-		messageTextFlow.setPadding(new Insets(5, 10, 5, 10));
-		// textMessage.setFill(Color.color(0.934, 0.945, 0.996));
-
-		StringTokenizer st = new StringTokenizer(messageStyle, ";");
-		int index = 0;
-		String style = "";
-		while (st.hasMoreTokens()) {
-			String currentToken = st.nextToken();
-			// to ignore this case (font-family: &quot;&quot;;) ==>
-			if (!(currentToken.equals(" font-family: &quot") || currentToken.equals("font-family: &quot")
-					|| currentToken.equals("&quot"))) {
-				if (index == 0) {
-					style = "-fx-" + currentToken;
-				} else {
-					style = "-fx-" + currentToken.substring(1);
-				}
-				// -fx-color ==> -fx-text-fill: white
-				if (style.contains("-fx-color:")){
-					System.out.println(style);
-					String red = style.substring("-fx-color: rgb(".length(), style.indexOf(","));
-					String green = style.substring(style.indexOf(",")+2, style.lastIndexOf(","));
-					String blue = style.substring(style.lastIndexOf(",")+2, style.lastIndexOf(")"));
-					// messageTextFlow.
-					// textMessage.setTextFill(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
-					// textMessage.setStyle(style.replace("-fx-color:", "-fx-text-fill:"));
-					textMessage.setFill(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
-					System.out.println(Color.rgb(Integer.valueOf(red),Integer.valueOf(green),Integer.valueOf(blue)));
-				} else if(style.contains("underline")){
-					textMessage.setStyle("-fx-underline: true");
-					messageTextFlow.setStyle("-fx-underline: true");
-				}else
-					messageTextFlow.setStyle(style);
-				System.out.println(style);
-			}
-			index++;
+	@FXML
+	void sendMessageByEnterAction(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			sendMessageEventHandler();
+			messagHtmlEditor.requestFocus();
 		}
-		return messageTextFlow;
-		// style="font-family: &quot;&quot;;">knasknds<span style="background-color:
-		// rgb(179, 102, 128):
+	}
+
+	private void sendMessageEventHandler() {
+
+		String messageToSend = messagHtmlEditor.getHtmlText();
+
+		ImageView imageView = new ImageView(contactImageView.getImage());
+		imageView.setFitWidth(18);
+		imageView.setFitHeight(18);
+
+		HBox messageHorizontalBox = new HBox();
+		messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
+		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
+
+		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend);
+		System.out.println(formattedMessage);
+		if (formattedMessage != null) {
+			messageHorizontalBox.getChildren().add(formattedMessage);
+			messageHorizontalBox.getChildren().add(imageView);
+			messagesVerticalBox.getChildren().add(messageHorizontalBox);
+
+			// SEND MESSAGE TO SPECIFIC USER As HTML
+
+			messagHtmlEditor.setHtmlText("");
+		}
+
 	}
 
 	@FXML
@@ -191,9 +142,6 @@ public class HomePageController implements Initializable {
 		userModel1.setEmail("hashemalhariry33@gmail.com");
 		userModel1.setPhoneNumber("01149056691");
 		userModel1.setUserName("HASHEM");
-
-		// RMIConnection.INSTANCE.getConnectedClients().sendMessage(message);
-		// stageCoordinator.switchToProfileScene();
 
 	}
 
