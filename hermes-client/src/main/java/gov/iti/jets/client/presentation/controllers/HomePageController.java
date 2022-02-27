@@ -6,12 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.StringTokenizer;
-
-import javax.swing.text.rtf.RTFEditorKit;
-
-import org.w3c.dom.Document;
-
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.HTMLMessageParser;
@@ -19,8 +13,6 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -33,7 +25,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -41,14 +32,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.scene.web.HTMLEditor;
-import javafx.scene.web.WebView;
 
 public class HomePageController implements Initializable {
 
@@ -58,9 +44,7 @@ public class HomePageController implements Initializable {
 	private ImageView searchImageView;
 	@FXML
 	private BorderPane mainBorderPane;
-	// @FXML
-	// private TextField messageTextField;
-
+	
 	@FXML
 	private HTMLEditor messagHtmlEditor;
 
@@ -113,7 +97,6 @@ public class HomePageController implements Initializable {
 		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
 		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend);
-		System.out.println(formattedMessage);
 		if (formattedMessage != null) {
 			messageHorizontalBox.getChildren().add(formattedMessage);
 			messageHorizontalBox.getChildren().add(imageView);
@@ -164,7 +147,7 @@ public class HomePageController implements Initializable {
 	void onAddContactClicked(MouseEvent mouseEvent) {
 
 		// contact list to send invitation to all users
-		List<String> invitedContacts = new ArrayList<String>();
+		List<String> invitedContacts = new ArrayList<>();
 
 		Dialog<Integer> dialog = new Dialog<>();
 		dialog.setTitle("Enter Phone Number");
@@ -205,7 +188,7 @@ public class HomePageController implements Initializable {
 		}));
 
 		// Request focus on the newContact field by default.
-		Platform.runLater(() -> newContact.requestFocus());
+		Platform.runLater(newContact::requestFocus);
 
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == loginButtonType) {
