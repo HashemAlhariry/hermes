@@ -1,52 +1,51 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
+import java.rmi.AccessException;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
-import common.business.dtos.UserAuthDto;
+import common.business.dtos.UserDto;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
-import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presistance.network.RMIConnection;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 
 public class LoginController implements Initializable {
 
-
-  @FXML
-  private TextField emailTextField;
-  @FXML
-  private ImageView eyeImage;
-  @FXML
-  private TextField nameTextField;
-  @FXML
-  private PasswordField passwordTextField;
-  @FXML
-  private Button signInButton;
-
-  
-  private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
-  private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
-  private UserModel userModel = modelsFactory.getUserModel();
-
-
-  @Override
-  public void initialize(URL location, ResourceBundle resources) {
-  }
 	@FXML
-	void eyeImageMouseClicked(MouseEvent event) {
+	private TextField phoneTextField;
 
+	@FXML
+	private Button nextButton;
+
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+
+		try {
+			Registry registry = LocateRegistry.getRegistry();
+			for (var s : registry.list()) {
+				System.out.println(s);
+			}
+
+		} catch (AccessException e) {
+			e.printStackTrace();
+
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -55,31 +54,33 @@ public class LoginController implements Initializable {
 	}
 
 	@FXML
-	void signinButtonAction(ActionEvent event) {
+	void nextButtonAction(ActionEvent event) {
+		try {
 
-		Platform.runLater(() -> {
-
-			try {
-				ModelsFactory.INSTANCE.getUserModel().setPhoneNumber("01149056691");
-				ModelsFactory.INSTANCE.getUserModel().setPassword("456");
-				RMIConnection.INSTANCE.getServer().login(
-						ServiceFactory.INSTANCE.getClientImpl(),
-						new UserAuthDto("01149056691", "456"));
-
-			} catch (RemoteException e) {
-
-				e.printStackTrace();
+			UserDto userDto = RMIConnection.INSTANCE.getServer().checkPhone(ServiceFactory.INSTANCE.getClientImpl(),
+					phoneTextField.getText());
+			ModelsFactory.INSTANCE.getUserModel().setPhoneNumber(phoneTextField.getText());
+			if (userDto != null) {
+				stageCoordinator.switchToNextLoginScene();
+			} else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("Hermes");
+				alert.setHeaderText(null);
+				alert.setContentText("Not found");
+				alert.showAndWait();
 			}
 
-			stageCoordinator.switchtoHomePageScene();
-		});
+		} catch (RemoteException e) {
 
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
-	void signinKeyPressed(KeyEvent event) {
-		// If login authenticated -> login -> homepage
+	void nextKeyPressed(KeyEvent event) {
+		if (event.getCode() == KeyCode.ENTER) {
+			stageCoordinator.switchToNextLoginScene();
+		}
 	}
 
 }
- 

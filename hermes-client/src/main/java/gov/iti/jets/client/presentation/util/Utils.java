@@ -4,7 +4,6 @@ import java.rmi.RemoteException;
 import java.util.regex.Pattern;
 
 import common.business.dtos.InvitationResponse;
-import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;

@@ -1,6 +1,5 @@
 package common.business.dtos;
 
-import java.util.List;
 import java.io.Serializable;
 
 public class InvitationResponse implements Serializable {

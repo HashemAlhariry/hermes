@@ -9,7 +9,6 @@ import java.util.Optional;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.UserEntity;
-import java.sql.SQLException;
 
 public class UserDaoImpl implements UserDao {
 
@@ -24,8 +23,8 @@ public class UserDaoImpl implements UserDao {
 		List<UserEntity> userEntities = new ArrayList<>();
 		String query = "Select * from user";
 		try (var connection = dataSource.getDataSource().getConnection();
-			var preparedStatement = connection.prepareStatement(query);
-			var resultSet = preparedStatement.executeQuery()) {
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
@@ -38,21 +37,60 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public boolean checkPhone(UserEntity userEntity) {
+		String query = "Select * from hermesdb.user where phone = ?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, userEntity.phone);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next())
+				return true;
+			else
+				return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean loginUser(UserEntity userEntity) {
+		String query = "Select * from hermesdb.user where phone = ? and password = ?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, userEntity.phone);
+			preparedStatement.setString(2, userEntity.password);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()){
+				System.out.println(rs.getString("phone"));
+				return true;
+			}
+			else
+				return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public Optional<UserEntity> getUserByPhone(String phone) {
 
 		String sql = "Select * from user where phone = ?";
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+		UserEntity userEntity = new UserEntity();
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+				var preparedStmt = connection.prepareStatement(sql)) {
 			preparedStmt.setString(1, phone);
 			var resultSet = preparedStmt.executeQuery();
 			if (resultSet.next()) {
-				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
 				return Optional.of(userEntity);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Optional.<UserEntity>of(null);
+		return Optional.empty();
 
 	}
 
@@ -73,7 +111,7 @@ public class UserDaoImpl implements UserDao {
 		int gender = user.gender ? 1 : 0;
 		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
 		try (var connection = dataSource.getDataSource().getConnection();
-			var preparedStatement = connection.prepareStatement(query);) {
+				var preparedStatement = connection.prepareStatement(query);) {
 			preparedStatement.setString(1, user.name);
 			preparedStatement.setString(2, user.phone);
 			preparedStatement.setString(3, user.email);

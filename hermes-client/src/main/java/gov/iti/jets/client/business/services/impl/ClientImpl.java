@@ -2,8 +2,11 @@ package gov.iti.jets.client.business.services.impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
 import common.business.dtos.MessageDto;
+import common.business.dtos.UserDto;
 import common.business.services.Client;
+import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.Utils;
 
@@ -31,8 +34,9 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 	}
 
 	@Override
-	public void loginSuccess() {
-
+	public void loginSuccess(UserDto userDto) {
+		UserModel userModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
+		ModelsFactory.INSTANCE.setUserModel(userModel);
 	}
 
 	@Override

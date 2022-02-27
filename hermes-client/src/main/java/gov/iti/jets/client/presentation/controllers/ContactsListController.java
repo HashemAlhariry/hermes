@@ -15,11 +15,13 @@ public class ContactsListController implements Initializable{
 
     private ObservableList<String> observableList = FXCollections.observableArrayList();
 
+	
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("from list intializer");
         ContactsListView.setItems(observableList);
-        for(int x=0; x<2; x++) {
+        for(int x=0; x<10; x++) {
             observableList.add(x+"");
         }
         observableList.add("amira");

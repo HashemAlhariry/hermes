@@ -15,6 +15,10 @@ public enum StageCoordinator {
 	private final Map<String, Scene> sceneMap = new HashMap<>();
 	private Stage primaryStage;
 
+	public Map<String, Scene> getSceneMap() {
+		return sceneMap;
+	}
+	
 	private StageCoordinator() {
 
 	}
@@ -25,6 +29,10 @@ public enum StageCoordinator {
 
 	public void initStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+
+	public void switchToNextLoginScene() {
+		prepareScene("nextloginScene", "/views/login/NextLoginView.fxml");
 	}
 
 	public void switchToLoginScene() {
@@ -42,8 +50,7 @@ public enum StageCoordinator {
 	public void switchToProfileScene() {
 		prepareScene("profileScene", "/views/profile/ProfileView.fxml");
 	}
-
-	 
+	
 	private void prepareScene(String sceneName, String fxmlLocation) {
 		if (sceneMap.get(sceneName) == null) {
 			try {

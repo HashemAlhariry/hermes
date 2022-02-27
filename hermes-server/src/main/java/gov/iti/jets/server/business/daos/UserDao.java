@@ -16,6 +16,10 @@ public interface UserDao {
 
 	void deleteUser(UserEntity user);
 
+	boolean loginUser(UserEntity userEntity);
+
+	boolean checkPhone(UserEntity userEntity);
+
 	Optional<UserEntity> getUserByPhone(String phone);
 
 }

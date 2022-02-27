@@ -1,5 +1,7 @@
 package gov.iti.jets.server.persistance.daos.impl;
 
+import static gov.iti.jets.server.persistance.entities.enums.InvitationStatus.ACCEPTED;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,11 +10,6 @@ import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.InvitationEntity;
 import gov.iti.jets.server.persistance.entities.enums.InvitationStatus;
-import gov.iti.jets.server.persistance.util.DaosFactory;
-import javafx.scene.chart.PieChart.Data;
-
-import static gov.iti.jets.server.persistance.entities.enums.InvitationStatus.ACCEPTED;
-import static gov.iti.jets.server.persistance.entities.enums.InvitationStatus.REJECTED;
 
 public class InvitationDaoImpl implements InvitationDao {
 

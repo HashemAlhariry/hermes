@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -16,7 +17,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
+<BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
    <left>
       <HBox prefHeight="500.0" prefWidth="231.0" BorderPane.alignment="CENTER">
          <children>
@@ -78,14 +79,14 @@
                         <String fx:value="radius" />
                      </styleClass>
                   </HBox>
-                  <Pane fx:id="contactsListPane" opacity="0.16" prefHeight="0.0" prefWidth="195.0" styleClass="background-color">
+                  <AnchorPane maxHeight="1.7976931348623157E308">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                      <children>
-                        <ListView fx:id="contactsListView" prefHeight="682.0" prefWidth="196.0" />
+                        <ListView fx:id="contactsListView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
-                  </Pane>
+                  </AnchorPane>
                   <!--
                   <HBox alignment="CENTER" prefHeight="50.0" prefWidth="184.0">
                      <children>

@@ -2,21 +2,27 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import common.business.dtos.InvitationSentDto;
-import gov.iti.jets.client.presentation.models.UserModel;
+import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
+import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -27,12 +33,12 @@ import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -41,45 +47,61 @@ import javafx.scene.text.TextFlow;
 
 public class HomePageController implements Initializable {
 
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+
 	Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
 
 	@FXML
-	private ImageView searchImageView;
-	@FXML
-	private BorderPane mainBorderPane;
-	@FXML
-	private TextField messageTextField;
-	@FXML
-	private TextField searchTextField;
-	@FXML
-	private Button sendButton;
-	@FXML
-	private ImageView profileImageView;
-	@FXML
 	private ImageView addContactView;
-	@FXML
-	private ImageView logoutImageView;
-	@FXML
-	private VBox messagesVerticalBox;
-	@FXML
-	private ImageView contactImageView;
-	@FXML
-    private ListView<String> contactsListView;
 
 	@FXML
-    private Pane contactsListPane;
+	private ImageView contactImageView;
+
+	@FXML
+	private ImageView logoutImageView;
+
+	@FXML
+	private BorderPane mainBorderPane;
+
+	@FXML
+	private VBox mainVertical;
+
+	@FXML
+	private TextField messageTextField;
+
+	@FXML
+	private VBox messagesVerticalBox;
+
+	@FXML
+	private ImageView optionsOnChat;
+
+	@FXML
+	private ImageView profileImageView;
+
+	@FXML
+	private ImageView searchImageView;
+
+	@FXML
+	private TextField searchTextField;
+
+	@FXML
+	private Button sendButton;
+
+	@FXML
+	private ListView<Contact> contactsListView;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		try {
-			System.out.println("from home initializer");
-			// contactsListView = FXMLLoader.load(getClass().getResource("/views/contactsList/ContactsListView.fxml"));
-			contactsListPane.getChildren().setAll(FXMLLoader.load(getClass().getResource("/views/contactsList/ContactsListView.fxml")));
-			System.out.println(contactsListView.getItems());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 
+		ObservableList<Contact> contacts = FXCollections.observableArrayList();
+		// this line is only for testing puroses till hashing password is handeled
+		// only works for user mina
+		ModelsFactory.INSTANCE.getUserModel().setPassword("123");
+		Platform.runLater(() -> {
+			addAllContacts(contacts);
+		});
+		contactsListView.setItems(contacts);
+		contactsListView.setCellFactory(i -> new ContactListCell());
 
 		// Sending message to vbox in chat box to a specific contact
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -115,6 +137,47 @@ public class HomePageController implements Initializable {
 			}
 		});
 
+		// Platform.runLater(() -> {
+		// initUserImage();
+		// });
+
+	}
+
+	private void initUserImage() {
+		Image image;
+
+		try {
+			byte[] imgBytes = RMIConnection.INSTANCE.getServer()
+					.getUserImageByPhone(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+			image = Util.INSTANCE.fromArrayOfBytesToImage(imgBytes);
+			ModelsFactory.INSTANCE.getUserModel().setPicture(image);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	private void addAllContacts(ObservableList<Contact> contacts) {
+		try {
+			var fetchedContacts = RMIConnection.INSTANCE
+					.getServer()
+					.getAllGroupsByUser(MapperImpl.INSTANCE.mapToUserDto(ModelsFactory.INSTANCE.getUserModel()))
+					.stream()
+					.map((gdto) -> {
+						try {
+							return new Contact(gdto.id, gdto.name,
+									Util.INSTANCE.fromArrayOfBytesToImage(gdto.image));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+						return new Contact(gdto.id, gdto.name, null);
+					}).collect(Collectors.toList());
+			contacts.addAll(fetchedContacts);
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -123,20 +186,8 @@ public class HomePageController implements Initializable {
 	}
 
 	@FXML
-	void onSearchContactList(MouseEvent mouseEvent) {
-		System.out.println("CLICKED");
-	}
-
-	@FXML
 	void onProfileClicked(MouseEvent mouseEvent) {
-		UserModel userModel1 = ModelsFactory.INSTANCE.getUserModel();
-		userModel1.setEmail("hashemalhariry33@gmail.com");
-		userModel1.setPhoneNumber("01149056691");
-		userModel1.setUserName("HASHEM");
-
-		// RMIConnection.INSTANCE.getConnectedClients().sendMessage(message);
-		// stageCoordinator.switchToProfileScene();
-
+		stageCoordinator.switchToProfileScene();
 	}
 
 	@FXML
@@ -146,14 +197,18 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	void onLogoutClicked(MouseEvent mouseEvent) {
-		UserModel userModel1 = ModelsFactory.INSTANCE.getUserModel();
-		userModel1.setEmail("Mina@gmail.com");
-		userModel1.setPhoneNumber("01285097233");
-		userModel1.setUserName("MINA");
-		// stageCoordinator.switchToLoginScene();
+		try {
+			RMIConnection.INSTANCE.close();
+			// ModelsFactory.INSTANCE.setUserModel(new UserModel());
+			StageCoordinator.INSTANCE.getSceneMap().clear();
+			stageCoordinator.switchToLoginScene();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		} catch (NotBoundException e) {
+			e.printStackTrace();
+		}
 	}
 
-	// Added Contact/Contacts feature
 	@FXML
 	void onAddContactClicked(MouseEvent mouseEvent) {
 
@@ -165,7 +220,6 @@ public class HomePageController implements Initializable {
 
 		ButtonType loginButtonType = new ButtonType("Add Contact/Contacts", ButtonData.OK_DONE);
 		dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
-
 
 		GridPane gridPane = new GridPane();
 		gridPane.setStyle("-fx-background-color: #363A54; "
@@ -196,6 +250,7 @@ public class HomePageController implements Initializable {
 					addedContacts.appendText(newContact.getText() + " \n");
 					newContact.clear();
 				}
+
 			}
 		}));
 
@@ -213,24 +268,26 @@ public class HomePageController implements Initializable {
 		result.ifPresent(length -> {
 			System.out.println(length);
 		});
-
 		if (!invitedContacts.isEmpty()) {
-
 			// calling RMI SERVICE TO ADD CONTACTS if list is not empty
 			// SEND USER PHONE AND LIST OF ADDED CONTACT BY USER
-
 			try {
 
 				System.out.println("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
 						+ " Sending all invitation ...");
 
-				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
+				RMIConnection.INSTANCE.getServer().sendInvitation(
+						new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
 
 			} catch (RemoteException e) {
-
 				e.printStackTrace();
 			}
 		}
+
+	}
+
+	@FXML
+	void onSearchContactList(MouseEvent event) {
 
 	}
 
