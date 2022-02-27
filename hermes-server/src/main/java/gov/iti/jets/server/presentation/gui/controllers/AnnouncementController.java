@@ -27,6 +27,7 @@ import java.util.regex.Pattern;
 
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
 import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebView;
 
 public class AnnouncementController implements Initializable {
 
@@ -72,10 +73,14 @@ public class AnnouncementController implements Initializable {
 	}
 
 	public void showAlert() {
+
+
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		alert.setTitle("SERVER ANNOUNCEMENT");
-		alert.setHeaderText("Broadcast");
-		alert.setContentText(getText(htmlEditor.getHtmlText()));
+		alert.setHeaderText("Server Announcemenet");
+		WebView webView = new WebView();
+		webView.getEngine().loadContent(htmlEditor.getHtmlText());
+		webView.setPrefSize(600, 200);
+		alert.getDialogPane().setContent(webView);;
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.OK) {
 

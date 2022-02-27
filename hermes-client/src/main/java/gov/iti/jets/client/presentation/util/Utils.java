@@ -8,14 +8,15 @@ import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.PrivateGroupDetailsDto;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 
 public enum Utils {
 
   INSTANCE;
-
-
 
   public boolean checkNumberInString(String phoneNumber) {
     Pattern pattern = Pattern.compile(".*[^0-9].*");
@@ -59,6 +60,22 @@ public enum Utils {
       }
     });
 
+  }
+
+  public void receiveBroadCastMessage(String broadCastMessage){
+    Platform.runLater(()->{
+
+
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setHeaderText("Server Announcemenet");
+      WebView webView = new WebView();
+      webView.getEngine().loadContent(broadCastMessage);
+      webView.setPrefSize(600, 200);
+      alert.getDialogPane().setContent(webView);;
+      alert.showAndWait();
+
+
+    });
   }
 
 

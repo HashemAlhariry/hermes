@@ -59,6 +59,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 	@Override
 	public void receiveBroadCastMessage(String broadCastMessage) throws RemoteException {
 		System.out.println(broadCastMessage);
+		Utils.INSTANCE.receiveBroadCastMessage(broadCastMessage);
 	}
 
 }
