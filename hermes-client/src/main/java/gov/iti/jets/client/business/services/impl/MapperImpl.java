@@ -16,9 +16,7 @@ public enum MapperImpl implements Mapper<UserModel> {
             return null;
         }
 
-        String saltValue = HashManager.INSTANCE.getSaltvalue(15);
-        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword(),
-                saltValue);
+        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword());
 
         return new UserDto(
                 userModel.getPhoneNumber(),
