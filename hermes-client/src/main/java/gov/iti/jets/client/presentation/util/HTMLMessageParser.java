@@ -33,7 +33,8 @@ public enum HTMLMessageParser {
 			String style = "";
 			while (st.hasMoreTokens()) {
 				String currentToken = st.nextToken();
-				if (!currentToken.contains("font-family") && !currentToken.contains("&quot")) {
+				if (!currentToken.contains("&quot")) {
+					System.out.println(currentToken);
 					if (index == 0) {
 						style = "-fx-" + currentToken;
 					} else {
@@ -41,6 +42,8 @@ public enum HTMLMessageParser {
 					}
 					if (style.contains("-fx-color:")) {
 						textMessage.setFill(textColor);
+					} else if (style.contains("font-family")){
+						textMessage.setStyle("-fx-font-weight: bold");
 					} else if (style.contains("size")) {
 						if (style.contains("x-small")) {
 							textMessage.setStyle("-fx-font-size: 8;");
@@ -63,7 +66,7 @@ public enum HTMLMessageParser {
 						messageTextFlow.setStyle(style);
 					}
 				}
-				if (textColor == null)
+				if (textColor != null)
 					textMessage.setFill(textColor);
 				index++;
 			}
