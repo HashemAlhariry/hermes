@@ -48,7 +48,7 @@ public class AnnouncementController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
-		htmlEditor.setHtmlText("<body text='#ffffff' style='background-color:#2B233C'/>");
+		htmlEditor.setHtmlText("<body  style='background-color:#FFF'/>");
 		broadcastTextMessages = "";
 		sendMessageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
