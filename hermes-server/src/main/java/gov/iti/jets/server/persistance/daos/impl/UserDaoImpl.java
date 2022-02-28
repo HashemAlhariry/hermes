@@ -116,8 +116,6 @@ public class UserDaoImpl implements UserDao {
 	}
 
 
-
-
 	@Override
 	public List<UserEntity> getAllMaleUsers() {
 		List<UserEntity> userEntities = new ArrayList<>();
@@ -140,7 +138,7 @@ public class UserDaoImpl implements UserDao {
 	@Override
 	public List<UserEntity> getAllFemaleUsers() {
 		List<UserEntity> userEntities = new ArrayList<>();
-		String query = "Select * from user where gender = 2";
+		String query = "Select * from user where gender = 0";
 		try (var connection = dataSource.getDataSource().getConnection();
 			 var preparedStatement = connection.prepareStatement(query);
 			 var resultSet = preparedStatement.executeQuery()) {

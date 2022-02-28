@@ -1,5 +1,6 @@
 package gov.iti.jets.server.presentation.gui.util;
 
+import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -53,10 +54,6 @@ public enum StatisticsData {
 
     }
 
-    public void newUserLoggedIn(){
-        this.onlineUsers.set(this.onlineUsers.get()+1);
-        this.offlineUsers.set(this.offlineUsers.get()-1);
-    }
 
     public void setPieChartDataForCountry(Map<String,Integer> countryMap){
         countryMapValue=countryMap;
@@ -74,7 +71,22 @@ public enum StatisticsData {
                         countriesUser.get(i).setPieValue( countriesUser.get(i).getPieValue()+1);
                     }
                 }
+
+            }else{
+                countriesUser.add(new PieChart.Data(countryName ,1));
             }
+
+
+
+        Platform.runLater(()->{
+            pieChartDataForCountry.clear();
+            pieChartDataForCountry.setAll(countriesUser);
+                });
+
+
+
+
+
     }
 
 

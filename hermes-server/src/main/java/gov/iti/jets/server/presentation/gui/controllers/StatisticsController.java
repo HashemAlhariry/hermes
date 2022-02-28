@@ -27,6 +27,7 @@ public class StatisticsController implements Initializable {
 		userGenderPieChart.setData(StatisticsData.INSTANCE.pieChartDataForGender);
 		onlineOfflineUserPieChart.setData(StatisticsData.INSTANCE.pieChartDataForOnlineOffline);
 		countryPieChart.setData(StatisticsData.INSTANCE.pieChartDataForCountry);
+		countryPieChart.setAnimated(false);
 
 	}
 
