@@ -316,18 +316,10 @@
             </ScrollPane>
             <HBox maxWidth="1.7976931348623157E308">
                <children>
-                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/icons8-iOS%20Filled-Plus%20Math.png" />
-                     </image>
+                  <HTMLEditor fx:id="messagHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="1.7976931348623157E308" onKeyPressed="#sendMessageByEnterAction" prefHeight="100.0" prefWidth="2000.0" />
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessageAction" prefHeight="55.0" prefWidth="73.0">
                      <HBox.margin>
-                        <Insets left="15.0" top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <HTMLEditor fx:id="messagHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="1.7976931348623157E308" onKeyPressed="#sendMessageByEnterAction" prefHeight="100.0" prefWidth="2500.0" />
-                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessageAction" text="Send">
-                     <HBox.margin>
-                        <Insets left="-32.0" right="5.0" top="5.0" />
+                        <Insets left="-40.0" top="43.0" />
                      </HBox.margin>
                   </Button>
                </children>
