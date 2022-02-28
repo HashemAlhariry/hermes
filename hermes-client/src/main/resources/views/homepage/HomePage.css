@@ -1,56 +1,80 @@
-.mainbackground-color{
-  -fx-background-color:'#2B233C';
+.mainbackground-color {
+    -fx-background-color: '#2B233C';
 }
 
-.background-color{
-    -fx-background-color:'#2B233C';
- }
-  
-.third-background{
-   -fx-background-color:'#307686'
-}
-.fourth-background{
-    -fx-background-color:'#FFFFFF'
-    
-}
-.gray-background{
-    -fx-background-color:'#363A54'
-}
-  
-.transparent-background{
-    -fx-background-color:rgba(0,0,0,0);
-}
- 
-.radius{
-    -fx-background-radius:10px;
-}
-  
-.light-gray-background{
-    -fx-background-color:'#E7E7E7';
-}
-  
-.incoming-bubble{
-    -fx-background-color:'#FFFFFF';
-    -fx-background-radius:10px;
-}
-.outgoing-bubble{
-    -fx-background-color:'#7192D9';
-    -fx-background-radius:10px;
+.background-color {
+    -fx-background-color: '#2B233C';
 }
 
-.testing-font{
+.third-background {
+    -fx-background-color: '#307686'
+}
+
+.fourth-background {
+    -fx-background-color: '#FFFFFF'
+
+}
+
+.gray-background {
+    -fx-background-color: '#363A54'
+}
+
+.transparent-background {
+    -fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.radius {
+    -fx-background-radius: 10px;
+}
+
+.light-gray-background {
+    -fx-background-color: '#E7E7E7';
+}
+
+.incoming-bubble {
+    -fx-background-color : '#FFFFFF';
+    -fx-background-radius: 10px;
+}
+
+.outgoing-bubble {
+    -fx-background-color : '#7192D9';
+    -fx-background-radius: 10px;
+}
+
+.testing-font {
     -fx-font-family: "Fresca-Regular";
 }
 
-Button{
- -fx-text-fill: black;
- -fx-font-family: Arial,Helvetica,sans-serif;
- -fx-font-size: 12px;
- -fx-background-color:white;
- -fx-border-color:white;
+Button {
+    -fx-text-fill       : black;
+    -fx-font-family     : Arial, Helvetica, sans-serif;
+    -fx-font-size       : 12px;
+    -fx-background-color: white;
+    -fx-border-color    : white;
 }
 
-Button:hover {
+/* Button:hover {
   -fx-background-color: #CCA4FF;
   -fx-text-fill: white;
+} */
+
+.bg-color-pricker {
+    -fx-pref-width: 50;
+}
+
+.bg-color-pricker .label {
+    -fx-text-fill: null;
+    -fx-graphic  : url("../../images/bg-color.png");
+}
+
+
+.color-pricker {
+    -fx-pref-width: 50;
+}
+
+.color-pricker .label {
+    -fx-graphic      : url("../../images/color.png");
+    -fx-text-fill    : null;
+    /* -fx-pref-width:50;
+    -fx-pref-height  :50; */
 }

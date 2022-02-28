@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.HTMLMessageParser;
@@ -19,22 +21,30 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.web.HTMLEditor;
+import javafx.scene.web.WebView;
 
 public class HomePageController implements Initializable {
 
@@ -44,7 +54,7 @@ public class HomePageController implements Initializable {
 	private ImageView searchImageView;
 	@FXML
 	private BorderPane mainBorderPane;
-	
+
 	@FXML
 	private HTMLEditor messagHtmlEditor;
 
@@ -63,10 +73,35 @@ public class HomePageController implements Initializable {
 	@FXML
 	private ImageView contactImageView;
 
+	private Color bgColor;
+	private Color textColor;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		// Sending message to vbox in chat box to a specific contact
+		ImageView sendImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/button-send.png")));
+		sendImageView.setFitHeight(20);
+		sendImageView.setFitWidth(20);
+		sendButton.setGraphic(sendImageView);
+
+		messagHtmlEditor.lookup(".top-toolbar").setManaged(false);
+		messagHtmlEditor.lookup(".top-toolbar").setVisible(false);
+
+		ColorPicker backGroundColorPicker= new ColorPicker();
+		ColorPicker textColorPicker= new ColorPicker();
+
+		backGroundColorPicker.setOnAction( event-> bgColor = backGroundColorPicker.getValue());
+		backGroundColorPicker.setTooltip(new Tooltip("Background"));
+		backGroundColorPicker.getStyleClass().add("bg-color-pricker");
+
+		textColorPicker.setTooltip(new Tooltip("textColor"));
+		textColorPicker.getStyleClass().add("color-pricker");
+		textColorPicker.setOnAction( event-> textColor = textColorPicker.getValue());
+
+		ToolBar customToolBar = (ToolBar)messagHtmlEditor.lookup(".bottom-toolbar");
+		customToolBar.getItems().add(backGroundColorPicker);
+		customToolBar.getItems().add(textColorPicker);
+
 		messagHtmlEditor.requestFocus();
 
 	}
@@ -80,7 +115,7 @@ public class HomePageController implements Initializable {
 	void sendMessageByEnterAction(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			sendMessageEventHandler();
-			messagHtmlEditor.requestFocus();
+//			messagHtmlEditor.requestFocus();
 		}
 	}
 
@@ -96,8 +131,11 @@ public class HomePageController implements Initializable {
 		messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
 		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
-		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend);
+		//add text and backgroud colors as css in the html message
+
+		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend, textColor, bgColor);
 		if (formattedMessage != null) {
+			formattedMessage.setPadding(new Insets(5, 10, 5, 10));
 			messageHorizontalBox.getChildren().add(formattedMessage);
 			messageHorizontalBox.getChildren().add(imageView);
 			messagesVerticalBox.getChildren().add(messageHorizontalBox);
