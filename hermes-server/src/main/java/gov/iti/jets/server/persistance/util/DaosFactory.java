@@ -11,12 +11,15 @@ public enum DaosFactory {
     private MessageDao messageDao = new MessageDaoImpl();
     private InvitationDao invitationDao = new InvitationDaoImpl();
     private GroupUserDao groupUserDao = new GroupUserDaoImpl();
+    private StatisticsDao statisticsDao = new StatisticsDaoImpl();
+
     public UserDao getUserDao() {
         return userDao;
     }
 
- 
-	public GroupDao getGroupDao() {
+
+
+    public GroupDao getGroupDao() {
 		return GroupDao;
 	}
 
@@ -27,4 +30,9 @@ public enum DaosFactory {
     public InvitationDao getInvitationDao (){return  invitationDao;}
 
     public GroupUserDao getGroupUserDao(){return groupUserDao;}
+
+
+    public StatisticsDao getStatisticsDao() {
+        return statisticsDao;
+    }
 }

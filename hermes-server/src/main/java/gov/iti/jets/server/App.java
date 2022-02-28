@@ -5,7 +5,9 @@ import java.rmi.registry.Registry;
 import java.sql.SQLException;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.daos.impl.UserDaoImpl;
+import gov.iti.jets.server.persistance.util.DaosFactory;
 import gov.iti.jets.server.presentation.gui.util.StageCoordinator;
+import gov.iti.jets.server.presentation.gui.util.StatisticsData;
 import gov.iti.jets.server.presentation.network.RMIConnection;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -28,8 +30,23 @@ public class App extends Application {
 
 	@Override
 	public void init() throws Exception {
+
 		super.init();
 		RMIConnection.INSTANCE.init();
+
+		//getting all offline users when server starts
+		int allUsers = DaosFactory.INSTANCE.getStatisticsDao().getAllUsers();
+		System.out.println(allUsers);
+		StatisticsData.INSTANCE.setOfflineUsers(allUsers);
+		//getting all male/female users when server starts
+		int maleUsers = DaosFactory.INSTANCE.getStatisticsDao().getMaleUsers();
+		int femaleUsers =  DaosFactory.INSTANCE.getStatisticsDao().getFemaleUsers();
+
+		StatisticsData.INSTANCE.setMaleUsers(maleUsers);
+		StatisticsData.INSTANCE.setFemaleUsers(femaleUsers);
+
+		//getting all countries/users when server starts
+		StatisticsData.INSTANCE.setPieChartDataForCountry(DaosFactory.INSTANCE.getStatisticsDao().getAllCountries());
 	}
 
 	@Override

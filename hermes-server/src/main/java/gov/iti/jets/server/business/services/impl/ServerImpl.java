@@ -23,6 +23,7 @@ import gov.iti.jets.server.business.services.*;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
+import gov.iti.jets.server.presentation.gui.util.StatisticsData;
 
 import java.util.List;
 
@@ -48,6 +49,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 			e.printStackTrace();
 		}
+
+		StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get()+1);
+		StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get()-1);
+
+
 	}
 
 	@Override
@@ -63,6 +69,20 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		if (insertionResponse == null) {
 			try {
 				connectedClient.registerationSuccess();
+
+		      //updating statistics in server
+			  StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get()+1);
+			  StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get()-1);
+
+				if(userDto.gender)
+					StatisticsData.INSTANCE.setMaleUsers(StatisticsData.INSTANCE.maleUsers.get()+1);
+				else
+					StatisticsData.INSTANCE.setFemaleUsers(StatisticsData.INSTANCE.femaleUsers.get()+1);
+
+				StatisticsData.INSTANCE.updatePieChartDataForCountry(userDto.country);
+
+
+
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -79,6 +99,10 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public void logout(UserAuthDto userAuthDto) {
 		// maybe add additional check to see if he is connected or not
 		connectedClients.remove(userAuthDto.phoneNumber);
+
+		StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get()-1);
+		StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get()+1);
+
 	}
 
 	@Override
