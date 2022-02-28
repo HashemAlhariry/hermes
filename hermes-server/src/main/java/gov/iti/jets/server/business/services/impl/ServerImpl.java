@@ -16,14 +16,12 @@ import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
 import common.business.dtos.*;
-import common.business.services.Client;
-import common.business.services.Server;
-import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.services.*;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
 import gov.iti.jets.server.presentation.gui.util.StatisticsData;
+import gov.iti.jets.server.presentation.network.RMIConnection;
 
 import java.util.List;
 
@@ -162,11 +160,25 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException {
-
 		BroadCastMessageService broadCastMessageService = new BroadCastMessageServiceImpl();
 		broadCastMessageService.sendMessageToAllOnlineUsers(broadCastMessage,connectedClients);
 
 	}
 
+	@Override
+	public void sendServerAvailability(boolean serverAvailability){
+		for (Map.Entry<String, Client> client : connectedClients.entrySet()) {
+			try {
+				client.getValue().serverAvailability(serverAvailability);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	@Override
+	public boolean getServerAvailability() throws RemoteException {
+		return RMIConnection.INSTANCE.serverAvailability.get();
+	}
 
 }

@@ -21,4 +21,6 @@ public interface Client extends Remote {
 
 	public void receiveBroadCastMessage(String broadCastMessage) throws RemoteException;
 
+	public void serverAvailability(boolean checkServerAvailability) throws RemoteException;
+
 }

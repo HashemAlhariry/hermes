@@ -10,6 +10,10 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import common.business.dtos.UserDto;
+import gov.iti.jets.client.presentation.util.Utils;
+import javafx.application.Platform;
+import javafx.scene.control.*;
+import javafx.scene.web.WebView;
 import net.synedra.validatorfx.Validator;
 import net.synedra.validatorfx.Check.Context;
 import gov.iti.jets.client.business.services.impl.MapperImpl;
@@ -23,15 +27,8 @@ import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -89,6 +86,7 @@ public class RegisterationController implements Initializable {
     private ToggleGroup toggleGendGroup = new ToggleGroup();
     UserModel userModel = modelsFactory.getUserModel();
 
+    private Boolean checkServerAvailabilty=true;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fillCountryComboBox();
@@ -170,13 +168,24 @@ public class RegisterationController implements Initializable {
         userModel.setGender(gender);
         UserDto userDto = MapperImpl.INSTANCE.mapToUserDto(userModel);
         try {
-            RMIConnection.INSTANCE.getServer().register(ServiceFactory.INSTANCE.getClientImpl(), userDto);
+            if(Utils.INSTANCE.booleanProperty.get()){
+                RMIConnection.INSTANCE.getServer().register(ServiceFactory.INSTANCE.getClientImpl(), userDto);
+            }
+            else
+            {
+                Platform.runLater(() -> {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setContentText("The server is down we are sorry to inform you that !");
+                    alert.show();
+                });
+            }
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        if (userModel.getBio() != null) {
+        if (userModel.getBio() != null &&Utils.INSTANCE.booleanProperty.get() ) {
             stageCoordinator.switchtoHomePageScene();
         }
+
     }
 
     @FXML

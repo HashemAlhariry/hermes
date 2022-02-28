@@ -62,4 +62,29 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 		Utils.INSTANCE.receiveBroadCastMessage(broadCastMessage);
 	}
 
+	public void serverAvailability(boolean checkServerAvailability){
+		//Send all users to loginPage/Registration page
+		//disable login / registration
+
+		if(checkServerAvailability){
+			Utils.INSTANCE.booleanProperty.set(true);
+			Platform.runLater(() -> {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("The Server is back you can Login Again ");
+				alert.show();
+			});
+
+		}else
+		{
+
+			Utils.INSTANCE.booleanProperty.set(false);
+			Platform.runLater(() -> {
+				stageCoordinator.switchToLoginScene();
+
+			});
+		}
+
+
+	}
+
 }

@@ -33,4 +33,10 @@ public interface Server extends Remote {
 	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException;
 
 	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException;
+
+	public void sendServerAvailability(boolean serverAvailability) throws  RemoteException;
+
+	public boolean getServerAvailability() throws RemoteException;
+
+
 }

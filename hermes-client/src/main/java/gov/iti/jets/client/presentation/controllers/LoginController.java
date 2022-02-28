@@ -9,11 +9,13 @@ import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
@@ -33,6 +35,8 @@ public class LoginController implements Initializable {
 	private PasswordField passwordTextField;
 	@FXML
 	private Button signInButton;
+
+	private Boolean checkServerAvailabilty=true;
 
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
@@ -55,22 +59,33 @@ public class LoginController implements Initializable {
 	@FXML
 	void signinButtonAction(ActionEvent event) {
 
-		Platform.runLater(() -> {
-
 			try {
 				ModelsFactory.INSTANCE.getUserModel().setPhoneNumber("01149056691");
 				ModelsFactory.INSTANCE.getUserModel().setPassword("456");
-				RMIConnection.INSTANCE.getServer().login(
-						ServiceFactory.INSTANCE.getClientImpl(),
-						new UserAuthDto("01149056691", "456"));
+
+				Utils.INSTANCE.booleanProperty.set(	RMIConnection.INSTANCE.getServer().getServerAvailability());
+				if(Utils.INSTANCE.booleanProperty.get()){
+
+					RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(), new UserAuthDto("01149056691", "456"));
+					stageCoordinator.switchtoHomePageScene();
+				}
+				  else
+				{
+					Platform.runLater(() -> {
+						Alert alert = new Alert(Alert.AlertType.ERROR);
+						alert.setContentText("The server is down we are sorry to inform you that !");
+						alert.show();
+					});
+				}
+
 
 			} catch (RemoteException e) {
 
 				e.printStackTrace();
 			}
 
-			stageCoordinator.switchtoHomePageScene();
-		});
+
+
 
 	}
 
