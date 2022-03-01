@@ -199,12 +199,7 @@ public class HomePageController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-	@FXML
-	void onSearchContactList(MouseEvent mouseEvent) {
 
-		System.out.println("CLICKED");
-
-	}
 
 	@FXML
 	void onSearchTextFieldClick(ActionEvent event) {
