@@ -68,7 +68,6 @@ public enum Utils {
   public void receiveBroadCastMessage(String broadCastMessage){
     Platform.runLater(()->{
 
-
       Alert alert = new Alert(Alert.AlertType.INFORMATION);
       alert.setHeaderText("Server Announcemenet");
       WebView webView = new WebView();
@@ -76,7 +75,6 @@ public enum Utils {
       webView.setPrefSize(600, 200);
       alert.getDialogPane().setContent(webView);;
       alert.showAndWait();
-
 
     });
   }

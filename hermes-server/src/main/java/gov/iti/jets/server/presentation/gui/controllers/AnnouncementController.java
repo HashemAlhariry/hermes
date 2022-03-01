@@ -71,7 +71,7 @@ public class AnnouncementController implements Initializable {
 				new EventHandler<ActionEvent>() {
 					@Override
 					public void handle(ActionEvent event) {
-						System.out.println("Server Availabilty" +serverActivated );
+						System.out.println("Server Availabilty " + serverActivated );
 						if(serverActivated){
 							serverActivated=false;
 							serverActivationButton.setText("Server Closed");
@@ -107,7 +107,7 @@ public class AnnouncementController implements Initializable {
 		WebView webView = new WebView();
 		webView.getEngine().loadContent(htmlEditor.getHtmlText());
 		webView.setPrefSize(600, 200);
-		alert.getDialogPane().setContent(webView);;
+		alert.getDialogPane().setContent(webView);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.OK) {
 

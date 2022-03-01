@@ -10,6 +10,8 @@ import gov.iti.jets.client.presentation.util.Utils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.stage.Modality;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
 
@@ -80,7 +82,12 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 			Utils.INSTANCE.booleanProperty.set(false);
 			Platform.runLater(() -> {
 				stageCoordinator.switchToLoginScene();
-
+				Alert alertBox = new Alert(AlertType.ERROR, "Announcement", ButtonType.OK);
+				alertBox.setTitle("Server Announcement");
+				alertBox.setContentText("We are sorry to tell you that the server is going down, Please try again later");
+				alertBox.initModality(Modality.APPLICATION_MODAL);
+				alertBox.initOwner( StageCoordinator.INSTANCE.getPrimaryStage());
+				alertBox.showAndWait();
 			});
 		}
 
