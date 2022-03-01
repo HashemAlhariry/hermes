@@ -18,6 +18,7 @@ public enum StageCoordinator {
 
 	}
 
+
     public void initStage(Stage primaryStage){
 		this.primaryStage = primaryStage;
 	}
@@ -29,7 +30,9 @@ public enum StageCoordinator {
     public void switchToAnnouncementScene(){
         prepareScene("announcement","/views/announcement/AnnouncementView.fxml");
 	}
+
     public void switchToStatisticsScene(){
+
         prepareScene("statistics","/views/statistics/StatisticsView.fxml");
 	}
 

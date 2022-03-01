@@ -1,62 +1,23 @@
 .mainbackground-color {
-    -fx-background-color: '#2B233C';
+	-fx-background-color: #2B233C;
 }
 
 .background-color {
-    -fx-background-color: '#2B233C';
+	-fx-background-color: #2B233C;
 }
 
 .third-background {
-    -fx-background-color: '#307686'
+	-fx-background-color: #307686;
 }
 
 .fourth-background {
-    -fx-background-color: '#FFFFFF'
+	-fx-background-color: #FFFFFF;
 
 }
 
 .gray-background {
     -fx-background-color: '#363A54'
 }
-
-.transparent-background {
-    -fx-background-color: rgba(0, 0, 0, 0);
-}
-
-.radius {
-    -fx-background-radius: 10px;
-}
-
-.light-gray-background {
-    -fx-background-color: '#E7E7E7';
-}
-
-.incoming-bubble {
-    -fx-background-color : '#FFFFFF';
-    -fx-background-radius: 10px;
-}
-
-.outgoing-bubble {
-    -fx-background-color : '#7192D9';
-    -fx-background-radius: 10px;
-}
-
-.testing-font {
-    -fx-font-family: "Fresca-Regular";
-}
-
-Button {
-    -fx-text-fill       : black;
-    -fx-font-family     : Arial, Helvetica, sans-serif;
-    -fx-font-size       : 12px;
-    -fx-background-color: white;
-    -fx-border-color    : white;
-}
-
-/* Button:hover {
-  -fx-background-color: #CCA4FF;
-  -fx-text-fill: white;
-} */
 
 .bg-color-pricker {
     -fx-pref-width: 50;
@@ -77,4 +38,62 @@ Button {
     -fx-text-fill    : null;
     /* -fx-pref-width:50;
     -fx-pref-height  :50; */
+	-fx-background-color: #363A54;
+}
+
+.transparent-background {
+	-fx-background-color: rgba(0, 0, 0, 0);
+}
+
+.radius {
+	-fx-background-radius: 10px;
+}
+
+.light-gray-background {
+	-fx-background-color: #E7E7E7;
+}
+
+.incoming-bubble {
+	-fx-background-color: #FFFFFF;
+	-fx-background-radius: 10px;
+}
+
+.outgoing-bubble {
+	-fx-background-color: #7192D9;
+	-fx-background-radius: 10px;
+}
+
+.testing-font {
+	-fx-font-family: "Fresca-Regular";
+}
+
+Button {
+	-fx-text-fill: black;
+	-fx-font-family: Arial, Helvetica, sans-serif;
+	-fx-font-size: 12px;
+	-fx-background-color: white;
+	-fx-border-color: white;
+}
+
+/* Button:hover {
+	-fx-background-color: #CCA4FF;
+	-fx-text-fill: white;
+} */
+
+.list-view .list-cell:even {
+	-fx-background-color: #363A54;
+	-fx-text-fill: black;
+}
+
+.list-view .list-cell:odd {
+	-fx-background-color: #363A54;
+	-fx-text-fill: black;
+}
+
+.combo-box .list-cell,.arrow-button  {
+	-fx-background-color:#363A54;
+}
+.combo-box-popup .list-view .list-cell {
+	-fx-background-color:#363A54;
+	-fx-text-fill:white;
 }

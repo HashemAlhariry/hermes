@@ -1,12 +1,13 @@
 package gov.iti.jets.server.business.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import common.business.dtos.MessageDto;
 import gov.iti.jets.server.business.daos.MessageDao;
 import gov.iti.jets.server.business.services.MessageService;
 import gov.iti.jets.server.persistance.entities.MessageEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MessageServiceImpl implements MessageService {
 

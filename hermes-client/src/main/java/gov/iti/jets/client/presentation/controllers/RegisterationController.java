@@ -24,6 +24,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Button;
@@ -40,11 +41,11 @@ import javafx.scene.layout.BorderPane;
 
 public class RegisterationController implements Initializable {
 
-    private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
-    private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
-    private static final String PASSWORD = "password";
-    private static final String PASSWORD_CONFIRMATION = "password_confirmation";
-    private static final String PHONE_NUMBER = "phone_number";
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+	private static final String PASSWORD = "password";
+	private static final String PASSWORD_CONFIRMATION = "password_confirmation";
+	private static final String PHONE_NUMBER = "phone_number";
 
     @FXML
     private BorderPane mainPane;
@@ -174,7 +175,9 @@ public class RegisterationController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        stageCoordinator.switchtoHomePageScene();
+        if (userModel.getBio() != null) {
+            stageCoordinator.switchtoHomePageScene();
+        }
     }
 
     @FXML
@@ -212,7 +215,7 @@ public class RegisterationController implements Initializable {
     }
 
     private void fillCountryComboBox() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Countries.txt");
         try {
             InputStreamReader streamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(streamReader);

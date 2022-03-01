@@ -14,29 +14,22 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@StatisticsStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.gui.controllers.StatisticsController">
 
     <children>
-        <Label id="statisticsLabel" fx:id="textLabel" alignment="CENTER" layoutX="210.0" layoutY="14.0" prefHeight="9.0" prefWidth="299.0" text="Statistics" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+        <Label id="statisticsLabel" fx:id="textLabel" alignment="CENTER" layoutY="56.0" prefHeight="9.0" prefWidth="299.0" text="Statistics" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
             <font>
                 <Font size="20.0" />
             </font>
         </Label>
-        <HBox alignment="CENTER" layoutX="152.0" layoutY="195.0" spacing="20.0" stylesheets="@StatisticsStyle.css" AnchorPane.bottomAnchor="195.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="195.0">
-            <children>
-                <PieChart fx:id="countryPieChart" prefHeight="320.0" prefWidth="239.0">
+        <HBox alignment="CENTER" layoutY="128.0" maxHeight="479.0" maxWidth="1024.0" minHeight="10.0" minWidth="10.0" prefHeight="479.0" prefWidth="1024.0" spacing="20.0" stylesheets="@StatisticsStyle.css" AnchorPane.bottomAnchor="113.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="128.0">
+         <children>
+                <PieChart fx:id="countryPieChart" prefHeight="400.0" prefWidth="300.0">
                     <styleClass>
                         <String fx:value="chart-legend" />
                         <String fx:value="chart-legend" />
                     </styleClass>
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
                 </PieChart>
-                <PieChart fx:id="onlineOfflineUserPieChart" prefHeight="320.0" prefWidth="244.0" styleClass="chart-legend" />
-                <PieChart fx:id="userGenderPieChart" prefHeight="320.0" prefWidth="239.0" styleClass="chart-legend">
-                    <HBox.margin>
-                        <Insets />
-                    </HBox.margin>
-                </PieChart>
-            </children>
+                <PieChart fx:id="userGenderPieChart" prefHeight="400.0" prefWidth="300.0" styleClass="chart-legend" />
+                <PieChart fx:id="onlineOfflineUserPieChart" prefHeight="400.0" prefWidth="300.0" styleClass="chart-legend" />
+         </children>
         </HBox>
         <StackPane id="back-stackpane" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
             <children>

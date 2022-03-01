@@ -3,6 +3,7 @@ package common.business.dtos;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+
 public class UserDto implements Serializable {
 	// (Phone Number, Display Name, email, picture, password, confirmation password,
 	// gender, country, date of birth, bio.

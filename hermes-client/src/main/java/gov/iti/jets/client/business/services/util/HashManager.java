@@ -1,69 +1,40 @@
 package gov.iti.jets.client.business.services.util;
 
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.util.Arrays;
-import java.util.Base64;
-import java.util.Random;
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.PBEKeySpec;
+import java.security.MessageDigest;
 
 public enum HashManager {
     INSTANCE;
-    /* Declaration of variables */
-    private final Random random = new SecureRandom();
-    private final String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-    private final int iterations = 10000;
-    private final int keylength = 256;
 
-    /* Method to generate the salt value. */
-    public String getSaltvalue(int length) {
-        StringBuilder finalval = new StringBuilder(length);
-
-        for (int i = 0; i < length; i++) {
-            finalval.append(characters.charAt(random.nextInt(characters.length())));
-        }
-
-        return new String(finalval);
-    }
-
-    /* Method to generate the hash value */
-    public byte[] hash(char[] password, byte[] salt) {
-        PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, keylength);
-        Arrays.fill(password, Character.MIN_VALUE);
+    /* Driver Code */
+    public String generateSecurePassword(String password) {
+        /* Plain-text password initialization. */
+        String encryptedpassword = null;
         try {
-            SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-            return skf.generateSecret(spec).getEncoded();
-        } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-            throw new AssertionError("Error while hashing a password: " + e.getMessage(), e);
-        } finally {
-            spec.clearPassword();
+            /* MessageDigest instance for MD5. */
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+
+            /* Add plain-text password bytes to digest using MD5 update() method. */
+            messageDigest.update(password.getBytes());
+
+            /* Convert the hash value into bytes */
+            byte[] bytes = messageDigest.digest();
+
+            /*
+             * The bytes array has bytes in decimal form. Converting it into hexadecimal
+             * format.
+             */
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                s.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            /* Complete hashed password in hexadecimal format */
+            encryptedpassword = s.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
-    }
+        return encryptedpassword;
 
-    /* Method to encrypt the password using the original password and salt value. */
-    public String generateSecurePassword(String password, String salt) {
-        String finalval = null;
-
-        byte[] securePassword = hash(password.toCharArray(), salt.getBytes());
-
-        finalval = Base64.getEncoder().encodeToString(securePassword);
-
-        return finalval;
-    }
-
-    /* Method to verify if both password matches or not */
-    public boolean verifyUserPassword(String providedPassword,
-            String securedPassword, String salt) {
-        boolean finalval = false;
-
-        /* Generate New secure password with the same salt */
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-
-        /* Check if two passwords are equal */
-        finalval = newSecurePassword.equalsIgnoreCase(securedPassword);
-
-        return finalval;
     }
 }

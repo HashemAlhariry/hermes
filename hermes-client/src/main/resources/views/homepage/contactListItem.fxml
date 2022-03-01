@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
+
+<HBox fx:id="contactItemHbox" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="60.0" prefWidth="190.0" spacing="10.0" stylesheets="@ContactListItem.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="contactImage" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </ImageView>
+      <Label fx:id="contactName" text="Mina Talaat" HBox.hgrow="ALWAYS" />
+      <AnchorPane HBox.hgrow="ALWAYS">
+         <children>
+            <Circle fx:id="userStatusCircle" fill="WHITE" layoutX="31.0" layoutY="30.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" AnchorPane.bottomAnchor="23.8397089948065" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="23.0" />
+         </children>
+      </AnchorPane>
+   </children>
+</HBox>
