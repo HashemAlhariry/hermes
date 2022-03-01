@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
    <left>
