@@ -15,6 +15,7 @@ import common.business.dtos.GroupDetailsDto;
 import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.persistance.entities.GroupEntity;
 import gov.iti.jets.server.persistance.entities.GroupUserEntity;
+import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
 
 public class GroupServiceImpl implements GroupService {
@@ -118,8 +119,4 @@ public class GroupServiceImpl implements GroupService {
         return null;
     }
 
-    @Override
-    public void createGroup(GroupDto groupDto) {
-
-    }
 }
