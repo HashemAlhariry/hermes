@@ -52,6 +52,15 @@
                         <Insets bottom="20.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
+
+                  <ImageView  fitHeight="30.0" fitWidth="30.0" onMouseClicked="#onAddGroupClicked" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../images/add-group.png" />
+                     </image>
+                     <VBox.margin>
+                        <Insets bottom="20.0" left="10.0" top="10.0" />
+                     </VBox.margin>
+                  </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />
                   <ComboBox fx:id="onlineStatusComboBox" nodeOrientation="LEFT_TO_RIGHT" prefWidth="100.0" promptText="Status" rotate="270.0" visibleRowCount="4">
                      <VBox.margin>

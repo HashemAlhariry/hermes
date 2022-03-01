@@ -250,7 +250,7 @@ public class HomePageController implements Initializable {
 		newContact.setPromptText("Add Numbers");
 		TextArea addedContacts = new TextArea();
 		addedContacts.setPrefHeight(100);
-		addedContacts.setPrefWidth(100);
+		addedContacts.setPrefWidth(200);
 		addedContacts.setEditable(false);
 		addedContacts.setPromptText("Added Contacts");
 
@@ -314,7 +314,7 @@ public class HomePageController implements Initializable {
 	}
 
 	@FXML
-	void onAddGroupClicked(MouseEvent mouseEvent){
+		void onAddGroupClicked(MouseEvent mouseEvent){
 
 		// contact list to send invitation group to all users
 		List<String> invitedContacts = new ArrayList<>();
