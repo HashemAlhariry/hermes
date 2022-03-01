@@ -1,5 +1,6 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.rmi.AccessException;
 import java.rmi.RemoteException;
@@ -13,6 +14,7 @@ import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +22,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -49,9 +52,33 @@ public class NextloginController implements Initializable {
 		}
 	}
 
+	private void initUserImage() {
+		Image image;
+		System.out.println("IMAGE : " + ModelsFactory.INSTANCE.getUserModel().getPicture());
+		if (ModelsFactory.INSTANCE.getUserModel().getPicture() ==null) {
+			try {
+
+				byte[] imgBytes = RMIConnection.INSTANCE.getServer()
+						.getUserProfilePicture(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+				System.out.println("bytes : " + imgBytes);
+				if (imgBytes != null) {
+					image = Util.INSTANCE.fromArrayOfBytesToImage(imgBytes);
+					ModelsFactory.INSTANCE.getUserModel().setPicture(image);
+				}
+
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
 	@FXML
 	void signinButtonAction(ActionEvent event) {
 		try {
+
 			UserAuthDto userAuthDto = new UserAuthDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
 					passwordTextField.getText());
 			UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
@@ -60,6 +87,7 @@ public class NextloginController implements Initializable {
 				System.out.println(userDto.bio);
 				var newUserModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
 				ModelsFactory.INSTANCE.setUserModel(newUserModel);
+				initUserImage();
 				stageCoordinator.switchtoHomePageScene();
 			} else {
 				Alert alert = new Alert(Alert.AlertType.ERROR);

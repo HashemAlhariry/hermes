@@ -33,7 +33,7 @@ public class LoginController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		
 		try {
 			Registry registry = LocateRegistry.getRegistry();
 			for (var s : registry.list()) {
