@@ -1,11 +1,11 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.NotBoundException;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
-
 
 import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
@@ -32,11 +31,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -122,7 +122,6 @@ public class HomePageController implements Initializable {
 			initUserStatus();
 		});
 
-
 		// Sending message to vbox in chat box to a specific contact
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -200,7 +199,6 @@ public class HomePageController implements Initializable {
 		}
 	}
 
-
 	@FXML
 	void onSearchTextFieldClick(ActionEvent event) {
 
@@ -222,6 +220,7 @@ public class HomePageController implements Initializable {
 			RMIConnection.INSTANCE.close();
 			ModelsFactory.INSTANCE.getContactsModel().contactsProperty().clear();
 			StageCoordinator.INSTANCE.getSceneMap().clear();
+			clearCredsIfFound();
 			stageCoordinator.switchToLoginScene();
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -229,7 +228,6 @@ public class HomePageController implements Initializable {
 			e.printStackTrace();
 		}
 	}
-
 
 	// Added Contact/Contacts feature
 	@FXML
@@ -254,7 +252,6 @@ public class HomePageController implements Initializable {
 		addedContacts.setEditable(false);
 		addedContacts.setPromptText("Added Contacts");
 
-
 		gridPane.setStyle("-fx-background-color: #363A54; "
 				+ "-fx-font-style: italic;");
 		gridPane.setHgap(10);
@@ -265,7 +262,6 @@ public class HomePageController implements Initializable {
 		gridPane.add(newContact, 0, 0);
 		gridPane.add(addOneContact, 0, 1);
 		gridPane.add(addedContacts, 4, 0);
-
 
 		dialog.getDialogPane().setContent(gridPane);
 		Platform.runLater(() -> addOneContact.setOnAction(new EventHandler<ActionEvent>() {
@@ -314,7 +310,7 @@ public class HomePageController implements Initializable {
 	}
 
 	@FXML
-		void onAddGroupClicked(MouseEvent mouseEvent){
+	void onAddGroupClicked(MouseEvent mouseEvent) {
 
 		// contact list to send invitation group to all users
 		List<String> invitedContacts = new ArrayList<>();
@@ -356,14 +352,14 @@ public class HomePageController implements Initializable {
 
 		Label groupNameLabel = new Label("Group Name");
 		groupNameLabel.setTextFill(Color.WHITE);
-		gridPane.add(groupNameLabel,1 , 0);
+		gridPane.add(groupNameLabel, 1, 0);
 
 		TextField groupNameField = new TextField();
 		groupNameField.setPromptText("Group Name");
-		gridPane.add(groupNameField,1 , 1);
+		gridPane.add(groupNameField, 1, 1);
 		gridPane.add(addedContacts, 1, 2);
-		gridPane.add(temp,2 , 1);
-		gridPane.add(defaultImageView,3 , 1);
+		gridPane.add(temp, 2, 1);
+		gridPane.add(defaultImageView, 3, 1);
 		gridPane.add(chooseImageButton, 3, 2);
 
 		Platform.runLater(() -> addOneContact.setOnAction(new EventHandler<ActionEvent>() {
@@ -379,14 +375,14 @@ public class HomePageController implements Initializable {
 			}
 		}));
 
-		//Image bytes
+		// Image bytes
 		final byte[][] imageBytes = new byte[1][1];
 		Platform.runLater(() -> chooseImageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					imageBytes[0] =loadPicture(defaultImageView);
-				 } catch (IOException e) {
+					imageBytes[0] = loadPicture(defaultImageView);
+				} catch (IOException e) {
 					e.printStackTrace();
 				}
 			}
@@ -409,19 +405,17 @@ public class HomePageController implements Initializable {
 
 		if (!invitedContacts.isEmpty() && !groupNameField.getText().isEmpty()) {
 			LocalDateTime myObj = LocalDateTime.now();
-			//SEND GROUP DETAILS TO BE SAVED TO SERVER
+			// SEND GROUP DETAILS TO BE SAVED TO SERVER
 			System.out.println(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
 			try {
 				RMIConnection.INSTANCE.getServer().addGroupChat(
 						new GroupDetailsDto(
 								groupNameField.getText(),
-								groupNameField.getText()+"_"+myObj,
+								groupNameField.getText() + "_" + myObj,
 								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
 								invitedContacts,
 								imageBytes[0],
-								groupNameField.getText()+"_"+myObj
-								)
-				);
+								groupNameField.getText() + "_" + myObj));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -473,29 +467,40 @@ public class HomePageController implements Initializable {
 			}
 		});
 		onlineStatusComboBox.getSelectionModel().select(0);
-		
-	}
 
+	}
 
 	private byte[] loadPicture(ImageView imageView) throws IOException {
 
-		byte [] imageBytes;
+		byte[] imageBytes;
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().clear();
-		fileChooser.getExtensionFilters().add( new FileChooser.ExtensionFilter("Image Files","*.png","*.jpg","*.gif","*.jpeg"));
-		File file =  fileChooser.showOpenDialog(null);
+		fileChooser.getExtensionFilters()
+				.add(new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.gif", "*.jpeg"));
+		File file = fileChooser.showOpenDialog(null);
 
-		if(file!=null){
+		if (file != null) {
 
 			imageView.setImage(new Image(file.toURI().toString()));
-			imageBytes=Files.readAllBytes(file.toPath());
+			imageBytes = Files.readAllBytes(file.toPath());
 			return imageBytes;
 
-		}else{
+		} else {
 			System.out.println("InvalidImage");
 		}
-	return null;
+		return null;
 	}
 
+	private void clearCredsIfFound() {
+		File creds = Paths.get("creds").toFile();
+		if (!creds.exists())
+			return;
+		try {
+			Files.readAllLines(creds.toPath()).forEach(System.out::println);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		creds.delete();
+	}
 
 }

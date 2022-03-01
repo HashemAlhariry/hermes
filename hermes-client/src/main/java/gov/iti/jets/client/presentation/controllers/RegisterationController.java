@@ -10,8 +10,6 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import common.business.dtos.UserDto;
-import net.synedra.validatorfx.Validator;
-import net.synedra.validatorfx.Check.Context;
 import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
@@ -20,14 +18,13 @@ import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.validation.Messages;
 import gov.iti.jets.client.presentation.util.validation.Validators;
 import gov.iti.jets.client.presistance.network.RMIConnection;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.application.Platform;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
@@ -38,6 +35,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import net.synedra.validatorfx.Check.Context;
+import net.synedra.validatorfx.Validator;
 
 public class RegisterationController implements Initializable {
 
