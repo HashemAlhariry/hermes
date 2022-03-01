@@ -12,6 +12,7 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

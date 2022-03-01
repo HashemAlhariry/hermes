@@ -126,14 +126,17 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 				// updating statistics in server
 				StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get() + 1);
-				StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get() - 1);
 
+
+				// updating statistics in server
 				if (userDto.gender)
 					StatisticsData.INSTANCE.setMaleUsers(StatisticsData.INSTANCE.maleUsers.get() + 1);
 				else
 					StatisticsData.INSTANCE.setFemaleUsers(StatisticsData.INSTANCE.femaleUsers.get() + 1);
 
+				// updating statistics in server
 				StatisticsData.INSTANCE.updatePieChartDataForCountry(userDto.country);
+				StatisticsData.INSTANCE.setAllUsers(StatisticsData.INSTANCE.allUsers.get()+1);
 
 			} catch (RemoteException e) {
 				e.printStackTrace();

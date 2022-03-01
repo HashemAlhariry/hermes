@@ -2,6 +2,7 @@ package gov.iti.jets.server.presentation.gui.controllers;
 
 import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.PrivateGroupDetailsDto;
+import gov.iti.jets.server.presentation.gui.util.StatisticsData;
 import gov.iti.jets.server.presentation.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -75,6 +76,8 @@ public class AnnouncementController implements Initializable {
 						if(serverActivated){
 							serverActivated=false;
 							serverActivationButton.setText("Server Closed");
+							StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.allUsers.get());
+							StatisticsData.INSTANCE.setOnlineUsers(0);
 							//close service on all online users
 							try {
 								RMIConnection.INSTANCE.serverAvailability.set(false);

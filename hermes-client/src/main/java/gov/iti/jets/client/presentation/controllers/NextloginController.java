@@ -38,7 +38,7 @@ public class NextloginController implements Initializable {
 	void signinButtonAction(ActionEvent event) {
 		try {
 			ModelsFactory.INSTANCE.getUserModel().setPassword(passwordTextField.getText());
-			// sending raw password to the server unitll secure password hashing is fixed
+			// sending raw password to the server unitl secure password hashing is fixed
 			UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(ModelsFactory.INSTANCE.getUserModel());
 			System.out.println(passwordTextField.getText());
 			System.out.println(userAuthDto.password);
