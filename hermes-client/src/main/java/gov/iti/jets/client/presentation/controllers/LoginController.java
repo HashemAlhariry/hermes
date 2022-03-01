@@ -10,6 +10,7 @@ import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +22,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
 
 public class LoginController implements Initializable {
 
@@ -39,6 +39,8 @@ public class LoginController implements Initializable {
 	private PasswordField passwordTextField;
 	@FXML
 	private Button signInButton;
+
+	private Boolean checkServerAvailabilty = true;
 
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
@@ -71,18 +73,27 @@ public class LoginController implements Initializable {
 	@FXML
 	void nextButtonAction(ActionEvent event) {
 		try {
+			Utils.INSTANCE.booleanProperty.set(RMIConnection.INSTANCE.getServer().getServerAvailability());
 
-			UserDto userDto = RMIConnection.INSTANCE.getServer().checkPhone(ServiceFactory.INSTANCE.getClientImpl(),
-					phoneTextField.getText());
-			ModelsFactory.INSTANCE.getUserModel().setPhoneNumber(phoneTextField.getText());
-			if (userDto != null) {
-				stageCoordinator.switchToNextLoginScene();
+			if (Utils.INSTANCE.booleanProperty.get()) {
+				UserDto userDto = RMIConnection.INSTANCE.getServer().checkPhone(ServiceFactory.INSTANCE.getClientImpl(),
+						phoneTextField.getText());
+				ModelsFactory.INSTANCE.getUserModel().setPhoneNumber(phoneTextField.getText());
+				if (userDto != null) {
+					stageCoordinator.switchToNextLoginScene();
+				} else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("Hermes");
+					alert.setHeaderText(null);
+					alert.setContentText("Not found");
+					alert.showAndWait();
+				}
 			} else {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle("Hermes");
-				alert.setHeaderText(null);
-				alert.setContentText("Not found");
-				alert.showAndWait();
+				Platform.runLater(() -> {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setContentText("The server is down we are sorry to inform you that !");
+					alert.show();
+				});
 			}
 
 		} catch (RemoteException e) {

@@ -8,6 +8,8 @@ import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.PrivateGroupDetailsDto;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.web.WebEngine;
@@ -17,6 +19,8 @@ import javafx.stage.Modality;
 public enum Utils {
 
 	INSTANCE;
+
+	public BooleanProperty booleanProperty = new SimpleBooleanProperty(true);
 
 	public boolean checkNumberInString(String phoneNumber) {
 		Pattern pattern = Pattern.compile(".*[^0-9].*");
@@ -77,7 +81,6 @@ public enum Utils {
 			webView.getEngine().loadContent(broadCastMessage);
 			webView.setPrefSize(600, 200);
 			alert.getDialogPane().setContent(webView);
-			;
 			alert.showAndWait();
 
 		});

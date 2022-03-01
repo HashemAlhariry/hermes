@@ -36,14 +36,13 @@ public class AnnouncementController implements Initializable {
 	@FXML
 	private TextField messageTextField;
 	@FXML
-	private VBox announcementMessagesVBox;
-	@FXML
-	private ScrollPane mainScrollPane;
-	@FXML
 	private Button statisticsButton;
-
 	@FXML
 	private HTMLEditor htmlEditor;
+	@FXML
+	private Button serverActivationButton;
+
+	private Boolean serverActivated=true;
 	private String broadcastTextMessages;
 
 	@Override
@@ -53,8 +52,6 @@ public class AnnouncementController implements Initializable {
 		sendMessageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-
-
 				broadcastTextMessages=htmlEditor.getHtmlText();
 				if (!broadcastTextMessages.isEmpty()) {
 					showAlert();
@@ -70,17 +67,47 @@ public class AnnouncementController implements Initializable {
 			}
 		});
 
+		serverActivationButton.setOnAction(
+				new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						System.out.println("Server Availabilty " + serverActivated );
+						if(serverActivated){
+							serverActivated=false;
+							serverActivationButton.setText("Server Closed");
+							//close service on all online users
+							try {
+								RMIConnection.INSTANCE.serverAvailability.set(false);
+								RMIConnection.INSTANCE.getServer().sendServerAvailability(false);
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
+
+						}
+						else{
+							serverActivated=true;
+							serverActivationButton.setText("Server Online");
+							//return service on all online users
+							try {
+								RMIConnection.INSTANCE.serverAvailability.set(true);
+								RMIConnection.INSTANCE.getServer().sendServerAvailability(true);
+							} catch (RemoteException e) {
+								e.printStackTrace();
+							}
+						}
+					}
+				}
+		);
 	}
 
 	public void showAlert() {
-
 
 		Alert alert = new Alert(Alert.AlertType.INFORMATION);
 		alert.setHeaderText("Server Announcemenet");
 		WebView webView = new WebView();
 		webView.getEngine().loadContent(htmlEditor.getHtmlText());
 		webView.setPrefSize(600, 200);
-		alert.getDialogPane().setContent(webView);;
+		alert.getDialogPane().setContent(webView);
 		alert.showAndWait();
 		if (alert.getResult() == ButtonType.OK) {
 
@@ -109,40 +136,10 @@ public class AnnouncementController implements Initializable {
 			broadcastTextMessages += messageToSend;
 			broadcastTextMessages += " \n";
 
-			TextFlow textFlow = new TextFlow(text);
-			textFlow.setStyle("-fx-background-color:rgb(233,233,235); " + "-fx-background-radius: 20px;");
-			textFlow.setPadding(new Insets(5, 10, 5, 10));
-			hBox.getChildren().add(textFlow);
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					announcementMessagesVBox.getChildren().add(hBox);
-				}
-			});
-
 			messageTextField.clear();
 		}
 	}
 
-	public static String getText(String htmlText) {
 
-		String result = "";
-
-		Pattern pattern = Pattern.compile("<[^>]*>");
-		Matcher matcher = pattern.matcher(htmlText);
-		final StringBuffer text = new StringBuffer(htmlText.length());
-
-		while (matcher.find()) {
-			matcher.appendReplacement(
-					text,
-					" ");
-		}
-
-		matcher.appendTail(text);
-
-		result = text.toString().trim();
-
-		return result;
-	}
 
 }
