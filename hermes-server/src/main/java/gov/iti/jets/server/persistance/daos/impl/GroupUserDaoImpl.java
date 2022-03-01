@@ -15,8 +15,8 @@ public class GroupUserDaoImpl implements GroupUserDao {
 
         try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
 
-            preparedStmt.setInt(1, groupUserEntity.getGroupIdFk());
-            preparedStmt.setString(2,groupUserEntity.getUserPhoneFk());
+            preparedStmt.setInt(1, groupUserEntity.groupIdFk);
+            preparedStmt.setString(2,groupUserEntity.userPhoneFk);
 
 
             // isInserted if returns 1 and in case insertion failed returns 0

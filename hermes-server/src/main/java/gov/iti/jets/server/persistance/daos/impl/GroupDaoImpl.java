@@ -50,9 +50,9 @@ public class GroupDaoImpl implements GroupDao {
 
         try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
 
-            preparedStmt.setString(1, groupEntity.getName());
-            preparedStmt.setString(2,groupEntity.getImage());
-            preparedStmt.setInt(3, groupEntity.getParticipantsNumber());
+            preparedStmt.setString(1, groupEntity.name);
+            preparedStmt.setString(2,groupEntity.image);
+            preparedStmt.setInt(3, groupEntity.participantsNumber);
 
             // isInserted if returns 1 and in case insertion failed returns 0
             int isInserted = preparedStmt.executeUpdate();
@@ -82,7 +82,7 @@ public class GroupDaoImpl implements GroupDao {
     public int getGroupId(GroupEntity groupEntity) {
         String sql = "Select id from hermesdb.group where name = ? ";
         try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
-            preparedStmt.setString(1, groupEntity.getName());
+            preparedStmt.setString(1, groupEntity.name);
             var resultSet = preparedStmt.executeQuery();
             if (resultSet.next()) {
 

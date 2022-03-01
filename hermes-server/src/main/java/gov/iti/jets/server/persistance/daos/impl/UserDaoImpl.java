@@ -11,7 +11,6 @@ import gov.iti.jets.server.persistance.entities.UserEntity;
 public class UserDaoImpl implements UserDao {
 
 	private DataSource dataSource;
-
 	public UserDaoImpl() {
 		this.dataSource = DataSource.INSTANCE;
 	}
@@ -74,7 +73,7 @@ public class UserDaoImpl implements UserDao {
 
 	public Optional<UserEntity> getUserByPhone(String phone) {
 
-		String sql = "Select * from user where phone = ?";
+		String sql = "select * from user where phone = ?";
 		UserEntity userEntity = new UserEntity();
 		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
 				var preparedStmt = connection.prepareStatement(sql)) {
