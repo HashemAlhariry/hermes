@@ -1,5 +1,6 @@
 package gov.iti.jets.server.business.services.impl;
 
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -56,11 +57,16 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	private void fillDto(List<GroupDto> groupDtos, GroupEntity gE, OnlineStatus onlineStatus) throws IOException {
-		var img = ImageIO.read(getClass().getResource("/userImages/" + gE.image));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+		BufferedImage img;
+	 	if(gE.image==null){
+			 gE.image = "person.png" ;
+		}
+		img = ImageIO.read(getClass().getResource("/userImages/" + gE.image));
+		ByteArrayOutputStream baos  = new ByteArrayOutputStream();
 		ImageIO.write(img, gE.image.split("\\.")[1], baos);
-		// null because no status is set here
 		groupDtos.add(new GroupDto(gE.id, gE.name, baos.toByteArray(), onlineStatus));
+
 	}
 
 	@Override
