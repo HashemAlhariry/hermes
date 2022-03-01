@@ -50,7 +50,7 @@ values ('<html dir="ltr"><head></head><body contenteditable="true"><p style=" ba
 			var preparedStatement = connection.prepareStatement(query);) {
 			preparedStatement.setString(1, messageEntity.content);
 			preparedStatement.setDate(2, messageEntity.sendDate);
-			preparedStatement.setInt(3, messageEntity.receiverId);
+			preparedStatement.setInt(3, messageEntity.groupId);
 			preparedStatement.setString(4, messageEntity.senderPhone);
 			preparedStatement.executeUpdate();
 		} catch (SQLException e) {
@@ -62,7 +62,7 @@ values ('<html dir="ltr"><head></head><body contenteditable="true"><p style=" ba
 	private void fillMessageEntity(ResultSet resultSet, MessageEntity messageEntity) throws SQLException {
 		messageEntity.content = resultSet.getString("content");
 		messageEntity.sendDate = resultSet.getDate("send_date");
-		messageEntity.receiverId = resultSet.getInt("group_user_group_id_fk");
+		messageEntity.groupId = resultSet.getInt("group_user_group_id_fk");
 		messageEntity.senderPhone = resultSet.getString("group_user_user_phone_fk");
 	}
 

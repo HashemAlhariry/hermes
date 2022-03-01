@@ -7,7 +7,7 @@ public class MessageEntity {
 	public int id;
 	public String content;
 	public Date sendDate;
-	public int receiverId;
+	public int groupId;
 	public String senderPhone;
 
 	public MessageEntity() {
@@ -22,7 +22,7 @@ public class MessageEntity {
 		this.id = id;
 		this.content = content;
 		this.sendDate = sendDate;
-		this.receiverId = receiver;
+		this.groupId = receiver;
 		this.senderPhone = sender;
 	}
 
@@ -33,7 +33,7 @@ public class MessageEntity {
 			String sender) {
 		this.content = content;
 		this.sendDate = sendDate;
-		this.receiverId = receiver;
+		this.groupId = receiver;
 		this.senderPhone = sender;
 	}
 }

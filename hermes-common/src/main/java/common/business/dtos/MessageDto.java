@@ -8,7 +8,7 @@ public class MessageDto implements Serializable {
     public int id;
     public String content;
     public Date sendDate;
-    public int receiverId;
+    public int groupId;
     public String senderPhone;
 
     public MessageDto() {
@@ -24,7 +24,7 @@ public class MessageDto implements Serializable {
         this.content = content;
         this.sendDate = sendDate;
         this.senderPhone = sender;
-        this.receiverId = receiver;
+        this.groupId = receiver;
     }
 
     public MessageDto(
@@ -34,7 +34,7 @@ public class MessageDto implements Serializable {
             String sender) {
         this.content = content;
         this.sendDate = sendDate;
-        this.receiverId = receiver;
+        this.groupId = receiver;
         this.senderPhone = sender;
     }
 

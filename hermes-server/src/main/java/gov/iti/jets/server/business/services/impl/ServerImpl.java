@@ -172,7 +172,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public void sendMessage(MessageDto messageDto) {
 
 		// GroupDao group = new GroupDaoImpl();
-		// group.getUsersByGroupId(messageDto.receiverId);
+		// group.getUsersByGroupId(messageDto.groupId);
 
 		// ask db to get all users joined to this group id from messageDto
 		/*
