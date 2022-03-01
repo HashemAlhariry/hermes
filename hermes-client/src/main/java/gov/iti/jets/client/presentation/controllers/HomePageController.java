@@ -120,7 +120,9 @@ public class HomePageController implements Initializable {
 
 	@FXML
 	private ComboBox<String> onlineStatusComboBox;
+	@FXML
 	private ImageView contactImageView;
+
 	@FXML
 	private ImageView addGroupView;
 
