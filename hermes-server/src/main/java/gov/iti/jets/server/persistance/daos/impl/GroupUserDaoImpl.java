@@ -13,7 +13,8 @@ public class GroupUserDaoImpl implements GroupUserDao {
         //inserting new group for 2 specific users
         String sql = "insert into group_user (group_id_fk, user_phone_fk) values (?,?)";
 
-        try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+        try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+             var preparedStmt = connection.prepareStatement(sql)) {
 
             preparedStmt.setInt(1, groupUserEntity.groupIdFk);
             preparedStmt.setString(2,groupUserEntity.userPhoneFk);

@@ -48,7 +48,8 @@ public class GroupDaoImpl implements GroupDao {
         //inserting new group for 2 specific users
         String sql = "insert into hermesdb.group (name, image, particpiants_number) values (?,?,?)";
 
-        try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+        try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 
             preparedStmt.setString(1, groupEntity.name);
             preparedStmt.setString(2,groupEntity.image);
@@ -81,7 +82,8 @@ public class GroupDaoImpl implements GroupDao {
     @Override
     public int getGroupId(GroupEntity groupEntity) {
         String sql = "Select id from hermesdb.group where name = ? ";
-        try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+        try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
             preparedStmt.setString(1, groupEntity.name);
             var resultSet = preparedStmt.executeQuery();
             if (resultSet.next()) {
@@ -122,7 +124,8 @@ public class GroupDaoImpl implements GroupDao {
 				"ON a.group_id_fk = b.group_id_fk where " +
 				"a.user_phone_fk = ? and b.user_phone_fk= ? ) and particpiants_number = 2;";
 
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 
 			preparedStmt.setString(1, client1);
 			preparedStmt.setString(2, client2);
