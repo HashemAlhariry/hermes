@@ -63,9 +63,10 @@ public enum MapperImpl implements Mapper<UserModel> {
 		if (userModel == null) {
 			return null;
 		}
+        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword());
 
 		return new UserAuthDto(
-				userModel.getPhoneNumber(), userModel.getPassword());
+				userModel.getPhoneNumber(), encryptedPassword);
 	}
 
 	@Override

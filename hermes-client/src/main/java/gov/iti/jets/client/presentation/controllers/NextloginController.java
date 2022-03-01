@@ -37,10 +37,11 @@ public class NextloginController implements Initializable {
 	@FXML
 	void signinButtonAction(ActionEvent event) {
 		try {
+			ModelsFactory.INSTANCE.getUserModel().setPassword(passwordTextField.getText());
 			// sending raw password to the server unitll secure password hashing is fixed
-			UserAuthDto userAuthDto = new UserAuthDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
-					passwordTextField.getText());
+			UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(ModelsFactory.INSTANCE.getUserModel());
 			System.out.println(passwordTextField.getText());
+			System.out.println(userAuthDto.password);
 			System.out.println(ModelsFactory.INSTANCE.getUserModel().getPassword());
 			UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
 					userAuthDto);

@@ -31,7 +31,7 @@ public class UserEntity {
 
 	public UserEntity(){}
 
-	public UserEntity(String phone, String name, String email, String password, boolean gender, Date dob,
+	public UserEntity(String phone,String password, String name, String email , boolean gender, Date dob,
 			String country, String bio) {
 		this.phone = phone;
 		this.name = name;

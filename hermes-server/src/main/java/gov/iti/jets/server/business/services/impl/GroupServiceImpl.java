@@ -1,6 +1,7 @@
 package gov.iti.jets.server.business.services.impl;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
