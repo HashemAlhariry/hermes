@@ -1,15 +1,16 @@
 package common.business.services;
 
-import common.business.dtos.GroupDto;
+import common.business.dtos.*;
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import common.business.dtos.InvitationResponse;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.util.OnlineStatus;
+import common.business.dtos.InvitationResponseDto;
 
 import java.util.List;
 
@@ -37,4 +38,12 @@ public interface Server extends Remote {
 	public byte[] getUserImageByPhone(String phone) throws RemoteException;
 
 	public void changeMyOnlineStatus(OnlineStatus status, String phoneNumber) throws RemoteException;
+
+	public void invitationResponse(InvitationResponseDto invitationResponseDto) throws RemoteException;
+
+	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException;
+
+	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException;
+
+	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException;
 }

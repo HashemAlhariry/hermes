@@ -2,27 +2,19 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-
+<?import javafx.scene.web.HTMLEditor?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@AnnouncementStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.server.presentation.gui.controllers.AnnouncementController">
     <children>
-        <Label fx:id="textLabel" alignment="CENTER" layoutX="345.0" layoutY="37.0" prefHeight="35.0" prefWidth="300.0" text="Annoucement Screen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+        <Label fx:id="textLabel" alignment="CENTER" layoutY="27.0" prefHeight="35.0" prefWidth="300.0" text="Annoucement Screen" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0">
             <font>
                 <Font size="29.0" />
             </font>
         </Label>
-        <ScrollPane fx:id="mainScrollPane" fitToWidth="true" layoutX="42.0" layoutY="104.0" prefHeight="400.0" prefWidth="517.0" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="100.0">
-            <content>
-                <VBox fx:id="announcementMessagesVBox" />
-            </content>
-        </ScrollPane>
-        <TextField fx:id="messageTextField" layoutX="80.0" layoutY="518.0" onAction="#stageMessages" prefHeight="25.0" prefWidth="517.0" AnchorPane.bottomAnchor="176.06832075631198" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
-        <Button fx:id="sendMessageButton" alignment="CENTER" layoutX="80.0" layoutY="563.0" mnemonicParsing="false" text="Send Boradcast" AnchorPane.bottomAnchor="128.07620392050183" AnchorPane.leftAnchor="80.0" />
-        <Button fx:id="statisticsButton" layoutX="818.0" layoutY="563.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="125.0" text="Show Statistics" AnchorPane.bottomAnchor="128.07620392050183" AnchorPane.rightAnchor="80.33109289597348" />
+        <Button fx:id="sendMessageButton" alignment="CENTER" layoutX="80.0" layoutY="663.0" mnemonicParsing="false" text="Send Boradcast" AnchorPane.bottomAnchor="29.0" AnchorPane.leftAnchor="80.0" />
+        <Button fx:id="statisticsButton" layoutX="819.0" layoutY="663.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="125.0" text="Show Statistics" AnchorPane.bottomAnchor="29.0" AnchorPane.rightAnchor="80.0" />
+      <HTMLEditor fx:id="htmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" layoutX="80.0" layoutY="87.0" prefHeight="531.0" prefWidth="864.0" />
     </children>
 </AnchorPane>

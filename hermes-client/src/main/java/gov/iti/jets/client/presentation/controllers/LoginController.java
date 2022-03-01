@@ -26,7 +26,18 @@ public class LoginController implements Initializable {
 	@FXML
 	private Button nextButton;
 
+	@FXML
+	private ImageView eyeImage;
+	@FXML
+	private TextField nameTextField;
+	@FXML
+	private PasswordField passwordTextField;
+	@FXML
+	private Button signInButton;
+
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
+	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
+	private UserModel userModel = modelsFactory.getUserModel();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -38,9 +49,12 @@ public class LoginController implements Initializable {
 		} else {
 			phoneTextField.setText(lastLoggedPhone);
 		}
-		
-		phoneTextField.setFocusTraversable(false);
 
+		phoneTextField.setFocusTraversable(false);
+	}
+
+	@FXML
+	void eyeImageMouseClicked(MouseEvent event) {
 
 	}
 

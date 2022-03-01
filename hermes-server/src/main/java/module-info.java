@@ -2,6 +2,7 @@ module gov.iti.jets.server {
 
 	requires transitive javafx.controls;
 	requires javafx.fxml;
+	requires javafx.web;
 	requires com.zaxxer.hikari;
 	requires mysql.connector.java;
 	requires java.sql;

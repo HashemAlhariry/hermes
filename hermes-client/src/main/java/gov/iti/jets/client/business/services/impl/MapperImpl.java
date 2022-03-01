@@ -10,29 +10,6 @@ public enum MapperImpl implements Mapper<UserModel> {
 	INSTANCE;
 
 	@Override
-	public UserDto mapToUserDto(UserModel userModel) {
-		// encrypt incoming userpassword
-		// map user data
-		if (userModel == null) {
-			return null;
-		}
-
-		String saltValue = HashManager.INSTANCE.getSaltvalue(15);
-		String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword(),
-				saltValue);
-
-		return new UserDto(
-				userModel.getPhoneNumber(),
-				encryptedPassword,
-				userModel.getUserName(),
-				userModel.getEmail(),
-				userModel.getGender(),
-				userModel.getDateOfBirth(),
-				userModel.getCountry(),
-				userModel.getBio());
-	}
-
-	@Override
 	public UserModel mapFromUserDto(UserDto userDto) {
 		if (userDto == null) {
 			return null;
@@ -56,6 +33,29 @@ public enum MapperImpl implements Mapper<UserModel> {
 			userModel.setBio(userDto.bio);
 		return userModel;
 	}
+
+    @Override
+    public UserDto mapToUserDto(UserModel userModel) {
+        // encrypt incoming userpassword
+        // map user data
+        if (userModel == null) {
+            return null;
+        }
+
+        String encryptedPassword = HashManager.INSTANCE.generateSecurePassword(userModel.getPassword());
+
+        return new UserDto(
+                userModel.getPhoneNumber(),
+                encryptedPassword,
+                userModel.getUserName(),
+                userModel.getEmail(),
+                userModel.getGender(),
+                userModel.getDateOfBirth(),
+                userModel.getCountry(),
+                userModel.getBio());
+    }
+
+
 
 	@Override
 	public UserAuthDto mapToUserAuthDto(UserModel userModel) {

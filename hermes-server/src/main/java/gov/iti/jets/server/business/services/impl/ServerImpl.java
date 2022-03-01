@@ -3,13 +3,12 @@ package gov.iti.jets.server.business.services.impl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import common.business.dtos.GroupDto;
 import common.business.dtos.GroupStatusDto;
-import common.business.dtos.InvitationResponse;
+import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
@@ -26,8 +25,21 @@ import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
 
+import common.business.dtos.*;
+import common.business.services.Client;
+import common.business.services.Server;
+import gov.iti.jets.server.business.daos.GroupDao;
+import gov.iti.jets.server.business.services.*;
+import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
+import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.util.DaosFactory;
+import gov.iti.jets.server.presentation.gui.util.StatisticsData;
+
+import java.util.List;
+
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
+	// connected Clients will be used for getting online users
 	private Map<String, Client> connectedClients;
 
 	public ServerImpl() throws RemoteException {
@@ -38,9 +50,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	@Override
 	public UserDto checkPhone(Client connectedClient, String phoneNumber) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
-		// userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
 		Optional<UserEntity> userEntity = userDao.getUserByPhone(phoneNumber);
-		System.out.println("loginserver");
 		if (userEntity.isPresent()) {
 			try {
 				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity.get());
@@ -87,6 +97,9 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 						}
 					}
 				}
+				StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get() + 1);
+				StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get() - 1);
+
 				return userDto;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -101,15 +114,35 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public void register(Client connectedClient, UserDto userDto) {
-		// registered user will be connected?
+		// registered user will be connected
 		// map userDto to userEntity
 		// call userDao to insert user data
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
-		if (true) {
+
+		String insertionResponse = userDao.insertUser(userEntity);
+		if (insertionResponse == null) {
 			try {
 				connectedClient.registerationSuccess();
+
+				// updating statistics in server
+				StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get() + 1);
+				StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get() - 1);
+
+				if (userDto.gender)
+					StatisticsData.INSTANCE.setMaleUsers(StatisticsData.INSTANCE.maleUsers.get() + 1);
+				else
+					StatisticsData.INSTANCE.setFemaleUsers(StatisticsData.INSTANCE.femaleUsers.get() + 1);
+
+				StatisticsData.INSTANCE.updatePieChartDataForCountry(userDto.country);
+
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		} else {
+			try {
+				connectedClient.registerationFail(insertionResponse);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -122,6 +155,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		// maybe add additional check to see if he is connected or not
 		connectedClients.remove(phoneNumber);
 		System.out.println("User: " + phoneNumber + " logged out");
+		// connectedClients.remove(userAuthDto.phoneNumber);
+
+		StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get() - 1);
+		StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get() + 1);
+
 	}
 
 	@Override
@@ -144,15 +182,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void sendInvitation(InvitationSentDto invitationDto) {
+	public void invitationResponse(InvitationResponseDto invitationResponseDto) throws RemoteException {
 		InvitationService invitation = new InvitationServiceImpl();
-		invitation.sendInvitation(invitationDto, connectedClients);
+		invitation.updatingInvitation(invitationResponseDto);
 	}
 
 	@Override
-	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException {
+	public void sendInvitation(InvitationSentDto invitationDto) {
 		InvitationService invitation = new InvitationServiceImpl();
-		invitation.updatingInvitation(invitationResponse);
+		invitation.sendInvitation(invitationDto, connectedClients);
 	}
 
 	@Override
@@ -196,11 +234,29 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		setOnlineStatus(status, phoneNumber);
 	}
 
+	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException {
+		PrivateGroupService privateGroupService = new PrivateGroupServiceImpl();
+		privateGroupService.addNewPrivateGroupChat(privateGroupDetailsDto);
+	}
+
+	@Override
+	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException {
+		GroupService groupService = new GroupServiceImpl();
+		groupService.addNewGroupChat(groupDetailsDto);
+	}
+
+	@Override
+	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException {
+
+		BroadCastMessageService broadCastMessageService = new BroadCastMessageServiceImpl();
+		broadCastMessageService.sendMessageToAllOnlineUsers(broadCastMessage, connectedClients);
+	}
+
 	private void setOnlineStatus(OnlineStatus status, String phoneNumber) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
-		Optional<UserEntity> usOptional = userDao.getUserByPhone(phoneNumber);
-		UserEntity userEntity2 = usOptional.get();
-		UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
+		Optional<UserEntity> userEntetityOptional = userDao.getUserByPhone(phoneNumber);
+		UserEntity userEntity = userEntetityOptional.get();
+		UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity);
 		GroupService groupService = new GroupServiceImpl();
 		var groups = groupService.getAllGroupsByUserWithChatType(userDto);
 		for (GroupDto groupDto : groups) {

@@ -10,10 +10,15 @@ import common.business.services.Client;
 import common.business.util.OnlineStatus;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
+import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.Utils;
 import javafx.application.Platform;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
+
+	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
 	public ClientImpl() throws RemoteException {
 		super();
@@ -43,6 +48,8 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 	@Override
 	public void registerationSuccess() throws RemoteException {
+
+		Platform.runLater(stageCoordinator::switchtoHomePageScene);
 		System.out.println("User Registered Succefully");
 	}
 
@@ -61,6 +68,19 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 				});
 			}
 		});
+	}
+	public void registerationFail(String errorMessage) throws RemoteException {
+		Platform.runLater(()->{
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setContentText(errorMessage);
+			alert.show();
+		});
+	}
+
+	@Override
+	public void receiveBroadCastMessage(String broadCastMessage) throws RemoteException {
+		System.out.println(broadCastMessage);
+		Utils.INSTANCE.receiveBroadCastMessage(broadCastMessage);
 	}
 
 }

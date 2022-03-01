@@ -2,9 +2,7 @@ package gov.iti.jets.server.persistance.daos.impl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
@@ -62,11 +60,10 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(1, userEntity.phone);
 			preparedStatement.setString(2, userEntity.password);
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()){
+			if (rs.next()) {
 				System.out.println(rs.getString("phone"));
 				return true;
-			}
-			else
+			} else
 				return false;
 
 		} catch (Exception e) {
@@ -107,24 +104,41 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void insertUser(UserEntity user) {
-		int gender = user.gender ? 1 : 0;
-		String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
-		try (var connection = dataSource.getDataSource().getConnection();
-				var preparedStatement = connection.prepareStatement(query);) {
-			preparedStatement.setString(1, user.name);
-			preparedStatement.setString(2, user.phone);
-			preparedStatement.setString(3, user.email);
-			preparedStatement.setString(4, user.password);
-			preparedStatement.setInt(5, gender);
-			preparedStatement.setDate(6, user.dob);
-			preparedStatement.setString(7, user.country);
-			// System.out.println(preparedStatement.executeUpdate());
-			preparedStatement.executeUpdate();
-			// System.out.println(resultSet);
-		} catch (SQLException e) {
-			e.printStackTrace();
+	public String insertUser(UserEntity user) {
+		boolean uniqueEmail = true;
+		boolean uniquePhone = true;
+		List<UserEntity> allUsers = getAllUsers();
+		for (UserEntity userEntity : allUsers) {
+			if (userEntity.phone.equals(user.phone)) {
+				uniquePhone = false;
+				return "Phone Number Must Be Unique";
+			}
+			if (userEntity.email.equalsIgnoreCase(user.email)) {
+				uniqueEmail = false;
+				return "Email Must Be Unique";
+			}
 		}
+
+		if (uniquePhone && uniqueEmail) {
+			int gender = user.gender ? 1 : 0;
+			String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
+			try (var connection = dataSource.getDataSource().getConnection();
+					var preparedStatement = connection.prepareStatement(query);) {
+				preparedStatement.setString(1, user.name.trim());
+				preparedStatement.setString(2, user.phone.trim());
+				preparedStatement.setString(3, user.email.trim());
+				preparedStatement.setString(4, user.password.trim());
+				preparedStatement.setInt(5, gender);
+				preparedStatement.setDate(6, user.dob);
+				preparedStatement.setString(7, user.country.trim());
+				// System.out.println(preparedStatement.executeUpdate());
+				preparedStatement.executeUpdate();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 	@Override
@@ -137,4 +151,64 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
+	@Override
+	public List<UserEntity> getAllMaleUsers() {
+		List<UserEntity> userEntities = new ArrayList<>();
+		String query = "Select * from user where gender = 1";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				UserEntity userEntity = new UserEntity();
+				fillUserEntity(resultSet, userEntity);
+				userEntities.add(userEntity);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userEntities;
+	}
+
+	@Override
+	public List<UserEntity> getAllFemaleUsers() {
+		List<UserEntity> userEntities = new ArrayList<>();
+		String query = "Select * from user where gender = 0";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
+			while (resultSet.next()) {
+				UserEntity userEntity = new UserEntity();
+				fillUserEntity(resultSet, userEntity);
+				userEntities.add(userEntity);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return userEntities;
+	}
+
+	public Map<String, Integer> getAllCountries() {
+		Map<String, Integer> countriesWithUsers = new HashMap<>();
+		String query = "Select * from user;";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
+			String country;
+			while (resultSet.next()) {
+				country = resultSet.getString("country");
+				if (resultSet.wasNull()) {
+					continue;
+				} else {
+					if (countriesWithUsers.containsKey(country)) {
+						countriesWithUsers.put(country, countriesWithUsers.get(country) + 1);
+					} else {
+						countriesWithUsers.put(country, 1);
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return countriesWithUsers;
+	}
 }

@@ -39,7 +39,20 @@ public enum UserMapperImpl implements Mapper<UserEntity> {
                 userDto.bio
         );
     }
-    
+
+//     return null;
+//     return new UserEntity(
+//         userDto.phoneNumber,
+//         userDto.name,
+//         userDto.email,
+//         userDto.password,
+//         userDto.gender,
+//         java.sql.Date.valueOf(userDto.dateOfBirth),
+//         userDto.country,
+//         userDto.bio);
+// }
+
+
     public UserEntity mapFromUserAuthDto(UserAuthDto userAuthDto) {
         if (userAuthDto == null)
             return null;
@@ -54,6 +67,5 @@ public enum UserMapperImpl implements Mapper<UserEntity> {
         // TODO Auto-generated method stub
         return null;
     }
-
 
 }

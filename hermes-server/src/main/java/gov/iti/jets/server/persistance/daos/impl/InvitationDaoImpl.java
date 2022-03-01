@@ -50,8 +50,10 @@ public class InvitationDaoImpl implements InvitationDao {
 				// isInserted if returns 1 and in case insertion failed returns 0
 
 			    var resultSet = preparedStmt.executeQuery();
-				 if(resultSet.next()){
-					 return  false;
+
+
+					 if(resultSet.next()){
+					 return resultSet.getInt("status")==2 ? true : false;
 				 }
 
 		} catch (SQLException exception) {

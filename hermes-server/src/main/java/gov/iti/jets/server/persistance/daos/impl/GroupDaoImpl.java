@@ -6,9 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import gov.iti.jets.server.business.daos.GroupDao;
+import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.GroupEntity;
 import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.entities.enums.InvitationStatus;
 
 /**
  * GroupDaoImpl
@@ -41,17 +43,34 @@ public class GroupDaoImpl implements GroupDao {
 		return groupEntities;
 	}
 
-	@Override
-	public void insertGroup(GroupEntity groupEntity) {
-		// TODO Auto-generated method stub
+    @Override
+    public int insertGroup(GroupEntity groupEntity) {
+        //inserting new group for 2 specific users
+        String sql = "insert into hermesdb.group (name, image, particpiants_number) values (?,?,?)";
+
+        try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+
+            preparedStmt.setString(1, groupEntity.getName());
+            preparedStmt.setString(2,groupEntity.getImage());
+            preparedStmt.setInt(3, groupEntity.getParticipantsNumber());
+
+            // isInserted if returns 1 and in case insertion failed returns 0
+            int isInserted = preparedStmt.executeUpdate();
+
+            return isInserted;
+
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+
+        return 0;
 
 	}
 
-	@Override
-	public void updateGroup(GroupEntity groupEntity) {
-		// TODO Auto-generated method stub
-
-	}
+    @Override
+    public void updateGroup(GroupEntity groupEntity) {
+        // TODO Auto-generated method stub
+    }
 
 	@Override
 	public void deleteGroup(GroupEntity groupEntity) {
@@ -59,9 +78,24 @@ public class GroupDaoImpl implements GroupDao {
 
 	}
 
-	// get all user attached to a group private or public
-	public List<String> getUsersByGroupId(Long groupID) {
+    @Override
+    public int getGroupId(GroupEntity groupEntity) {
+        String sql = "Select id from hermesdb.group where name = ? ";
+        try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+            preparedStmt.setString(1, groupEntity.getName());
+            var resultSet = preparedStmt.executeQuery();
+            if (resultSet.next()) {
 
+                return  resultSet.getInt("id");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+
+    }
+
+	public List<String> getUsersByGroupId(Long groupID) {
 		String query = "select * from group_user where group_id_fk = ? ";
 		List<String> result = new ArrayList<>();
 		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();

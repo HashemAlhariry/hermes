@@ -9,6 +9,8 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
 import java.util.Map;
+
+import common.business.services.Server;
 import gov.iti.jets.server.business.services.impl.ServerImpl;
 
 public enum RMIConnection {
@@ -47,5 +49,9 @@ public enum RMIConnection {
 		for (var entry : services.entrySet()) {
 			UnicastRemoteObject.unexportObject(entry.getValue(), true);
 		}
+	}
+
+	public Server getServer() {
+		return (Server) services.get("Server");
 	}
 }
