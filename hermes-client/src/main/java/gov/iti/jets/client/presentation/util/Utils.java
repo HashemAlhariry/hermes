@@ -73,7 +73,7 @@ public enum Utils {
       WebView webView = new WebView();
       webView.getEngine().loadContent(broadCastMessage);
       webView.setPrefSize(600, 200);
-      alert.getDialogPane().setContent(webView);;
+      alert.getDialogPane().setContent(webView);
       alert.showAndWait();
 
     });
