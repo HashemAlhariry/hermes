@@ -2,16 +2,18 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.HTMLMessageParser;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
+import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
@@ -87,18 +89,20 @@ public class HomePageController implements Initializable {
 		messagHtmlEditor.lookup(".top-toolbar").setManaged(false);
 		messagHtmlEditor.lookup(".top-toolbar").setVisible(false);
 
-		ColorPicker backGroundColorPicker= new ColorPicker();
-		ColorPicker textColorPicker= new ColorPicker();
+		ColorPicker backGroundColorPicker = new ColorPicker();
+		ColorPicker textColorPicker = new ColorPicker();
 
-		backGroundColorPicker.setOnAction( event-> bgColor = backGroundColorPicker.getValue());
+		backGroundColorPicker.setOnAction(event -> {
+			bgColor = backGroundColorPicker.getValue();
+		});
 		backGroundColorPicker.setTooltip(new Tooltip("Background"));
 		backGroundColorPicker.getStyleClass().add("bg-color-pricker");
 
 		textColorPicker.setTooltip(new Tooltip("textColor"));
 		textColorPicker.getStyleClass().add("color-pricker");
-		textColorPicker.setOnAction( event-> textColor = textColorPicker.getValue());
+		textColorPicker.setOnAction(event -> textColor = textColorPicker.getValue());
 
-		ToolBar customToolBar = (ToolBar)messagHtmlEditor.lookup(".bottom-toolbar");
+		ToolBar customToolBar = (ToolBar) messagHtmlEditor.lookup(".bottom-toolbar");
 		customToolBar.getItems().add(backGroundColorPicker);
 		customToolBar.getItems().add(textColorPicker);
 
@@ -115,7 +119,7 @@ public class HomePageController implements Initializable {
 	void sendMessageByEnterAction(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			sendMessageEventHandler();
-//			messagHtmlEditor.requestFocus();
+			// messagHtmlEditor.requestFocus();
 		}
 	}
 
@@ -131,11 +135,20 @@ public class HomePageController implements Initializable {
 		messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
 		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
-		//add text and backgroud colors as css in the html message
-
-		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend, textColor, bgColor);
+		// add text and backgroud colors as css in the html message
+		// insert style at paragraph tag
+		// add bgcolor and text color in this style
+		messageToSend = Util.INSTANCE.insertString(messageToSend, " style=\"\"", messageToSend.indexOf("p"));
+		if (textColor != null)
+			messageToSend = Util.INSTANCE.insertString(messageToSend, " color: " + textColor + "; ",
+					messageToSend.indexOf("style=\"") + "style=\"".length() - 1);
+		if (bgColor != null)
+			messageToSend = Util.INSTANCE.insertString(messageToSend, " background-color: " + bgColor + "; ",
+					messageToSend.indexOf("style=\"") + "style=\"".length() - 1);
+		Date date = new Date();
+		Timestamp timestamp2 = new Timestamp(date.getTime());
+		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend, timestamp2);
 		if (formattedMessage != null) {
-			formattedMessage.setPadding(new Insets(5, 10, 5, 10));
 			messageHorizontalBox.getChildren().add(formattedMessage);
 			messageHorizontalBox.getChildren().add(imageView);
 			messagesVerticalBox.getChildren().add(messageHorizontalBox);

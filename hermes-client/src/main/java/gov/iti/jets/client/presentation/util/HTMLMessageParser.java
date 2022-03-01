@@ -1,22 +1,36 @@
 package gov.iti.jets.client.presentation.util;
 
+import java.sql.Timestamp;
 import java.util.StringTokenizer;
 
+import javafx.geometry.Insets;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 public enum HTMLMessageParser {
 	INSTANCE;
 
-	public TextFlow formatMessage(String htmlMessage, Color textColor, Color bgColor) {
+	public VBox formatMessage(String htmlMessage, Timestamp messageTimestamp) {
+		String textColor = "";
+		String bgColor = "";
+		VBox messageVBox = new VBox();
+		Text messageTime = new Text(messageTimestamp.toString());
+		messageTime.setStyle("-fx-font-size: 8;");
+		System.out.println(htmlMessage);
 
 		TextFlow parentTextFlow = new TextFlow();
 		if (!htmlMessage.contains("span")) // add html field handling bonus
 			return null;
-		htmlMessage = Util.INSTANCE.insertString(htmlMessage,
-				" style=\" color: #" + textColor + "; background-color: #" + bgColor + "; \"",
-				htmlMessage.indexOf("p"));
+		if (htmlMessage.contains("background-color"))
+			bgColor = "#" + htmlMessage.substring(
+					htmlMessage.indexOf("background-color: 0x") + "background-color: 0x".length(),
+					htmlMessage.indexOf(";"));
+		if (htmlMessage.contains(" color"))
+			textColor = "#" + htmlMessage.substring(htmlMessage.indexOf(" color: 0x") + " color: 0x".length(),
+					htmlMessage.indexOf("; \">"));
 		for (String currentSpanToken : htmlMessage.split("span")) {
 			if (!currentSpanToken.contains("style") || currentSpanToken.contains("p"))
 				continue;
@@ -34,15 +48,12 @@ public enum HTMLMessageParser {
 			while (st.hasMoreTokens()) {
 				String currentToken = st.nextToken();
 				if (!currentToken.contains("&quot")) {
-					System.out.println(currentToken);
 					if (index == 0) {
 						style = "-fx-" + currentToken;
 					} else {
 						style = "-fx-" + currentToken.substring(1);
 					}
-					if (style.contains("-fx-color:")) {
-						textMessage.setFill(textColor);
-					} else if (style.contains("font-family")){
+					if (style.contains("font-family")) {
 						textMessage.setStyle("-fx-font-weight: bold");
 					} else if (style.contains("size")) {
 						if (style.contains("x-small")) {
@@ -66,15 +77,20 @@ public enum HTMLMessageParser {
 						messageTextFlow.setStyle(style);
 					}
 				}
-				if (textColor != null)
-					textMessage.setFill(textColor);
+				if (!textColor.equals(""))
+					textMessage.setFill(Paint.valueOf(textColor));
 				index++;
 			}
 			parentTextFlow.getChildren().add(messageTextFlow);
 		}
-		if (bgColor != null)
-			parentTextFlow.setStyle("-fx-background-color: " + toRGBCode(bgColor));
-		return parentTextFlow;
+		// parentTextFlow.setPadding(new Insets(5, 10, 5, 10));
+		messageVBox.getChildren().add(parentTextFlow);
+		messageVBox.getChildren().add(messageTime);
+		if (!bgColor.equals("")){
+			messageVBox.setStyle("-fx-background-radius: 10;-fx-padding: 5 ;-fx-background-color: " + bgColor);
+			// messageVBox.setStyle("");
+		}
+		return messageVBox;
 
 	}
 
@@ -85,7 +101,7 @@ public enum HTMLMessageParser {
 		return Color.rgb(Integer.valueOf(red), Integer.valueOf(green), Integer.valueOf(blue));
 	}
 
-	public String toRGBCode(Color color) {
+	private String toRGBCode(Color color) {
 		return String.format("#%02X%02X%02X",
 				(int) (color.getRed() * 255),
 				(int) (color.getGreen() * 255),
