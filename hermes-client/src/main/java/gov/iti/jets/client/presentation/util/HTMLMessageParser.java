@@ -83,12 +83,10 @@ public enum HTMLMessageParser {
 			}
 			parentTextFlow.getChildren().add(messageTextFlow);
 		}
-		// parentTextFlow.setPadding(new Insets(5, 10, 5, 10));
 		messageVBox.getChildren().add(parentTextFlow);
 		messageVBox.getChildren().add(messageTime);
 		if (!bgColor.equals("")){
 			messageVBox.setStyle("-fx-background-radius: 10;-fx-padding: 5 ;-fx-background-color: " + bgColor);
-			// messageVBox.setStyle("");
 		}
 		return messageVBox;
 
