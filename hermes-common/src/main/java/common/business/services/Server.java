@@ -33,8 +33,6 @@ public interface Server extends Remote {
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
-	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
-
 	public byte[] getUserImageByPhone(String phone) throws RemoteException;
 
 	public void changeMyOnlineStatus(OnlineStatus status, String phoneNumber) throws RemoteException;
