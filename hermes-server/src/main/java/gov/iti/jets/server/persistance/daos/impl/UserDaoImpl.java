@@ -37,17 +37,34 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean checkPhone(UserEntity userEntity) {
+	public boolean checkPhone(String phone) {
 		String query = "Select * from hermesdb.user where phone = ?";
 		try (var connection = dataSource.getDataSource().getConnection();
 				var preparedStatement = connection.prepareStatement(query)) {
-			preparedStatement.setString(1, userEntity.phone);
+			preparedStatement.setString(1, phone);
 			ResultSet rs = preparedStatement.executeQuery();
 			if (rs.next())
 				return true;
 			else
 				return false;
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean setUserProfilePicture(String phone, String format) {
+		String query = "update hermesdb.user set image = ? where  phone= ? ";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setString(1, phone + "." + format);
+			preparedStatement.setString(2, phone);
+			int i = preparedStatement.executeUpdate();
+			if (i > 0) {
+				return true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,11 +79,9 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setString(1, userEntity.phone);
 			preparedStatement.setString(2, userEntity.password);
 			ResultSet rs = preparedStatement.executeQuery();
-			if (rs.next()){
-				System.out.println(rs.getString("phone"));
+			if (rs.next()) {
 				return true;
-			}
-			else
+			} else
 				return false;
 
 		} catch (Exception e) {
@@ -104,6 +119,7 @@ public class UserDaoImpl implements UserDao {
 		userEntity.dob = resultSet.getDate("dob");
 		userEntity.country = resultSet.getString("country");
 		userEntity.bio = resultSet.getString("bio");
+
 	}
 
 	@Override
@@ -119,9 +135,7 @@ public class UserDaoImpl implements UserDao {
 			preparedStatement.setInt(5, gender);
 			preparedStatement.setDate(6, user.dob);
 			preparedStatement.setString(7, user.country);
-			// System.out.println(preparedStatement.executeUpdate());
 			preparedStatement.executeUpdate();
-			// System.out.println(resultSet);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -129,12 +143,51 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updateUser(UserEntity user) {
+		String query = "update hermesdb.user set country = ? , email = ? , dob = ? ,  bio= ? , password=?  where  phone=?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, user.country);
+			preparedStatement.setString(2, user.email);
+			preparedStatement.setDate(3, user.dob);
+			preparedStatement.setString(4, user.bio);
+			preparedStatement.setString(5, user.password);
+			preparedStatement.setString(6, user.phone);
+			int rowAffected = preparedStatement.executeUpdate();
+
+			if (rowAffected > 0) {
+				System.out.println("Update is done.");
+
+			} else
+				System.out.println("Wrong update");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public void deleteUser(UserEntity user) {
 
+	}
+
+	@Override
+	public String getUserImageByPhone(String phone) {
+		String query = "select image from hermesdb.user where phone = ? ";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, phone);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String img = rs.getString(1);
+				System.out.println(img);
+				return img;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

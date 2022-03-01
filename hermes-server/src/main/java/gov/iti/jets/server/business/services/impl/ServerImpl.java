@@ -1,5 +1,6 @@
 package gov.iti.jets.server.business.services.impl;
-
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
+
 import common.business.services.Server;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
@@ -23,6 +25,7 @@ import gov.iti.jets.server.business.services.MessageService;
 import gov.iti.jets.server.persistance.daos.impl.GroupDaoImpl;
 import gov.iti.jets.server.persistance.entities.UserEntity;
 import gov.iti.jets.server.persistance.util.DaosFactory;
+
 
 public class ServerImpl extends UnicastRemoteObject implements Server {
 
@@ -36,9 +39,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	@Override
 	public UserDto checkPhone(Client connectedClient, String phoneNumber) {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
-		// userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
 		Optional<UserEntity> userEntity = userDao.getUserByPhone(phoneNumber);
-		System.out.println("loginserver");
 		if (userEntity.isPresent()) {
 			try {
 				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity.get());
@@ -60,8 +61,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		System.out.println("userDto password: " + userAuthDto.password);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserAuthDto(userAuthDto);
-		System.out.println("loginserver");
-		System.out.println("ph : " + userEntity.phone + " p: " + userEntity.password);
 
 		if (userDao.loginUser(userEntity)) {
 			try {
@@ -70,8 +69,6 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 				UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
 				connectedClients.put(userAuthDto.phoneNumber, connectedClient);
 				connectedClient.loginSuccess(userDto);
-				System.out.println(userDto.bio);
-				System.out.println(userDto.gender);
 				return userDto;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -85,10 +82,16 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
+	public UserDto updateUser(UserDto userDto) {
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		UserEntity userEntity2 = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
+		userDao.updateUser(userEntity2);
+		userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
+		return userDto;
+	}
+
+	@Override
 	public void register(Client connectedClient, UserDto userDto) {
-		// registered user will be connected?
-		// map userDto to userEntity
-		// call userDao to insert user data
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		connectedClients.put(userDto.phoneNumber, connectedClient);
 		UserEntity userEntity = UserMapperImpl.INSTANCE.mapFromUserDto(userDto);
@@ -103,28 +106,14 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public void logout(String phoneNumber) {
-		// maybe add additional check to see if he is connected or not
 		connectedClients.remove(phoneNumber);
 		System.out.println("User: " + phoneNumber + " logged out");
 	}
 
 	@Override
 	public void sendMessage(MessageDto messageDto) {
-
 		GroupDao group = new GroupDaoImpl();
 		group.getUsersByGroupId(messageDto.groupID);
-
-		// ask db to get all users joined to this group id from messageDto
-		/*
-		 * for (ConnectedClient connectedClient : connectedClients) {
-		 * 
-		 * 
-		 * if(message.groupID.equals(connectedClient.)){
-		 * connectedClient.recieveInvitation(invitationDto.senderPhone);
-		 * }
-		 * }
-		 * 
-		 */
 	}
 
 	@Override
@@ -152,11 +141,35 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public byte[] getUserImageByPhone(String phone) throws RemoteException {
-		// TODO: Create UserService that have method takes phone and returns the path
-		// userImages/picname.png
-		// TODO: Then we pass the path another method in UserService that returns the image bytes
-		return null;
+	public boolean setUserProfilePicture(byte[] bytes, UserDto userDto, String format) throws RemoteException {
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		try (var img = new FileOutputStream("src/main/resources/userImages/" + userDto.phoneNumber + "." + format)) {
+
+			img.write(bytes);
+
+			userDao.setUserProfilePicture(userDto.phoneNumber, format);
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return false;
 	}
 
+	@Override
+	public byte[] getUserProfilePicture(String phone) throws RemoteException {
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		String image = userDao.getUserImageByPhone(phone);
+		System.out.println("image in server :" + image);
+		try (var img = new FileInputStream("src/main/resources/userImages/" + image)) {
+			byte[] b = img.readAllBytes();
+			System.out.println("bytes in server :" + b);
+			return b;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+}
 }

@@ -1,5 +1,8 @@
 package gov.iti.jets.server.business.daos;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
@@ -18,8 +21,12 @@ public interface UserDao {
 
 	boolean loginUser(UserEntity userEntity);
 
-	boolean checkPhone(UserEntity userEntity);
+	boolean checkPhone(String phone);
 
 	Optional<UserEntity> getUserByPhone(String phone);
+
+	public String getUserImageByPhone(String phone);
+
+	public boolean setUserProfilePicture(String phoneNumber , String phone);
 
 }
