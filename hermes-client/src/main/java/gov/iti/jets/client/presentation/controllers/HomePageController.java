@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 import common.business.dtos.InvitationSentDto;
+import common.business.util.OnlineStatus;
 import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
@@ -18,7 +19,6 @@ import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -29,6 +29,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -41,6 +42,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
@@ -90,18 +92,27 @@ public class HomePageController implements Initializable {
 	@FXML
 	private ListView<Contact> contactsListView;
 
+	@FXML
+	private Circle myOnlineStatus;
+
+	@FXML
+	private ComboBox<String> onlineStatusComboBox;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		ObservableList<Contact> contacts = FXCollections.observableArrayList();
-		// this line is only for testing puroses till hashing password is handeled
-		// only works for user mina
-		ModelsFactory.INSTANCE.getUserModel().setPassword("123");
+		ObservableList<Contact> contacts = ModelsFactory.INSTANCE.getContactsModel().contactsProperty();
+		ModelsFactory.INSTANCE.getUserModel().setPassword("");
 		Platform.runLater(() -> {
-			addAllContacts(contacts);
+			addAllContacts();
 		});
 		contactsListView.setItems(contacts);
 		contactsListView.setCellFactory(i -> new ContactListCell());
+
+		Platform.runLater(() -> {
+			initUserStatus();
+		});
+
 
 		// Sending message to vbox in chat box to a specific contact
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -159,7 +170,7 @@ public class HomePageController implements Initializable {
 
 	}
 
-	private void addAllContacts(ObservableList<Contact> contacts) {
+	private void addAllContacts() {
 		try {
 			var fetchedContacts = RMIConnection.INSTANCE
 					.getServer()
@@ -168,13 +179,13 @@ public class HomePageController implements Initializable {
 					.map((gdto) -> {
 						try {
 							return new Contact(gdto.id, gdto.name,
-									Util.INSTANCE.fromArrayOfBytesToImage(gdto.image));
+									Util.INSTANCE.fromArrayOfBytesToImage(gdto.image), gdto.status);
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
-						return new Contact(gdto.id, gdto.name, null);
+						return new Contact(gdto.id, gdto.name, null, gdto.status);
 					}).collect(Collectors.toList());
-			contacts.addAll(fetchedContacts);
+			ModelsFactory.INSTANCE.getContactsModel().setContacts(fetchedContacts);
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
@@ -199,7 +210,7 @@ public class HomePageController implements Initializable {
 	void onLogoutClicked(MouseEvent mouseEvent) {
 		try {
 			RMIConnection.INSTANCE.close();
-			// ModelsFactory.INSTANCE.setUserModel(new UserModel());
+			ModelsFactory.INSTANCE.getContactsModel().contactsProperty().clear();
 			StageCoordinator.INSTANCE.getSceneMap().clear();
 			stageCoordinator.switchToLoginScene();
 		} catch (RemoteException e) {
@@ -283,12 +294,53 @@ public class HomePageController implements Initializable {
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	@FXML
 	void onSearchContactList(MouseEvent event) {
 
+	}
+
+	private void initUserStatus() {
+		onlineStatusComboBox.getItems().add("Available");
+		onlineStatusComboBox.getItems().add("Away");
+		onlineStatusComboBox.getItems().add("Busy");
+		// the default color on login
+		myOnlineStatus.setFill(Color.rgb(55, 255, 3));
+		// the default status on login
+		ModelsFactory.INSTANCE.getUserModel().setOnlineStatus(OnlineStatus.AVAILABLE);
+
+		onlineStatusComboBox.setOnAction((event) -> {
+			int selectedIndex = onlineStatusComboBox.getSelectionModel().getSelectedIndex();
+			try {
+				switch (selectedIndex) {
+					case 0:
+						RMIConnection.INSTANCE.getServer().changeMyOnlineStatus(OnlineStatus.AVAILABLE,
+								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+						myOnlineStatus.setFill(Color.rgb(55, 255, 3));
+						ModelsFactory.INSTANCE.getUserModel().setOnlineStatus(OnlineStatus.AVAILABLE);
+						break;
+					case 1:
+						RMIConnection.INSTANCE.getServer().changeMyOnlineStatus(OnlineStatus.AWAY,
+								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+						myOnlineStatus.setFill(Color.rgb(255, 182, 3));
+						ModelsFactory.INSTANCE.getUserModel().setOnlineStatus(OnlineStatus.AWAY);
+						break;
+					case 2:
+						RMIConnection.INSTANCE.getServer().changeMyOnlineStatus(OnlineStatus.BUSY,
+								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+						myOnlineStatus.setFill(Color.rgb(255, 20, 20));
+						ModelsFactory.INSTANCE.getUserModel().setOnlineStatus(OnlineStatus.BUSY);
+						break;
+					default:
+						break;
+				}
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		});
+		onlineStatusComboBox.getSelectionModel().select(0);
+		
 	}
 
 }

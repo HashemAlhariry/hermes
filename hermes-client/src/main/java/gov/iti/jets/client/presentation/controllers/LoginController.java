@@ -1,10 +1,7 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
-import java.rmi.AccessException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 import common.business.dtos.UserDto;
@@ -34,18 +31,17 @@ public class LoginController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		try {
-			Registry registry = LocateRegistry.getRegistry();
-			for (var s : registry.list()) {
-				System.out.println(s);
-			}
-
-		} catch (AccessException e) {
-			e.printStackTrace();
-
-		} catch (RemoteException e) {
-			e.printStackTrace();
+		String lastLoggedPhone = ModelsFactory.INSTANCE.getUserModel().getPhoneNumber();
+		if (lastLoggedPhone == null) {
+			lastLoggedPhone = "";
+			phoneTextField.setText(lastLoggedPhone);
+		} else {
+			phoneTextField.setText(lastLoggedPhone);
 		}
+		
+		phoneTextField.setFocusTraversable(false);
+
+
 	}
 
 	@FXML

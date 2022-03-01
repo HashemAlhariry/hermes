@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.ScrollPane?>
@@ -19,38 +20,55 @@
 
 <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
    <left>
-      <HBox prefHeight="500.0" prefWidth="231.0" BorderPane.alignment="CENTER">
+      <HBox prefHeight="500.0" prefWidth="300.0" BorderPane.alignment="CENTER">
          <children>
             <VBox prefHeight="500.0" prefWidth="37.0" styleClass="background-color">
                <children>
-                  <ImageView fx:id="profileImageView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/profile-screen.png" />
-                     </image>
+                  <HBox>
+                     <children>
+                        <ImageView fx:id="profileImageView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#onProfileClicked" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../images/profile-screen.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Circle fx:id="myOnlineStatus" fill="WHITE" radius="7.0" stroke="BLACK" strokeType="INSIDE">
+                           <HBox.margin>
+                              <Insets left="1.0" top="5.0" />
+                           </HBox.margin>
+                        </Circle>
+                     </children>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="5.0" top="10.0" />
+                        <Insets top="10.0" />
                      </VBox.margin>
-                  </ImageView>
-                  <ImageView fx:id="addContactView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onAddContactClicked" pickOnBounds="true" preserveRatio="true">
+                  </HBox>
+                  <ImageView fx:id="addContactView" fitHeight="30.0" fitWidth="30.0" onMouseClicked="#onAddContactClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/add-contact.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="20.0" left="5.0" top="10.0" />
+                        <Insets bottom="20.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </ImageView>
                   <Pane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="1000.0" />
-                  <ImageView fx:id="logoutImageView" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#onLogoutClicked" pickOnBounds="true" preserveRatio="true">
+                  <ComboBox fx:id="onlineStatusComboBox" nodeOrientation="LEFT_TO_RIGHT" prefWidth="100.0" promptText="Status" rotate="270.0" visibleRowCount="4">
+                     <VBox.margin>
+                        <Insets bottom="160.0" left="10.0" right="10.0" />
+                     </VBox.margin>
+                  </ComboBox>
+                  <ImageView fx:id="logoutImageView" fitHeight="25.0" fitWidth="25.0" onMouseClicked="#onLogoutClicked" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../images/icons8-iOS%20Filled-Logout%20Rounded%20Left.png" />
                      </image>
                      <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" />
+                        <Insets bottom="10.0" left="15.0" right="10.0" />
                      </VBox.margin>
                   </ImageView>
                </children>
             </VBox>
-            <VBox prefHeight="500.0" prefWidth="196.0" styleClass="gray-background">
+            <VBox prefHeight="500.0" prefWidth="250.0" styleClass="gray-background">
                <children>
                   <HBox prefHeight="20.0" prefWidth="154.0">
                      <children>
@@ -79,12 +97,12 @@
                         <String fx:value="radius" />
                      </styleClass>
                   </HBox>
-                  <AnchorPane maxHeight="1.7976931348623157E308">
+                  <AnchorPane maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
                      <VBox.margin>
-                        <Insets top="10.0" />
+                        <Insets left="2.0" right="2.0" top="10.0" />
                      </VBox.margin>
                      <children>
-                        <ListView fx:id="contactsListView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView fx:id="contactsListView" maxHeight="1.7976931348623157E308" prefHeight="583.0" prefWidth="180.0" style="-fx-background-color: #363A54;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                   <!--
@@ -343,4 +361,7 @@
          </children>
       </VBox>
    </center>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
 </BorderPane>

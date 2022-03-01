@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import common.business.dtos.GroupDto;
+import common.business.dtos.GroupStatusDto;
 import common.business.dtos.InvitationResponse;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
@@ -15,6 +16,7 @@ import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
 import common.business.services.Server;
+import common.business.util.OnlineStatus;
 import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.business.services.GroupService;
@@ -72,6 +74,19 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 				connectedClient.loginSuccess(userDto);
 				System.out.println(userDto.bio);
 				System.out.println(userDto.gender);
+				// notify other online contacts that i am online
+				GroupService groupService = new GroupServiceImpl();
+				var groups = groupService.getAllGroupsByUserWithChatType(userDto);
+				for (GroupDto groupDto : groups) {
+					if (groupDto.status != OnlineStatus.GROUP) {
+						String peerPhone = groupService.getPrivateChatPeerPhone(groupDto.id, userDto);
+						if (connectedClients.containsKey(peerPhone)) {
+							connectedClients.get(peerPhone)
+									.updateContactStatus(
+											new GroupStatusDto(groupDto.id, connectedClient.getOnlineStatus()));
+						}
+					}
+				}
 				return userDto;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -103,6 +118,7 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 
 	@Override
 	public void logout(String phoneNumber) {
+		setOnlineStatus(OnlineStatus.OFFLINE, phoneNumber);
 		// maybe add additional check to see if he is connected or not
 		connectedClients.remove(phoneNumber);
 		System.out.println("User: " + phoneNumber + " logged out");
@@ -140,9 +156,24 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public List<GroupDto> getAllGroupsByUser(UserDto userDto) throws RemoteException {
+	public List<GroupDto> getAllGroupsByUser(UserDto userDto) {
 		GroupService groupService = new GroupServiceImpl();
-		return groupService.getAllGroupsByUser(userDto);
+		var groups = groupService.getAllGroupsByUserWithChatType(userDto);
+		for (GroupDto group : groups) {
+			if (group.status != OnlineStatus.GROUP) {
+				String peerPhone = groupService.getPrivateChatPeerPhone(group.id, userDto);
+				if (connectedClients.containsKey(peerPhone)) {
+					try {
+						group.status = connectedClients.get(peerPhone).getOnlineStatus();
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				} else {
+					group.status = OnlineStatus.OFFLINE;
+				}
+			}
+		}
+		return groups;
 	}
 
 	@Override
@@ -155,8 +186,36 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public byte[] getUserImageByPhone(String phone) throws RemoteException {
 		// TODO: Create UserService that have method takes phone and returns the path
 		// userImages/picname.png
-		// TODO: Then we pass the path another method in UserService that returns the image bytes
+		// TODO: Then we pass the path another method in UserService that returns the
+		// image bytes
 		return null;
+	}
+
+	@Override
+	public void changeMyOnlineStatus(OnlineStatus status, String phoneNumber) {
+		setOnlineStatus(status, phoneNumber);
+	}
+
+	private void setOnlineStatus(OnlineStatus status, String phoneNumber) {
+		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
+		Optional<UserEntity> usOptional = userDao.getUserByPhone(phoneNumber);
+		UserEntity userEntity2 = usOptional.get();
+		UserDto userDto = UserMapperImpl.INSTANCE.mapToUserDto(userEntity2);
+		GroupService groupService = new GroupServiceImpl();
+		var groups = groupService.getAllGroupsByUserWithChatType(userDto);
+		for (GroupDto groupDto : groups) {
+			if (groupDto.status != OnlineStatus.GROUP) {
+				String peerPhone = groupService.getPrivateChatPeerPhone(groupDto.id, userDto);
+				if (connectedClients.containsKey(peerPhone)) {
+					try {
+						connectedClients.get(peerPhone)
+								.updateContactStatus(new GroupStatusDto(groupDto.id, status));
+					} catch (RemoteException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+		}
 	}
 
 }

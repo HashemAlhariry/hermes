@@ -1,5 +1,6 @@
 package gov.iti.jets.client.presentation.util;
 
+import gov.iti.jets.client.presentation.models.ContactsModel;
 import gov.iti.jets.client.presentation.models.UserModel;
 
 public enum ModelsFactory {
@@ -7,6 +8,7 @@ public enum ModelsFactory {
 	INSTANCE;
 
 	private UserModel userModel = new UserModel();
+	private ContactsModel contactsModel = new ContactsModel();
 
 	private ModelsFactory() {
 
@@ -27,6 +29,14 @@ public enum ModelsFactory {
 		// this.userModel.setCountry(userModel.getCountry());
 		// this.userModel.setBio(userModel.getBio());
 		this.userModel = userModel;
+	}
+
+	public ContactsModel getContactsModel() {
+		return contactsModel;
+	}
+
+	public void setContactsModel(ContactsModel contactsModel) {
+		this.contactsModel = contactsModel;
 	}
 
 }

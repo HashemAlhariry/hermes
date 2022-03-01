@@ -9,6 +9,8 @@ import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
+import common.business.util.OnlineStatus;
+
 import java.util.List;
 
 // This will be implemented on serverSide
@@ -16,7 +18,7 @@ public interface Server extends Remote {
 
 	public UserDto login(Client connectedClient, UserAuthDto userAuthDto) throws RemoteException;
 
-	public UserDto checkPhone(Client connectedClient, String phoneNumber)  throws RemoteException;
+	public UserDto checkPhone(Client connectedClient, String phoneNumber) throws RemoteException;
 
 	public void register(Client connectedClient, UserDto userDto) throws RemoteException;
 
@@ -33,4 +35,6 @@ public interface Server extends Remote {
 	public void invitationResponse(InvitationResponse invitationResponse) throws RemoteException;
 
 	public byte[] getUserImageByPhone(String phone) throws RemoteException;
+
+	public void changeMyOnlineStatus(OnlineStatus status, String phoneNumber) throws RemoteException;
 }

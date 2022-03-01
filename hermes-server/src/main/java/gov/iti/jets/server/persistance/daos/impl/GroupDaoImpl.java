@@ -1,5 +1,7 @@
 package gov.iti.jets.server.persistance.daos.impl;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,8 +19,26 @@ public class GroupDaoImpl implements GroupDao {
 
 	@Override
 	public List<GroupEntity> getAllGroupdByUser(UserEntity userEntity) {
-		// TODO Auto-generated method stub
-		return null;
+		var sql = "SELECT * from hermesdb.group_user gu, hermesdb.`group` g "
+				+ "WHERE gu.user_phone_fk = ? "
+				+ "AND g.id = gu.group_id_fk ;";
+		List<GroupEntity> groupEntities = new ArrayList<>();
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(sql)) {
+			preparedStatement.setString(1, userEntity.phone);
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {
+				groupEntities.add(new GroupEntity(
+						resultSet.getInt("id"),
+						resultSet.getString("name"),
+						resultSet.getString("image"),
+						resultSet.getInt("particpiants_number")));
+			}
+			return groupEntities;
+		} catch (SQLException exception) {
+			exception.printStackTrace();
+		}
+		return groupEntities;
 	}
 
 	@Override
@@ -44,7 +64,7 @@ public class GroupDaoImpl implements GroupDao {
 
 		String query = "select * from group_user where group_id_fk = ? ";
 		List<String> result = new ArrayList<>();
-		try (var connection = dataSource.getDataSource().getConnection();
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
 				var preparedStatement = connection.prepareStatement(query);) {
 			preparedStatement.setLong(1, groupID);
 			var resultSet = preparedStatement.executeQuery();

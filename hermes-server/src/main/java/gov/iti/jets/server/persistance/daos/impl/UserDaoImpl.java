@@ -99,7 +99,7 @@ public class UserDaoImpl implements UserDao {
 		userEntity.name = resultSet.getString("name");
 		userEntity.email = resultSet.getString("email");
 		userEntity.password = resultSet.getString("password");
-		// userEntity.image = resultSet.getString("image");
+		userEntity.image = resultSet.getString("image");
 		userEntity.gender = resultSet.getBoolean("gender");
 		userEntity.dob = resultSet.getDate("dob");
 		userEntity.country = resultSet.getString("country");

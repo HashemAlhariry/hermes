@@ -1,10 +1,7 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.net.URL;
-import java.rmi.AccessException;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
 import java.util.ResourceBundle;
 
 import common.business.dtos.UserAuthDto;
@@ -35,25 +32,16 @@ public class NextloginController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		try {
-			Registry registry = LocateRegistry.getRegistry();
-			for (var s : registry.list()) {
-				System.out.println(s);
-			}
-
-		} catch (AccessException e) {
-			e.printStackTrace();
-
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
 	}
 
 	@FXML
 	void signinButtonAction(ActionEvent event) {
 		try {
+			// sending raw password to the server unitll secure password hashing is fixed
 			UserAuthDto userAuthDto = new UserAuthDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
 					passwordTextField.getText());
+			System.out.println(passwordTextField.getText());
+			System.out.println(ModelsFactory.INSTANCE.getUserModel().getPassword());
 			UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
 					userAuthDto);
 			if (userDto != null) {

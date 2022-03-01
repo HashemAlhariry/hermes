@@ -3,8 +3,10 @@ package common.business.services;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import common.business.dtos.GroupStatusDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserDto;
+import common.business.util.OnlineStatus;
 
 public interface Client extends Remote {
 
@@ -17,6 +19,10 @@ public interface Client extends Remote {
 	public void loginSuccess(UserDto userDto) throws RemoteException;
 
 	public void registerationSuccess() throws RemoteException;
+
+	public void updateContactStatus(GroupStatusDto groupStatusDto) throws RemoteException;
+
+	public OnlineStatus getOnlineStatus() throws RemoteException;
 
 
 }

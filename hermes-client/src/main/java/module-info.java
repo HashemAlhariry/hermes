@@ -2,7 +2,6 @@ module gov.iti.jets.client {
 
 	requires transitive javafx.controls;
 	requires javafx.fxml;
-	requires javafx.swing;
 	requires java.rmi;
 	requires common.mod;
 	requires validatorfx;
