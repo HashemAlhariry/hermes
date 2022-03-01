@@ -7,24 +7,33 @@ public class MessageEntity {
 	public int id;
 	public String content;
 	public Date sendDate;
-	public String senderPhone;
 	public int receiverId;
+	public String senderPhone;
 
 	public MessageEntity() {
 	}
 
-	public MessageEntity(int id, String content, Date sendDate, String sender, int receiver) {
+	public MessageEntity(
+			int id,
+			String content,
+			Date sendDate,
+			int receiver,
+			String sender) {
 		this.id = id;
 		this.content = content;
 		this.sendDate = sendDate;
-		this.senderPhone = sender;
 		this.receiverId = receiver;
+		this.senderPhone = sender;
 	}
-	
-	public MessageEntity(String content, Date sendDate, String sender, int receiver) {
+
+	public MessageEntity(
+			String content,
+			Date sendDate,
+			int receiver,
+			String sender) {
 		this.content = content;
 		this.sendDate = sendDate;
-		this.senderPhone = sender;
 		this.receiverId = receiver;
+		this.senderPhone = sender;
 	}
 }

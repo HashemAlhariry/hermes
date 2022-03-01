@@ -10,13 +10,21 @@ import java.util.List;
 
 public class MessageServiceImpl implements MessageService {
 
+	private MessageDao messageDao = DaosFactory.INSTANCE.getMessageDao();
+
 	@Override
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) {
-		MessageDao messageDao = DaosFactory.INSTANCE.getMessageDao();
 		List<MessageEntity> messageEntities = messageDao.getAllMessagesByGroup(groupId);
 		List<MessageDto> messageDtos = new ArrayList<>();
-		// TODO: map messageEntities to messageDtos
+		messageEntities.forEach( messageEntity -> messageDtos.add(MessageMapperImpl.INSTANCE.mapToMessageDto(messageEntity)));
 		return messageDtos;
 	}
+
+	@Override
+	public void insertMessage(MessageDto messageDto) {
+		MessageEntity messageEntity = MessageMapperImpl.INSTANCE.mapFromMessageDto(messageDto);
+		messageDao.insertMessage(messageEntity);
+	}
+
 
 }

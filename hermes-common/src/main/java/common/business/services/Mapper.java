@@ -7,4 +7,5 @@ public interface Mapper<T> {
 	public UserDto mapToUserDto(T userData);
 
 	public T mapFromUserDto(UserDto userDto);
+
 }

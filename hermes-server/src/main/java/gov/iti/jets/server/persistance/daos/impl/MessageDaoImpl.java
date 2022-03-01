@@ -45,30 +45,25 @@ insert into hermesdb.message
 (content, send_date, group_user_group_id_fk, group_user_user_phone_fk)
 values ('<html dir="ltr"><head></head><body contenteditable="true"><p style=" background-color: 0x999933ff;  color: 0xffe6b3ff; "><span style="font-family: &quot;&quot;;">askldlasjdl;a</span></p></body></html>',
 '2002-02-28',1,'01112066286'); */
-		// String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
-		// try (var connection = dataSource.getDataSource().getConnection();
-		// 	var preparedStatement = connection.prepareStatement(query);) {
-		// 	preparedStatement.setString(1, user.name);
-		// 	preparedStatement.setString(2, user.phone);
-		// 	preparedStatement.setString(3, user.email);
-		// 	preparedStatement.setString(4, user.password);
-		// 	preparedStatement.setInt(5, gender);
-		// 	preparedStatement.setDate(6, user.dob);
-		// 	preparedStatement.setString(7, user.country);
-		// 	// System.out.println(preparedStatement.executeUpdate());
-		// 	preparedStatement.executeUpdate();
-		// 	// System.out.println(resultSet);
-		// } catch (SQLException e) {
-		// 	e.printStackTrace();
-		// }
+		String query = "INSERT INTO hermesdb.message (content, send_date, group_user_group_id_fk, group_user_user_phone_fk) VALUES (?,?,?,?);";
+		try (var connection = dataSource.getDataSource().getConnection();
+			var preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setString(1, messageEntity.content);
+			preparedStatement.setDate(2, messageEntity.sendDate);
+			preparedStatement.setInt(3, messageEntity.receiverId);
+			preparedStatement.setString(4, messageEntity.senderPhone);
+			preparedStatement.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 
 	private void fillMessageEntity(ResultSet resultSet, MessageEntity messageEntity) throws SQLException {
 		messageEntity.content = resultSet.getString("content");
 		messageEntity.sendDate = resultSet.getDate("send_date");
-		messageEntity.senderPhone = resultSet.getString("group_user_user_phone_fk");
 		messageEntity.receiverId = resultSet.getInt("group_user_group_id_fk");
+		messageEntity.senderPhone = resultSet.getString("group_user_user_phone_fk");
 	}
 
 }
