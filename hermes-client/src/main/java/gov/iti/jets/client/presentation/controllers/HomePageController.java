@@ -18,17 +18,14 @@ import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import gov.iti.jets.client.presentation.models.MessageModel;
 import gov.iti.jets.client.presentation.models.UserModel;
-import gov.iti.jets.client.presentation.util.HTMLMessageParser;
-import gov.iti.jets.client.presentation.util.ModelsFactory;
+import gov.iti.jets.client.presentation.util.*;
+
 import java.util.stream.Collectors;
 import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.util.OnlineStatus;
 import gov.iti.jets.client.business.services.impl.MapperImpl;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
-import gov.iti.jets.client.presentation.util.StageCoordinator;
-import gov.iti.jets.client.presentation.util.Util;
-import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -554,16 +551,21 @@ public class HomePageController implements Initializable {
 			}
 		}));
 
-		// Image bytes
-		final byte[][] imageBytes = new byte[1][1];
+
+		ImageInfo imageInfo = new ImageInfo();
+
 		Platform.runLater(() -> chooseImageButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					imageBytes[0] = loadPicture(defaultImageView);
+					ImageInfo imageInfo2=loadPicture(defaultImageView);
+					imageInfo.extension=imageInfo2.extension;
+					imageInfo.bytes=imageInfo2.bytes;
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+
+
 			}
 		}));
 
@@ -585,16 +587,18 @@ public class HomePageController implements Initializable {
 		if (!invitedContacts.isEmpty() && !groupNameField.getText().isEmpty()) {
 			LocalDateTime myObj = LocalDateTime.now();
 			// SEND GROUP DETAILS TO BE SAVED TO SERVER
+
+			String imageName = 	String.valueOf(myObj.getNano());
 			System.out.println(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
 			try {
 				RMIConnection.INSTANCE.getServer().addGroupChat(
 						new GroupDetailsDto(
 								groupNameField.getText(),
-								groupNameField.getText() + "_" + myObj,
+								groupNameField.getText(),
 								ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
 								invitedContacts,
-								imageBytes[0],
-								groupNameField.getText() + "_" + myObj));
+								imageInfo.bytes,
+								groupNameField.getText() + "_" + imageName+"."+imageInfo.extension));
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -649,8 +653,8 @@ public class HomePageController implements Initializable {
 
 	}
 
-	private byte[] loadPicture(ImageView imageView) throws IOException {
-
+	private ImageInfo loadPicture(ImageView imageView) throws IOException {
+		ImageInfo imageInfo;
 		byte[] imageBytes;
 		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 		fileChooser.getExtensionFilters().clear();
@@ -662,7 +666,7 @@ public class HomePageController implements Initializable {
 
 			imageView.setImage(new Image(file.toURI().toString()));
 			imageBytes = Files.readAllBytes(file.toPath());
-			return imageBytes;
+			return new ImageInfo(imageBytes,file.getName().split("\\.")[1]);
 
 		} else {
 			System.out.println("InvalidImage");

@@ -110,7 +110,7 @@ public class GroupServiceImpl implements GroupService {
                 }
 
                 try (FileOutputStream fos = new FileOutputStream(
-                        "hermes-server/src/main/resources/images/" + groupDetailsDto.groupFullName)) {
+                        "hermes-server/src/main/resources/userImages/" + groupDetailsDto.imageName)) {
                     fos.write(groupDetailsDto.image);
 
                 } catch (IOException e) {

@@ -103,9 +103,7 @@ public enum Utils {
 		if(currentOpenGroupId==messageDto.groupId){
 			//append elmessege
 			//StageCoordinator.INSTANCE.getPrimaryStage().
-
 			Platform.runLater( ()->{
-
 				    ImageView imageView=new ImageView();
 					imageView.setFitHeight(20);
 					imageView.setFitWidth(20);
@@ -123,8 +121,6 @@ public enum Utils {
 					messageHorizontalBox.getChildren().add(imageView);
 					messageHorizontalBox.getChildren().add(formattedMessage);
 					messagesVerticalBox.getChildren().add(messageHorizontalBox);
-
-
 
 			});
 
