@@ -38,7 +38,7 @@
     -fx-text-fill    : null;
     /* -fx-pref-width:50;
     -fx-pref-height  :50; */
-	-fx-background-color: #363A54;
+
 }
 
 .transparent-background {
@@ -90,6 +90,7 @@ Button {
 	-fx-text-fill: black;
 }
 
+/*
 .combo-box .list-cell,.arrow-button  {
 	-fx-background-color:#363A54;
 }
@@ -97,3 +98,4 @@ Button {
 	-fx-background-color:#363A54;
 	-fx-text-fill:white;
 }
+*/

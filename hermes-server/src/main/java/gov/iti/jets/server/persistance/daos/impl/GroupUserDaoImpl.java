@@ -5,6 +5,8 @@ import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.GroupUserEntity;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupUserDaoImpl implements GroupUserDao {
 
@@ -30,7 +32,27 @@ public class GroupUserDaoImpl implements GroupUserDao {
         }
 
         return 0;
+    }
+
+    @Override
+    public List<String> getAllUsersByGroup(int groupID) {
+        List<String> userPhones = new ArrayList<>();
+        String sql = " select user_phone_fk from hermesdb.group_user where group_id_fk = ?;";
+
+        try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+             var preparedStmt = connection.prepareStatement(sql)) {
+
+            preparedStmt.setInt(1, groupID );
 
 
+            var resultSet = preparedStmt.executeQuery();
+            while (resultSet.next()) {
+                userPhones.add(resultSet.getString("user_phone_fk"));
+            }
+        return userPhones;
+        } catch (SQLException exception) {
+            exception.printStackTrace();
+        }
+        return userPhones;
     }
 }

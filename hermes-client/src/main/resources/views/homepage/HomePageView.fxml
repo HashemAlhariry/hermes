@@ -124,21 +124,12 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="29.0" prefWidth="100.0" styleClass="testing-font" stylesheets="@HomePage.css" text="Hashem " textFill="WHITE">
+                  <Label fx:id="currentGroupName" prefHeight="29.0" prefWidth="100.0" styleClass="testing-font" stylesheets="@HomePage.css" text="User " textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Circle fill="#7abf7c" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label layoutX="20.0" layoutY="29.0" prefHeight="30.0" prefWidth="50.0" text="Online" textFill="#909797">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
                   <Pane prefHeight="66.0" prefWidth="105.0" HBox.hgrow="ALWAYS" />
@@ -157,7 +148,7 @@
             </HBox>
             <ScrollPane fx:id="sp_main" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="521.0" styleClass="fourth-background" stylesheets="@HomePage.css" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="messagesVerticalBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2500.0" prefWidth="2500.0" styleClass="fourth-background" stylesheets="@HomePage.css" />
+                  <VBox id ="messagesVerticalBox" fx:id="messagesVerticalBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2500.0" prefWidth="2500.0" styleClass="fourth-background" stylesheets="@HomePage.css" />
                </content>
             </ScrollPane>
             <HBox maxWidth="1.7976931348623157E308">

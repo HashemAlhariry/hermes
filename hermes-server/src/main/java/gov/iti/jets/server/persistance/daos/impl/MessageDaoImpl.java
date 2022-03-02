@@ -45,6 +45,7 @@ insert into hermesdb.message
 (content, send_date, group_user_group_id_fk, group_user_user_phone_fk)
 values ('<html dir="ltr"><head></head><body contenteditable="true"><p style=" background-color: 0x999933ff;  color: 0xffe6b3ff; "><span style="font-family: &quot;&quot;;">askldlasjdl;a</span></p></body></html>',
 '2002-02-28',1,'01112066286'); */
+
 		String query = "INSERT INTO hermesdb.message (content, send_date, group_user_group_id_fk, group_user_user_phone_fk) VALUES (?,?,?,?);";
 		try (var connection = dataSource.getDataSource().getConnection();
 			var preparedStatement = connection.prepareStatement(query);) {

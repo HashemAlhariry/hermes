@@ -1,15 +1,28 @@
 package gov.iti.jets.client.presentation.util;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
 
 import common.business.dtos.InvitationResponseDto;
+import common.business.dtos.MessageDto;
 import common.business.dtos.PrivateGroupDetailsDto;
+import gov.iti.jets.client.presentation.models.ContactsModel;
+import gov.iti.jets.client.presentation.models.MessageModel;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -17,7 +30,7 @@ import javafx.stage.Modality;
 public enum Utils {
 
 	INSTANCE;
-
+	public int currentOpenGroupId;
 	public boolean checkNumberInString(String phoneNumber) {
 		Pattern pattern = Pattern.compile(".*[^0-9].*");
 		return !pattern.matcher(phoneNumber).matches();
@@ -67,7 +80,6 @@ public enum Utils {
 		});
 
 	}
-
 	public void receiveBroadCastMessage(String broadCastMessage) {
 		Platform.runLater(() -> {
 
@@ -82,5 +94,45 @@ public enum Utils {
 
 		});
 	}
+
+	public void appendMessagesToVbox(MessageDto messageDto){
+		if(currentOpenGroupId==messageDto.groupId){
+			//append elmessege
+			//StageCoordinator.INSTANCE.getPrimaryStage().
+
+			Platform.runLater( ()->{
+
+				    ImageView imageView=new ImageView();
+					imageView.setFitHeight(20);
+					imageView.setFitWidth(20);
+
+					Scene scene = StageCoordinator.INSTANCE.getPrimaryStage().getScene();
+					VBox messagesVerticalBox = (VBox) scene.lookup("#messagesVerticalBox");
+
+					var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageDto.content,  new Timestamp(messageDto.sendDate.getTime()));
+					HBox messageHorizontalBox = new HBox();
+					ModelsFactory.INSTANCE.getContactsModel().getContacts().forEach((item)->{
+						if(messageDto.groupId==item.groupId){
+							imageView.setImage(item.image);
+						}
+					});
+					messageHorizontalBox.getChildren().add(imageView);
+					messageHorizontalBox.getChildren().add(formattedMessage);
+					messagesVerticalBox.getChildren().add(messageHorizontalBox);
+
+
+
+			});
+
+
+
+		}
+
+	}
+
+
+
+
+
 
 }

@@ -14,13 +14,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-
 import common.business.dtos.InvitationSentDto;
+import common.business.dtos.MessageDto;
+import gov.iti.jets.client.presentation.models.MessageModel;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.HTMLMessageParser;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import java.util.stream.Collectors;
-
 import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.util.OnlineStatus;
@@ -31,6 +31,9 @@ import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -39,6 +42,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.SubScene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
@@ -93,7 +97,10 @@ public class HomePageController implements Initializable {
 
 	// @FXML
 	// private TextField messageTextField;
-
+	@FXML
+	private ScrollPane sp_main;
+	@FXML
+	private Label currentGroupName;
 	@FXML
 	private VBox messagesVerticalBox;
 
@@ -128,10 +135,22 @@ public class HomePageController implements Initializable {
 
 	private Color bgColor;
 	private Color textColor;
+	private int currentGroupId;
+
+	private ObservableList<MessageModel> contentGroupMessages;
+
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		messagesVerticalBox.heightProperty().addListener(new ChangeListener<Number>() {
+			@Override
+			public void changed(ObservableValue<? extends Number> observableValue, Number number, Number t1) {
+				sp_main.setVvalue((Double) t1);
+			}
+		});
+
+		contentGroupMessages=MessageModel.observableArrayList();
 		ImageView sendImageView = new ImageView(new Image(getClass().getResourceAsStream("/images/button-send.png")));
 		sendImageView.setFitHeight(20);
 		sendImageView.setFitWidth(20);
@@ -141,8 +160,65 @@ public class HomePageController implements Initializable {
 		Platform.runLater(() -> {
 			addAllContacts();
 		});
+
+
+		if (contactsListView.getItems().size() == 0) {
+			currentGroupName.setVisible(false);
+			contactImageView.setVisible(false);
+		}else{
+			currentGroupName.setVisible(true);
+			contactImageView.setVisible(true);
+		}
+
+
+
 		contactsListView.setItems(contacts);
 		contactsListView.setCellFactory(i -> new ContactListCell());
+		contactsListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+
+
+			//getting group id to start chat with
+			@Override
+			public void handle(MouseEvent event) {
+				contentGroupMessages.clear();
+				messagesVerticalBox.getChildren().removeAll(messagesVerticalBox.getChildren());
+
+				System.out.println(contactsListView.getSelectionModel().getSelectedItem().groupId);
+
+				currentGroupId=contactsListView.getSelectionModel().getSelectedItem().groupId;
+
+				Utils.INSTANCE.currentOpenGroupId=currentGroupId;
+
+				Platform.runLater(()->{
+					currentGroupName.setVisible(true);
+					contactImageView.setVisible(true);
+					currentGroupName.setText(contactsListView.getSelectionModel().getSelectedItem().name);
+					contactImageView.setImage(contactsListView.getSelectionModel().getSelectedItem().image);
+				});
+		 		// get all messages from database
+				try {
+
+					RMIConnection.INSTANCE.getServer().getAllMessagesByGroup(currentGroupId).forEach((message)->{
+						contentGroupMessages.add(new MessageModel(message.content,message.sendDate, message.groupId, message.senderPhone));
+					});
+
+					Platform.runLater(()->{
+						for (var message: contentGroupMessages) {
+							System.out.println(message.content);
+							boolean checker=false;
+							if(message.senderPhone.equals(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()))
+								checker=true;
+							createMessage(message.content,new Timestamp(message.sendDate.getTime()),checker);
+						}
+					});
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+				// update it when user click
+			}
+		});
+
+
 
 		Platform.runLater(() -> {
 			initUserStatus();
@@ -180,6 +256,8 @@ public class HomePageController implements Initializable {
 	}
 
 
+
+
 	@FXML
 	void sendMessageAction(ActionEvent event) {
 		sendMessageEventHandler();
@@ -193,18 +271,52 @@ public class HomePageController implements Initializable {
 		}
 	}
 
-	private void sendMessageEventHandler() {
+	public VBox getMessagesVerticalBox() {
+		return messagesVerticalBox;
+	}
 
+	public void setMessagesVerticalBox(VBox messagesVerticalBox) {
+		this.messagesVerticalBox = messagesVerticalBox;
+	}
+
+	private void sendMessageEventHandler() {
 		String messageToSend = messagHtmlEditor.getHtmlText();
+		Date date = new Date();
+		Timestamp timestamp = new Timestamp(date.getTime());
+		String messageToSendTo = createMessage(messageToSend,timestamp,true);
+
+		//get sender photo phone to put it beside the message (PRIVATE _ GROUP)
+
+			System.out.println(messageToSendTo);
+		//send message to save it to database
+		if(messageToSendTo!=null){
+			try {
+				RMIConnection.INSTANCE.getServer().sendMessage(new MessageDto(
+						messageToSendTo,
+						new java.sql.Date(date.getTime()),
+						currentGroupId,
+						ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
+						));
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+	private String createMessage(String messageToSend,Timestamp timestamp,boolean check){
 
 		ImageView imageView = new ImageView(contactImageView.getImage());
 		imageView.setFitWidth(18);
 		imageView.setFitHeight(18);
-
 		HBox messageHorizontalBox = new HBox();
-		messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
-		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 
+		if(check)
+			messageHorizontalBox.setAlignment(Pos.CENTER_RIGHT);
+		else
+			messageHorizontalBox.setAlignment(Pos.CENTER_LEFT);
+
+		messageHorizontalBox.setPadding(new Insets(5, 5, 5, 10));
 		// add text and backgroud colors as css in the html message
 		// insert style at paragraph tag
 		// add bgcolor and text color in this style
@@ -212,22 +324,27 @@ public class HomePageController implements Initializable {
 		if (textColor != null)
 			messageToSend = Util.INSTANCE.insertString(messageToSend, " color: " + textColor + "; ",
 					messageToSend.indexOf("style=\"") + "style=\"".length() - 1);
+
 		if (bgColor != null)
 			messageToSend = Util.INSTANCE.insertString(messageToSend, " background-color: " + bgColor + "; ",
 					messageToSend.indexOf("style=\"") + "style=\"".length() - 1);
-		Date date = new Date();
-		Timestamp timestamp2 = new Timestamp(date.getTime());
-		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend, timestamp2);
+
+		var formattedMessage = HTMLMessageParser.INSTANCE.formatMessage(messageToSend, timestamp);
 		if (formattedMessage != null) {
-			messageHorizontalBox.getChildren().add(formattedMessage);
-			messageHorizontalBox.getChildren().add(imageView);
+			if(check){
+				messageHorizontalBox.getChildren().add(formattedMessage);
+				messageHorizontalBox.getChildren().add(imageView);
+			}else{
+				messageHorizontalBox.getChildren().add(imageView);
+				messageHorizontalBox.getChildren().add(formattedMessage);
+			}
+
 			messagesVerticalBox.getChildren().add(messageHorizontalBox);
-
 			// SEND MESSAGE TO SPECIFIC USER As HTML
-
 			messagHtmlEditor.setHtmlText("");
-
+			return  messageToSend;
 		}
+		return  null;
 	}
 
 	private void initUserImage() {
@@ -265,6 +382,10 @@ public class HomePageController implements Initializable {
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static void  appendMessage(MessageDto messageDto){
+		//createMessage(messageDto.content,messageDto.sendDate,false);
 	}
 
 	@FXML
