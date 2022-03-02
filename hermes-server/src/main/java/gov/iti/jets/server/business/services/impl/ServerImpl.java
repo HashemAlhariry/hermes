@@ -145,12 +145,15 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	}
 
 	@Override
-	public void logout(UserAuthDto userAuthDto) {
+	public void logout(String phoneNumber) {
+		//setOnlineStatus(OnlineStatus.OFFLINE, phoneNumber);
 		// maybe add additional check to see if he is connected or not
-		connectedClients.remove(userAuthDto.phoneNumber);
+		connectedClients.remove(phoneNumber);
+		System.out.println("User: " + phoneNumber + " logged out");
+		// connectedClients.remove(userAuthDto.phoneNumber);
 
-		StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get()-1);
-		StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get()+1);
+		StatisticsData.INSTANCE.setOnlineUsers(StatisticsData.INSTANCE.onlineUsers.get() - 1);
+		StatisticsData.INSTANCE.setOfflineUsers(StatisticsData.INSTANCE.offlineUsers.get() + 1);
 
 	}
 
@@ -221,8 +224,11 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	public byte[] getUserProfilePicture(String phone) throws RemoteException {
 		UserDao userDao = DaosFactory.INSTANCE.getUserDao();
 		String image = userDao.getUserImageByPhone(phone);
+		if (image==null)
+			return null;
 		System.out.println("image in server :" + image);
 		try (var img = new FileInputStream("src/main/resources/userImages/" + image)) {
+
 			byte[] b = img.readAllBytes();
 			System.out.println("bytes in server :" + b);
 			return b;

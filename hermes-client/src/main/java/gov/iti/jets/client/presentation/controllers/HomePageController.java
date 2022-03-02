@@ -15,15 +15,9 @@ import java.util.ResourceBundle;
 import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
 import gov.iti.jets.client.presentation.models.UserModel;
-import java.io.IOException;
-import java.net.URL;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.util.ResourceBundle;
-
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
-import gov.iti.jets.client.presentation.util.Util;
+import gov.iti.jets.client.presentation.util.Utils;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -34,13 +28,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.ButtonBar.ButtonData;
-import javafx.scene.control.Button;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -51,46 +43,28 @@ import javafx.stage.FileChooser;
 
 public class HomePageController implements Initializable {
 
-	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
-
 	Font font = Font.loadFont("file:resources/fonts/TenaliRamakrishna-Regular.ttf", 45);
 
 	private final FileChooser fileChooser = new FileChooser();
 
 	@FXML
-	private ImageView addContactView;
-
-
-	@FXML
-	private ImageView logoutImageView;
-
+	private ImageView searchImageView;
 	@FXML
 	private BorderPane mainBorderPane;
-
-	@FXML
-	private VBox mainVertical;
-
 	@FXML
 	private TextField messageTextField;
-
-	@FXML
-	private VBox messagesVerticalBox;
-
-	@FXML
-	private ImageView optionsOnChat;
-
-	@FXML
-	private ImageView profileImageView;
-
-	@FXML
-	private ImageView searchImageView;
-
 	@FXML
 	private TextField searchTextField;
-
 	@FXML
 	private Button sendButton;
-
+	@FXML
+	private ImageView profileImageView;
+	@FXML
+	private ImageView addContactView;
+	@FXML
+	private ImageView logoutImageView;
+	@FXML
+	private VBox messagesVerticalBox;
 	@FXML
 	private ImageView contactImageView;
 	@FXML
@@ -98,6 +72,7 @@ public class HomePageController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+
 		// Sending message to vbox in chat box to a specific contact
 		sendButton.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
@@ -132,9 +107,10 @@ public class HomePageController implements Initializable {
 			}
 		});
 
-		// Platform.runLater(() -> {
-		// 	initUserImage();
-		// });
+	}
+
+	@FXML
+	void onSearchTextFieldClick(ActionEvent event) {
 
 	}
 
@@ -146,27 +122,22 @@ public class HomePageController implements Initializable {
 	}
 
 	@FXML
-	void onSearchTextFieldClick(ActionEvent event) {
-
+	void onProfileClicked(MouseEvent mouseEvent) {
+		StageCoordinator.INSTANCE.switchToProfileScene();
 	}
 
 	@FXML
-	void onProfileClicked(MouseEvent mouseEvent) {
-		stageCoordinator.switchToProfileScene();
+	void onContactClicked(MouseEvent mouseEvent) {
+		// stageCoordinator.switchToContactScene();
 	}
 
 	@FXML
 	void onLogoutClicked(MouseEvent mouseEvent) {
-		try {
-			RMIConnection.INSTANCE.close();
-			// ModelsFactory.INSTANCE.setUserModel(new UserModel());
-			StageCoordinator.INSTANCE.getSceneMap().clear();
-			stageCoordinator.switchToLoginScene();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
-			e.printStackTrace();
-		}
+		UserModel userModel1 = ModelsFactory.INSTANCE.getUserModel();
+		userModel1.setEmail("Mina@gmail.com");
+		userModel1.setPhoneNumber("01285097233");
+		userModel1.setUserName("MINA");
+		// stageCoordinator.switchToLoginScene();
 	}
 
 
@@ -242,7 +213,9 @@ public class HomePageController implements Initializable {
 				System.out.println("Client " + ModelsFactory.INSTANCE.getUserModel().getPhoneNumber()
 						+ " Sending all invitation ...");
 
-			 } catch (RemoteException e) {
+				RMIConnection.INSTANCE.getServer().sendInvitation(new InvitationSentDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(), invitedContacts));
+
+			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 		}

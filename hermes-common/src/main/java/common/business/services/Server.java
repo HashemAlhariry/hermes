@@ -10,7 +10,6 @@ import common.business.dtos.InvitationResponseDto;
 
 import java.util.List;
 import common.business.dtos.GroupDto;
-import common.business.dtos.InvitationResponse;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserAuthDto;
@@ -48,5 +47,6 @@ public interface Server extends Remote {
 	public boolean setUserProfilePicture(byte[]bytes,UserDto userDto ,String format) throws RemoteException;
 
 	public byte[] getUserProfilePicture(String phone) throws RemoteException;
+	
 }
 
