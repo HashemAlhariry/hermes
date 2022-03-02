@@ -14,8 +14,7 @@ import java.util.Map;
 public enum StatisticsData {
 
     INSTANCE;
-
-
+    public SimpleIntegerProperty allUsers = new SimpleIntegerProperty(0);
     public SimpleIntegerProperty onlineUsers = new SimpleIntegerProperty(0);
     public SimpleIntegerProperty offlineUsers = new SimpleIntegerProperty(0);
 
@@ -25,6 +24,16 @@ public enum StatisticsData {
     public ObservableList<PieChart.Data> pieChartDataForGender  = FXCollections.observableArrayList(
             new PieChart.Data("Males", 0),
             new PieChart.Data("Females", 0));
+
+
+
+    public SimpleIntegerProperty allUsersProperty() {
+        return allUsers;
+    }
+
+    public void setAllUsers(int allUsers) {
+        this.allUsers.set(allUsers);
+    }
 
     public ObservableList<PieChart.Data> pieChartDataForOnlineOffline = FXCollections.observableArrayList(
             new PieChart.Data("Online",  0),
@@ -54,7 +63,6 @@ public enum StatisticsData {
 
     }
 
-
     public void setPieChartDataForCountry(Map<String,Integer> countryMap){
         countryMapValue=countryMap;
         for (Map.Entry<String, Integer> entry : countryMap.entrySet()) {
@@ -76,19 +84,9 @@ public enum StatisticsData {
                 countriesUser.add(new PieChart.Data(countryName ,1));
             }
 
-
-
         Platform.runLater(()->{
             pieChartDataForCountry.clear();
             pieChartDataForCountry.setAll(countriesUser);
                 });
-
-
-
-
-
     }
-
-
-
 }

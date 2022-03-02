@@ -2,6 +2,7 @@ package gov.iti.jets.client.presentation.models;
 
 import java.time.LocalDate;
 
+import common.business.util.OnlineStatus;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.Property;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -21,6 +22,7 @@ public class UserModel {
 	private StringProperty country = new SimpleStringProperty();
 	private Property<LocalDate> dateOfBirth = new SimpleObjectProperty<>();
 	private StringProperty bio = new SimpleStringProperty();
+	private Property<OnlineStatus> onlineStatus = new SimpleObjectProperty<>(); 
 
 	public String getUserName() {
 		return userName.get();
@@ -145,5 +147,17 @@ public class UserModel {
 
 	public void setPicture(Image picture) {
 		this.picture.setValue(picture);
+	}
+
+	public Property<OnlineStatus> onlineStatusProperty() {
+		return onlineStatus;
+	}
+
+	public OnlineStatus getOnlineStatus() {
+		return onlineStatus.getValue();
+	}
+
+	public void setOnlineStatus(OnlineStatus onlineStatus) {
+		this.onlineStatus.setValue(onlineStatus);
 	}
 }

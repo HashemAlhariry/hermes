@@ -7,6 +7,10 @@ import java.util.List;
 
 public interface GroupService {
 
+	List<GroupDto> getAllGroupsByUserWithChatType(UserDto userDto);
+
+	String getPrivateChatPeerPhone(int groupId, UserDto userDto);
+
 	public void addNewGroupChat(GroupDetailsDto groupDetailsDto);
 
 	List<GroupDto> getAllGroupsByUser(UserDto userDto);

@@ -33,4 +33,16 @@ public enum Util {
 		}
 	}
 
+	public String insertString(String originalString, String stringToBeInserted, int index) {
+
+		String newString = "";
+		for (int i = 0; i < originalString.length(); i++) {
+			newString += originalString.charAt(i);
+			if (i == index) {
+				newString += stringToBeInserted;
+			}
+		}
+		return newString;
+	}
+
 }

@@ -1,19 +1,18 @@
 package common.business.services;
 
-import common.business.dtos.*;
-
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import common.business.dtos.InvitationResponseDto;
-
-import java.util.List;
+import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.GroupDto;
+import common.business.dtos.InvitationResponseDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.dtos.MessageDto;
+import common.business.dtos.PrivateGroupDetailsDto;
 import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
+import common.business.util.OnlineStatus;
 
 // This will be implemented on serverSide
 public interface Server extends Remote {
@@ -36,6 +35,10 @@ public interface Server extends Remote {
 
 	public List<MessageDto> getAllMessagesByGroup(Integer groupId) throws RemoteException;
 
+	public byte[] getUserImageByPhone(String phone) throws RemoteException;
+
+	public void changeMyOnlineStatus(OnlineStatus status, String phoneNumber) throws RemoteException;
+
 	public void invitationResponse(InvitationResponseDto invitationResponseDto) throws RemoteException;
 
 	public void addPrivateChat(PrivateGroupDetailsDto privateGroupDetailsDto) throws RemoteException;
@@ -43,6 +46,10 @@ public interface Server extends Remote {
 	public void addGroupChat(GroupDetailsDto groupDetailsDto) throws RemoteException;
 
 	public void sendBroadCastToOnlineUsers(String broadCastMessage) throws RemoteException;
+
+	public void sendServerAvailability(boolean serverAvailability) throws  RemoteException;
+
+	public boolean getServerAvailability() throws RemoteException;
 
 	public boolean setUserProfilePicture(byte[]bytes,UserDto userDto ,String format) throws RemoteException;
 

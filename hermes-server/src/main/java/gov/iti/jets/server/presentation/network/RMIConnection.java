@@ -12,10 +12,11 @@ import java.util.Map;
 
 import common.business.services.Server;
 import gov.iti.jets.server.business.services.impl.ServerImpl;
+import javafx.beans.property.SimpleBooleanProperty;
 
 public enum RMIConnection {
 	INSTANCE;
-
+	public SimpleBooleanProperty serverAvailability= new SimpleBooleanProperty(true);
 	private Registry registry;
 	private Map<String, Remote> services;
 	// private List<ConnectedClient>onlineUsers;

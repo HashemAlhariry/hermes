@@ -10,6 +10,7 @@ module gov.iti.jets.server {
 	requires transitive common.mod;
 	requires java.management;
 	requires javafx.swing;
+	requires java.desktop;
 	opens gov.iti.jets.server.presentation.gui.controllers to javafx.fxml;
 
 	exports gov.iti.jets.server;

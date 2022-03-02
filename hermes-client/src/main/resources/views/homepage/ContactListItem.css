@@ -1,0 +1,10 @@
+
+.label {
+	-fx-text-fill: white;
+	-fx-font-size:14;
+}
+
+#contactItemHbox {
+	-fx-background-color:#2B233C;
+}
+

@@ -18,7 +18,8 @@ public class InvitationDaoImpl implements InvitationDao {
 
 
 		String sql = "insert into invitation (sender_phone, reciever_phone, status) values (?,?,?)";
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 
 			UserDao daoImpl = new UserDaoImpl();
 			if (daoImpl.getUserByPhone(invitationEntity.getRecieverPhone()).isPresent()) {
@@ -41,7 +42,8 @@ public class InvitationDaoImpl implements InvitationDao {
 	public boolean checkInvitationAvailability(InvitationEntity invitationEntity) {
 		String sql = "select * from invitation where sender_phone = ? and reciever_phone = ?";
 
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 
 
 				preparedStmt.setString(1, invitationEntity.getSenderPhone());
@@ -65,7 +67,8 @@ public class InvitationDaoImpl implements InvitationDao {
 	@Override
 	public void updateInvitationStatus(InvitationEntity invitationEntity) {
 		String sql = "update invitation set status = ? where sender_phone = ? and reciever_phone = ?;";
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql);) {
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 			int response =2 ;
 			if(invitationEntity.getStatus()==ACCEPTED)
 				response=1;
@@ -94,7 +97,8 @@ public class InvitationDaoImpl implements InvitationDao {
 	@Override
 	public List<InvitationEntity> getPendingInvitationsByReciever(InvitationEntity invitationEntity) {
 		String sql = "select * from invitation where id = ?";
-		try (var preparedStmt = DataSource.INSTANCE.getDataSource().getConnection().prepareStatement(sql)) {
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+			 var preparedStmt = connection.prepareStatement(sql)) {
 			preparedStmt.executeQuery();
 		} catch (Exception e) {
 			//TODO: handle exception

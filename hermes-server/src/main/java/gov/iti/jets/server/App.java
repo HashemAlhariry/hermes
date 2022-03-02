@@ -36,8 +36,9 @@ public class App extends Application {
 
 		//getting all offline users when server starts
 		int allUsers = DaosFactory.INSTANCE.getStatisticsDao().getAllUsers();
-		System.out.println(allUsers);
 		StatisticsData.INSTANCE.setOfflineUsers(allUsers);
+		StatisticsData.INSTANCE.setAllUsers(allUsers);
+
 		//getting all male/female users when server starts
 		int maleUsers = DaosFactory.INSTANCE.getStatisticsDao().getMaleUsers();
 		int femaleUsers =  DaosFactory.INSTANCE.getStatisticsDao().getFemaleUsers();

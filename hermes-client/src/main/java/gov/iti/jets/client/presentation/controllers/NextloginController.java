@@ -2,10 +2,11 @@ package gov.iti.jets.client.presentation.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.AccessException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
+import java.util.Base64;
 import java.util.ResourceBundle;
 
 import common.business.dtos.UserAuthDto;
@@ -16,11 +17,13 @@ import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presistance.network.RMIConnection;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -33,23 +36,14 @@ public class NextloginController implements Initializable {
 	@FXML
 	private Button signInButton;
 
+	@FXML
+	private CheckBox remembermeCheckBox;
+
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		try {
-			Registry registry = LocateRegistry.getRegistry();
-			for (var s : registry.list()) {
-				System.out.println(s);
-			}
-
-		} catch (AccessException e) {
-			e.printStackTrace();
-
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void initUserImage() {
@@ -78,13 +72,17 @@ public class NextloginController implements Initializable {
 	@FXML
 	void signinButtonAction(ActionEvent event) {
 		try {
-
-			UserAuthDto userAuthDto = new UserAuthDto(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
-					passwordTextField.getText());
+			ModelsFactory.INSTANCE.getUserModel().setPassword(passwordTextField.getText());
+			UserAuthDto userAuthDto = MapperImpl.INSTANCE.mapToUserAuthDto(ModelsFactory.INSTANCE.getUserModel());
 			UserDto userDto = RMIConnection.INSTANCE.getServer().login(ServiceFactory.INSTANCE.getClientImpl(),
 					userAuthDto);
 			if (userDto != null) {
-				System.out.println(userDto.bio);
+				if (remembermeCheckBox.isSelected()) {
+					Platform.runLater(() -> {
+						rememberCredentials(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber(),
+								userAuthDto.password);
+					});
+				}
 				var newUserModel = MapperImpl.INSTANCE.mapFromUserDto(userDto);
 				ModelsFactory.INSTANCE.setUserModel(newUserModel);
 				initUserImage();
@@ -107,6 +105,17 @@ public class NextloginController implements Initializable {
 	void signinKeyPressed(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			stageCoordinator.switchToLoginScene();
+		}
+	}
+
+	private void rememberCredentials(String phone, String password) {
+		byte[] creds = (phone + "\n" + password).getBytes();
+		var encoder = Base64.getEncoder();
+		byte[] encoded = encoder.encode(creds);
+		try {
+			Files.write(Paths.get("creds"), encoded, StandardOpenOption.CREATE, StandardOpenOption.WRITE);
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 }

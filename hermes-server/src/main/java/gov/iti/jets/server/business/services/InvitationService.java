@@ -12,6 +12,8 @@ import java.util.Map;
 public interface InvitationService {
 
 	public void sendInvitation(InvitationSentDto invitationSentDto, Map<String, Client> connectedClients);
+
 	public void acceptInvitation(InvitationRecievedDto invitationRecievedDto);
+
 	public void updatingInvitation(InvitationResponseDto invitationResponseDto);
 }

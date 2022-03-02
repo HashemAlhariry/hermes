@@ -11,7 +11,6 @@ import gov.iti.jets.server.persistance.entities.UserEntity;
 public class UserDaoImpl implements UserDao {
 
 	private DataSource dataSource;
-
 	public UserDaoImpl() {
 		this.dataSource = DataSource.INSTANCE;
 	}
@@ -90,7 +89,7 @@ public class UserDaoImpl implements UserDao {
 
 	public Optional<UserEntity> getUserByPhone(String phone) {
 
-		String sql = "Select * from user where phone = ?";
+		String sql = "select * from user where phone = ?";
 		UserEntity userEntity = new UserEntity();
 		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
 				var preparedStmt = connection.prepareStatement(sql)) {
@@ -112,7 +111,7 @@ public class UserDaoImpl implements UserDao {
 		userEntity.name = resultSet.getString("name");
 		userEntity.email = resultSet.getString("email");
 		userEntity.password = resultSet.getString("password");
-		// userEntity.image = resultSet.getString("image");
+		userEntity.image = resultSet.getString("image");
 		userEntity.gender = resultSet.getBoolean("gender");
 		userEntity.dob = resultSet.getDate("dob");
 		userEntity.country = resultSet.getString("country");
@@ -126,11 +125,11 @@ public class UserDaoImpl implements UserDao {
 		boolean uniquePhone = true;
 		List<UserEntity> allUsers = getAllUsers();
 		for (UserEntity userEntity : allUsers) {
-			if (userEntity.phone.equals(user.phone)){
+			if (userEntity.phone.equals(user.phone)) {
 				uniquePhone = false;
 				return "Phone Number Must Be Unique";
 			}
-			if (userEntity.email.equalsIgnoreCase(user.email)){
+			if (userEntity.email.equalsIgnoreCase(user.email)) {
 				uniqueEmail = false;
 				return "Email Must Be Unique";
 			}
@@ -188,14 +187,13 @@ public class UserDaoImpl implements UserDao {
 
 	}
 
-
 	@Override
 	public List<UserEntity> getAllMaleUsers() {
 		List<UserEntity> userEntities = new ArrayList<>();
 		String query = "Select * from user where gender = 1";
 		try (var connection = dataSource.getDataSource().getConnection();
-			 var preparedStatement = connection.prepareStatement(query);
-			 var resultSet = preparedStatement.executeQuery()) {
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
@@ -206,15 +204,14 @@ public class UserDaoImpl implements UserDao {
 		}
 		return userEntities;
 	}
-
 
 	@Override
 	public List<UserEntity> getAllFemaleUsers() {
 		List<UserEntity> userEntities = new ArrayList<>();
 		String query = "Select * from user where gender = 0";
 		try (var connection = dataSource.getDataSource().getConnection();
-			 var preparedStatement = connection.prepareStatement(query);
-			 var resultSet = preparedStatement.executeQuery()) {
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
 			while (resultSet.next()) {
 				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
@@ -226,24 +223,24 @@ public class UserDaoImpl implements UserDao {
 		return userEntities;
 	}
 
-	public Map<String,Integer> getAllCountries(){
-		Map<String,Integer> countriesWithUsers = new HashMap<>();
+	public Map<String, Integer> getAllCountries() {
+		Map<String, Integer> countriesWithUsers = new HashMap<>();
 		String query = "Select * from user;";
 		try (var connection = dataSource.getDataSource().getConnection();
-			 var preparedStatement = connection.prepareStatement(query);
-			 var resultSet = preparedStatement.executeQuery()) {
+				var preparedStatement = connection.prepareStatement(query);
+				var resultSet = preparedStatement.executeQuery()) {
 			String country;
 			while (resultSet.next()) {
-			 country=resultSet.getString("country");
-			 if(resultSet.wasNull()){
-				 continue;
-			 }else {
-				 if(countriesWithUsers.containsKey(country)){
-					 countriesWithUsers.put(country,countriesWithUsers.get(country)+1);
-				 }else{
-					 countriesWithUsers.put(country,1);
-				 }
-			 }
+				country = resultSet.getString("country");
+				if (resultSet.wasNull()) {
+					continue;
+				} else {
+					if (countriesWithUsers.containsKey(country)) {
+						countriesWithUsers.put(country, countriesWithUsers.get(country) + 1);
+					} else {
+						countriesWithUsers.put(country, 1);
+					}
+				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
