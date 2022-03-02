@@ -7,7 +7,6 @@ import java.util.*;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.persistance.DataSource;
 import gov.iti.jets.server.persistance.entities.UserEntity;
-import java.sql.SQLException;
 
 public class UserDaoImpl implements UserDao {
 
@@ -36,22 +35,75 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
+	public boolean checkPhone(String phone) {
+		String query = "Select * from hermesdb.user where phone = ?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, phone);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next())
+				return true;
+			else
+				return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean setUserProfilePicture(String phone, String format) {
+		String query = "update hermesdb.user set image = ? where  phone= ? ";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query);) {
+			preparedStatement.setString(1, phone + "." + format);
+			preparedStatement.setString(2, phone);
+			int i = preparedStatement.executeUpdate();
+			if (i > 0) {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public boolean loginUser(UserEntity userEntity) {
+		String query = "Select * from hermesdb.user where phone = ? and password = ?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, userEntity.phone);
+			preparedStatement.setString(2, userEntity.password);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				return true;
+			} else
+				return false;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public Optional<UserEntity> getUserByPhone(String phone) {
 
 		String sql = "Select * from user where phone = ?";
-
-		try (var connection = DataSource.INSTANCE.getDataSource().getConnection(); var preparedStmt = connection.prepareStatement(sql)) {
+		UserEntity userEntity = new UserEntity();
+		try (var connection = DataSource.INSTANCE.getDataSource().getConnection();
+				var preparedStmt = connection.prepareStatement(sql)) {
 			preparedStmt.setString(1, phone);
 			var resultSet = preparedStmt.executeQuery();
 			if (resultSet.next()) {
-				UserEntity userEntity = new UserEntity();
 				fillUserEntity(resultSet, userEntity);
 				return Optional.of(userEntity);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return Optional.<UserEntity>of(null);
+		return Optional.empty();
 
 	}
 
@@ -65,6 +117,7 @@ public class UserDaoImpl implements UserDao {
 		userEntity.dob = resultSet.getDate("dob");
 		userEntity.country = resultSet.getString("country");
 		userEntity.bio = resultSet.getString("bio");
+
 	}
 
 	@Override
@@ -107,6 +160,26 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public void updateUser(UserEntity user) {
+		String query = "update hermesdb.user set country = ? , email = ? , dob = ? ,  bio= ? , password=?  where  phone=?";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, user.country);
+			preparedStatement.setString(2, user.email);
+			preparedStatement.setDate(3, user.dob);
+			preparedStatement.setString(4, user.bio);
+			preparedStatement.setString(5, user.password);
+			preparedStatement.setString(6, user.phone);
+			int rowAffected = preparedStatement.executeUpdate();
+
+			if (rowAffected > 0) {
+				System.out.println("Update is done.");
+
+			} else
+				System.out.println("Wrong update");
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
@@ -177,4 +250,23 @@ public class UserDaoImpl implements UserDao {
 		}
 		return countriesWithUsers;
 	}
+	@Override
+	public String getUserImageByPhone(String phone) {
+		String query = "select image from hermesdb.user where phone = ? ";
+		try (var connection = dataSource.getDataSource().getConnection();
+				var preparedStatement = connection.prepareStatement(query)) {
+			preparedStatement.setString(1, phone);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next()) {
+				String img = rs.getString(1);
+				System.out.println(img);
+				return img;
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

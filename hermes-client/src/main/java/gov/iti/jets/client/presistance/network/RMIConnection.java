@@ -8,8 +8,9 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.util.HashMap;
 import java.util.Map;
-import common.business.dtos.UserAuthDto;
+
 import common.business.services.Server;
+import gov.iti.jets.client.presentation.util.ModelsFactory;
 
 public enum RMIConnection {
 
@@ -42,7 +43,7 @@ public enum RMIConnection {
 
 	public void close() throws AccessException, RemoteException, NotBoundException {
 		// logout if RMI is going to be closed by the application normally
-		getServer().logout(new UserAuthDto("01149056691", "456"));
+		getServer().logout(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
 	}
 
 

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -12,12 +16,14 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:controller="gov.iti.jets.client.presentation.controllers.ProfileController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@ProfileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1024.0" stylesheets="@ProfileStyle.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.ProfileController">
 	<children>
 		<HBox alignment="CENTER" layoutY="230.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
 			<children>
@@ -89,10 +95,11 @@
 						</TextArea>
 					</children>
 				</HBox>
-				<GridPane alignment="CENTER_LEFT" focusTraversable="true" hgap="10.0" vgap="40.0">
+				<GridPane alignment="CENTER_LEFT" focusTraversable="true" hgap="5.0" prefHeight="265.0" prefWidth="943.0" vgap="20.0">
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="243.75297172097316" minWidth="0.0" prefWidth="58.84496378130352" />
 						<ColumnConstraints hgrow="SOMETIMES" maxWidth="451.8096422073336" minWidth="10.0" prefWidth="392.96467842603005" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="451.8096422073336" minWidth="10.0" prefWidth="392.96467842603005" />
 					</columnConstraints>
 					<rowConstraints>
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -102,9 +109,8 @@
 						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<TextField fx:id="emailTextField" promptText="Email" text="minatalaat070@gmail.com" GridPane.columnIndex="1" />
-						<TextField fx:id="phoneTextField" editable="false" promptText="Phone" text="01285097233" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-						<TextField fx:id="countryTextField" promptText="Country" text="Egypt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+						<TextField fx:id="emailTextField" prefHeight="0.0" prefWidth="483.0" promptText="Email" text="minatalaat070@gmail.com" GridPane.columnIndex="1" />
+						<TextField fx:id="phoneTextField" editable="false" prefHeight="40.0" prefWidth="322.0" promptText="Phone" text="01285097233" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 						<ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
 							<image>
 								<Image url="@../../images/002-mail.png" />
@@ -130,7 +136,7 @@
 								<Image url="@../../images/005-gender.png" />
 							</image>
 						</ImageView>
-						<DatePicker fx:id="birthdayDatePicker" maxWidth="1.7976931348623157E308" promptText="22/07/1998" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+						<DatePicker fx:id="birthdayDatePicker" maxWidth="1.7976931348623157E308" prefHeight="40.0" prefWidth="264.0" promptText="22/07/1998" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
 						<HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4">
 							<children>
 								<RadioButton fx:id="maleRadioButton" mnemonicParsing="false" selected="true" text="Male">
@@ -141,6 +147,19 @@
 								<RadioButton fx:id="femaleRadioButton" mnemonicParsing="false" text="Female" toggleGroup="$genderGroup" />
 							</children>
 						</HBox>
+                  <ComboBox fx:id="countryComboBox" prefHeight="81.0" prefWidth="452.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <children>
+                        <Label fx:id="oldPasswordLabel" layoutX="41.0" layoutY="7.0" text="Old password" />
+                        <PasswordField fx:id="oldPasswordTextField" layoutX="175.0" layoutY="-6.0" prefHeight="18.0" prefWidth="234.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <children>
+                        <Label fx:id="newPasswordLabel" layoutX="37.0" layoutY="8.0" text="New password" />
+                        <PasswordField fx:id="newPasswordTextField" layoutX="175.0" layoutY="-6.0" prefHeight="10.0" prefWidth="234.0" />
+                     </children>
+                  </Pane>
 					</children>
 					<VBox.margin>
 						<Insets />
@@ -149,9 +168,23 @@
 						<Insets bottom="10.0" left="20.0" right="30.0" top="10.0" />
 					</padding>
 				</GridPane>
+            <Pane prefHeight="62.0" prefWidth="1024.0">
+               <children>
+                  <Button fx:id="editButton" layoutX="842.0" layoutY="-6.0" mnemonicParsing="false" onMouseClicked="#editAction" prefHeight="40.0" prefWidth="126.0" style="-fx-background-radius: 20%; -fx-background-color: white; -fx-cursor: hand;" text="Save changes" textAlignment="CENTER" textFill="#1e0707">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="changePasswordButton" layoutX="55.0" layoutY="-6.0" mnemonicParsing="false" onMouseClicked="#changePasswordAction" prefHeight="40.0" prefWidth="126.0" style="-fx-background-radius: 20%; -fx-background-color: white; -fx-cursor: hand;" text="Change Password" textAlignment="CENTER" textFill="#1e0707">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </Pane>
 			</children>
 		</VBox>
-		<StackPane id="back-stackpane" onMouseClicked="#backToPreviousScene" layoutX="30.0" layoutY="30.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
+		<StackPane id="back-stackpane" layoutX="30.0" layoutY="30.0" onMouseClicked="#backToPreviousScene" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0">
 			<children>
 				<ImageView fx:id="previousImageView" fitHeight="20.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
 					<image>

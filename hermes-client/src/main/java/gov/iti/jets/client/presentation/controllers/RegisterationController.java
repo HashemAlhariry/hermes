@@ -174,9 +174,7 @@ public class RegisterationController implements Initializable {
         } catch (RemoteException e) {
             e.printStackTrace();
         }
-        if (userModel.getBio() != null) {
-            stageCoordinator.switchtoHomePageScene();
-        }
+
     }
 
     @FXML
@@ -214,7 +212,7 @@ public class RegisterationController implements Initializable {
     }
 
     private void fillCountryComboBox() {
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("countries.txt");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("Countries.txt");
         try {
             InputStreamReader streamReader = new InputStreamReader(inputStream);
             BufferedReader reader = new BufferedReader(streamReader);

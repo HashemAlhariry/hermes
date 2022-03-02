@@ -15,6 +15,7 @@ public class UserDto implements Serializable {
 	public String country;
 	public LocalDate dateOfBirth;
 	public String bio;
+	public byte[] image;
 
 	public UserDto(
 		String phone,
@@ -34,6 +35,9 @@ public class UserDto implements Serializable {
 		this.name = name;
 		this.dateOfBirth = dateOfBirth;
 		this.bio = bio;
+	}
+	public byte[] getImage(){
+		return image;
 	}
 
 }

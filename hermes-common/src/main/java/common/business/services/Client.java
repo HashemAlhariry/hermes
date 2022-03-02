@@ -2,6 +2,7 @@ package common.business.services;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserDto;
 
@@ -13,7 +14,7 @@ public interface Client extends Remote {
 
 	public String getPhoneNumber() throws RemoteException;
 
-	public void loginSuccess() throws RemoteException;
+	public void loginSuccess(UserDto userDto) throws RemoteException;
 
 	public void registerationSuccess() throws RemoteException;
 

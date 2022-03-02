@@ -1,5 +1,8 @@
 package gov.iti.jets.server.business.daos;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +20,10 @@ public interface UserDao {
 
 	void deleteUser(UserEntity user);
 
+	boolean loginUser(UserEntity userEntity);
+
+	boolean checkPhone(String phone);
+
 	Optional<UserEntity> getUserByPhone(String phone);
 
 	public List<UserEntity> getAllMaleUsers();
@@ -24,4 +31,8 @@ public interface UserDao {
 	public List<UserEntity> getAllFemaleUsers();
 
 	public Map<String,Integer> getAllCountries();
+	public String getUserImageByPhone(String phone);
+
+	public boolean setUserProfilePicture(String phoneNumber , String phone);
+
 }
