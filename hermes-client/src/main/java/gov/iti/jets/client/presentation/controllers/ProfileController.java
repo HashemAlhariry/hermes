@@ -105,10 +105,6 @@ public class ProfileController implements Initializable {
 	@FXML
     private Label newPasswordLabel;
 
-	@FXML
-    private Button changePasswordButton;
-
-
 	private boolean isNameBeingEdited;
 
 	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
@@ -164,13 +160,6 @@ public class ProfileController implements Initializable {
 
 	}
 	
-	@FXML
-    void changePasswordAction(MouseEvent event) {
-		newPasswordLabel.setVisible(true);
-		oldPasswordLabel.setVisible(true);
-		newPasswordTextField.setVisible(true);
-		oldPasswordTextField.setVisible(true);
-    }
         
 	//byte[]bytes = Util.INSTANCE.fromImageToArrayOfBytes(profilePictureImageView, "png");
 	@FXML

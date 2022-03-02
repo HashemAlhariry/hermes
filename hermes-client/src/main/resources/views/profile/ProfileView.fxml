@@ -175,11 +175,6 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button fx:id="changePasswordButton" layoutX="55.0" layoutY="-6.0" mnemonicParsing="false" onMouseClicked="#changePasswordAction" prefHeight="40.0" prefWidth="126.0" style="-fx-background-radius: 20%; -fx-background-color: white; -fx-cursor: hand;" text="Change Password" textAlignment="CENTER" textFill="#1e0707">
-                     <font>
-                        <Font name="System Bold" size="12.0" />
-                     </font>
-                  </Button>
                </children>
             </Pane>
 			</children>
