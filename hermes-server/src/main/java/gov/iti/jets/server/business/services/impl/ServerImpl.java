@@ -15,8 +15,14 @@ import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
 import common.business.services.Server;
+import gov.iti.jets.server.business.daos.*;
+import gov.iti.jets.server.business.services.GroupService;
+import gov.iti.jets.server.business.services.InvitationService;
+import gov.iti.jets.server.persistance.daos.impl.GroupUserDaoImpl;
+import gov.iti.jets.server.persistance.entities.UserEntity;
+import gov.iti.jets.server.persistance.util.DaosFactory;
+import gov.iti.jets.server.business.services.MessageService;
 import common.business.util.OnlineStatus;
-import gov.iti.jets.server.business.daos.GroupDao;
 import gov.iti.jets.server.business.daos.UserDao;
 import gov.iti.jets.server.business.services.GroupService;
 import gov.iti.jets.server.business.services.InvitationService;
@@ -166,20 +172,31 @@ public class ServerImpl extends UnicastRemoteObject implements Server {
 	@Override
 	public void sendMessage(MessageDto messageDto) {
 
-		GroupDao group = new GroupDaoImpl();
-		group.getUsersByGroupId(messageDto.groupID);
+		MessageService messageService = new MessageServiceImpl();
+		messageService.insertMessage(messageDto);
 
-		// ask db to get all users joined to this group id from messageDto
-		/*
-		 * for (ConnectedClient connectedClient : connectedClients) {
-		 * 
-		 * 
-		 * if(message.groupID.equals(connectedClient.)){
-		 * connectedClient.recieveInvitation(invitationDto.senderPhone);
-		 * }
-		 * }
-		 * 
-		 */
+		//send message to all clients connected to it and being online
+		GroupUserDao groupUserDao = new GroupUserDaoImpl();
+
+		List <String> userPhones = groupUserDao.getAllUsersByGroup(messageDto.groupId);
+
+		userPhones.remove(messageDto.senderPhone);
+
+		for (String userPhone:userPhones) {
+			//check if group participants online or not
+			if(connectedClients.containsKey(userPhone)){
+				try {
+					connectedClients.get(userPhone).recieveMessage(messageDto);
+				} catch (RemoteException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+
+
+
+		//call message recieve in client to check if the message will append to the currenct v box or not
+
 	}
 
 	@Override

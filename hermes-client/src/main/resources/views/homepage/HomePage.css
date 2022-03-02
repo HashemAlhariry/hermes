@@ -16,7 +16,29 @@
 }
 
 .gray-background {
-	-fx-background-color: #363A54;
+    -fx-background-color: '#363A54'
+}
+
+.bg-color-pricker {
+    -fx-pref-width: 50;
+}
+
+.bg-color-pricker .label {
+    -fx-text-fill: null;
+    -fx-graphic  : url("../../images/bg-color.png");
+}
+
+
+.color-pricker {
+    -fx-pref-width: 50;
+}
+
+.color-pricker .label {
+    -fx-graphic      : url("../../images/color.png");
+    -fx-text-fill    : null;
+    /* -fx-pref-width:50;
+    -fx-pref-height  :50; */
+
 }
 
 .transparent-background {
@@ -53,10 +75,10 @@ Button {
 	-fx-border-color: white;
 }
 
-Button:hover {
+/* Button:hover {
 	-fx-background-color: #CCA4FF;
 	-fx-text-fill: white;
-}
+} */
 
 .list-view .list-cell:even {
 	-fx-background-color: #363A54;
@@ -68,6 +90,7 @@ Button:hover {
 	-fx-text-fill: black;
 }
 
+/*
 .combo-box .list-cell,.arrow-button  {
 	-fx-background-color:#363A54;
 }
@@ -75,3 +98,4 @@ Button:hover {
 	-fx-background-color:#363A54;
 	-fx-text-fill:white;
 }
+*/

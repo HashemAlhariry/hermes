@@ -28,7 +28,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 	@Override
 	public void recieveMessage(MessageDto message) {
-		System.out.println("MESSAGE RECIEVED" + message.content);
+		Utils.INSTANCE.appendMessagesToVbox(message);
 	}
 
 	@Override
@@ -71,6 +71,7 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 			}
 		});
 	}
+
 	public void registerationFail(String errorMessage) throws RemoteException {
 		Platform.runLater(()->{
 			Alert alert = new Alert(AlertType.ERROR);

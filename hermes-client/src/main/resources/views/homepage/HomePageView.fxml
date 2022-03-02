@@ -17,6 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.web.HTMLEditor?>
 
 <BorderPane fx:id="mainBorderPane" prefHeight="720.0" prefWidth="1024.0" styleClass="mainbackground-color" stylesheets="@HomePage.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gov.iti.jets.client.presentation.controllers.HomePageController">
    <left>
@@ -114,183 +115,6 @@
                         <ListView fx:id="contactsListView" maxHeight="1.7976931348623157E308" prefHeight="583.0" prefWidth="180.0" style="-fx-background-color: #363A54;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="2.0" AnchorPane.rightAnchor="2.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
-                  <!--
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fx:id="profileImage" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Hashem " textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets top="10.0" />
-                     </VBox.margin>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="61.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Color-Name.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Mohammed" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="111.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Hazem" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="161.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="JetsGroup" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="211.0" prefHeight="50.0" prefWidth="184.0">
-
-
-
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Color-Circled%20User%20Female%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="+2011132323" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="261.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Color-Name.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Criss" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="311.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Jone" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  <HBox alignment="CENTER" layoutX="10.0" layoutY="361.0" prefHeight="50.0" prefWidth="184.0">
-                     <children>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../images/icons8-Cute%20Color-Circled%20User%20Male%20Skin%20Type%207.png" />
-                           </image>
-                        </ImageView>
-                        <VBox alignment="CENTER_LEFT" prefHeight="21.0" prefWidth="131.0">
-                           <children>
-                              <Label prefHeight="17.0" prefWidth="129.0" text="Jone" textFill="#fffbfb">
-                                 <VBox.margin>
-                                    <Insets left="5.0" />
-                                 </VBox.margin>
-                              </Label>
-                           </children>
-                        </VBox>
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                  </HBox>
-                  -->
-
                </children>
             </VBox>
          </children>
@@ -309,21 +133,12 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </ImageView>
-                  <Label prefHeight="29.0" prefWidth="100.0" styleClass="testing-font" stylesheets="@HomePage.css" text="Hashem " textFill="WHITE">
+                  <Label fx:id="currentGroupName" prefHeight="29.0" prefWidth="100.0" styleClass="testing-font" stylesheets="@HomePage.css" text="User " textFill="WHITE">
                      <font>
                         <Font size="20.0" />
                      </font>
                      <HBox.margin>
                         <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-                  <Circle fill="#7abf7c" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
-                  <Label layoutX="20.0" layoutY="29.0" prefHeight="30.0" prefWidth="50.0" text="Online" textFill="#909797">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="5.0" />
                      </HBox.margin>
                   </Label>
                   <Pane prefHeight="66.0" prefWidth="105.0" HBox.hgrow="ALWAYS" />
@@ -342,27 +157,15 @@
             </HBox>
             <ScrollPane fx:id="sp_main" fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="389.0" prefWidth="521.0" styleClass="fourth-background" stylesheets="@HomePage.css" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="messagesVerticalBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2500.0" prefWidth="2500.0" styleClass="fourth-background" stylesheets="@HomePage.css" />
+                  <VBox id ="messagesVerticalBox" fx:id="messagesVerticalBox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="2500.0" prefWidth="2500.0" styleClass="fourth-background" stylesheets="@HomePage.css" />
                </content>
             </ScrollPane>
-            <HBox prefHeight="39.0" prefWidth="521.0">
+            <HBox maxWidth="1.7976931348623157E308">
                <children>
-                  <ImageView fitHeight="25.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../images/icons8-iOS%20Filled-Plus%20Math.png" />
-                     </image>
+                  <HTMLEditor fx:id="messagHtmlEditor" htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;" maxWidth="1.7976931348623157E308" onKeyPressed="#sendMessageByEnterAction" prefHeight="100.0" prefWidth="2000.0" />
+                  <Button fx:id="sendButton" mnemonicParsing="false" onAction="#sendMessageAction" prefHeight="55.0" prefWidth="73.0">
                      <HBox.margin>
-                        <Insets left="15.0" top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <TextField fx:id="messageTextField" prefHeight="26.0" prefWidth="220.0" HBox.hgrow="ALWAYS">
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" top="5.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <Button fx:id="sendButton" mnemonicParsing="false" text="Send">
-                     <HBox.margin>
-                        <Insets right="5.0" top="5.0" />
+                        <Insets left="-40.0" top="43.0" />
                      </HBox.margin>
                   </Button>
                </children>

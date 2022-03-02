@@ -9,5 +9,5 @@ public interface MessageDao {
 
 	void insertMessage(MessageEntity messageEntity);
 
-	
+
 }
