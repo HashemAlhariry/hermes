@@ -1,10 +1,15 @@
 package gov.iti.jets.client.presentation.controllers;
 
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.rmi.RemoteException;
+import java.util.Base64;
 import java.util.ResourceBundle;
 
+import common.business.dtos.UserAuthDto;
 import common.business.dtos.UserDto;
 import gov.iti.jets.client.business.services.util.ServiceFactory;
 import gov.iti.jets.client.presentation.models.UserModel;
@@ -44,8 +49,6 @@ public class LoginController implements Initializable {
 	private Boolean checkServerAvailabilty = true;
 
 	private final StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
-	private final ModelsFactory modelsFactory = ModelsFactory.INSTANCE;
-	private UserModel userModel = modelsFactory.getUserModel();
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -59,6 +62,8 @@ public class LoginController implements Initializable {
 		}
 
 		phoneTextField.setFocusTraversable(false);
+		// check if there is cred file exists
+		checkIfRememberedLoginActivated();
 	}
 
 	@FXML
@@ -107,6 +112,36 @@ public class LoginController implements Initializable {
 	void nextKeyPressed(KeyEvent event) {
 		if (event.getCode() == KeyCode.ENTER) {
 			stageCoordinator.switchToNextLoginScene();
+		}
+	}
+
+	private void checkIfRememberedLoginActivated() {
+		try {
+			if (!Paths.get("creds").toFile().exists())
+				return;
+			byte[] credsEncoded = Files.readAllBytes(Paths.get("creds"));
+			if (credsEncoded != null) {
+				var decoder = Base64.getDecoder();
+				byte[] credsInBytes = decoder.decode(credsEncoded);
+				String creds = new String(credsInBytes);
+				if (creds.split("\n").length == 2) {
+					String phone = creds.split("\n")[0];
+					String password = creds.split("\n")[1];
+					ModelsFactory.INSTANCE.getUserModel().setPhoneNumber(phone);
+					UserDto userDto = RMIConnection.INSTANCE.getServer()
+							.login(ServiceFactory.INSTANCE.getClientImpl(),
+									new UserAuthDto(phone, password));
+					if (userDto != null) {
+						Platform.runLater(() -> {
+							StageCoordinator.INSTANCE.switchtoHomePageScene();
+						});
+					} else {
+						ModelsFactory.INSTANCE.setUserModel(new UserModel());
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 

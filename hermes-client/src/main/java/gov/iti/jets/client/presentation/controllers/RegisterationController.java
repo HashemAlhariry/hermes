@@ -23,6 +23,8 @@ import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presentation.util.validation.Messages;
 import gov.iti.jets.client.presentation.util.validation.Validators;
 import gov.iti.jets.client.presistance.network.RMIConnection;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +37,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import net.synedra.validatorfx.Check.Context;
+import net.synedra.validatorfx.Validator;
 
 public class RegisterationController implements Initializable {
 

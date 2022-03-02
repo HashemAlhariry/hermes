@@ -1,11 +1,11 @@
 package gov.iti.jets.client.presentation.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.rmi.NotBoundException;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -21,6 +21,8 @@ import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.*;
 
 import java.util.stream.Collectors;
+
+
 import common.business.dtos.GroupDetailsDto;
 import common.business.dtos.InvitationSentDto;
 import common.business.util.OnlineStatus;
@@ -47,6 +49,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.*;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -396,6 +399,7 @@ public class HomePageController implements Initializable {
 			RMIConnection.INSTANCE.close();
 			ModelsFactory.INSTANCE.getContactsModel().contactsProperty().clear();
 			StageCoordinator.INSTANCE.getSceneMap().clear();
+			clearCredsIfFound();
 			stageCoordinator.switchToLoginScene();
 		} catch (RemoteException e) {
 			e.printStackTrace();
@@ -672,6 +676,13 @@ public class HomePageController implements Initializable {
 			System.out.println("InvalidImage");
 		}
 		return null;
+	}
+
+	private void clearCredsIfFound() {
+		File creds = Paths.get("creds").toFile();
+		if (!creds.exists())
+			return;
+		creds.delete();
 	}
 
 }
