@@ -122,8 +122,7 @@ public class HomePageController implements Initializable {
 		Image image;
 
 		try {
-			byte[] imgBytes = RMIConnection.INSTANCE.getServer()
-					.getUserImageByPhone(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+			byte[] imgBytes = RMIConnection.INSTANCE.getServer().getUserProfilePicture(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
 			image = Util.INSTANCE.fromArrayOfBytesToImage(imgBytes);
 			ModelsFactory.INSTANCE.getUserModel().setPicture(image);
 		} catch (RemoteException e) {
