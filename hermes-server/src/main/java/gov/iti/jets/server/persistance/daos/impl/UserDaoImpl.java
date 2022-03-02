@@ -129,13 +129,13 @@ public class UserDaoImpl implements UserDao {
 				uniquePhone = false;
 				return "Phone Number Must Be Unique";
 			}
-			if (userEntity.email.equalsIgnoreCase(user.email)) {
-				uniqueEmail = false;
-				return "Email Must Be Unique";
-			}
+			// if (userEntity.email.equalsIgnoreCase(user.email)) {
+			// 	uniqueEmail = false;
+			// 	return "Email Must Be Unique";
+			// }
 		}
 
-		if (uniquePhone && uniqueEmail) {
+		if (uniquePhone) {
 			int gender = user.gender ? 1 : 0;
 			String query = "INSERT INTO hermesdb.user (name, phone, email, password, gender, dob, country) VALUES (?,?,?,?,?,?,?);";
 			try (var connection = dataSource.getDataSource().getConnection();
