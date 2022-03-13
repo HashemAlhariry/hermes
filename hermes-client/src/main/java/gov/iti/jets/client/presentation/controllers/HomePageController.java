@@ -374,14 +374,13 @@ public class HomePageController implements Initializable {
 	@FXML
 	void onLogoutClicked(MouseEvent mouseEvent) {
 		try {
-			RMIConnection.INSTANCE.close();
+
+			RMIConnection.INSTANCE.close(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
 			ModelsFactory.INSTANCE.getContactsModel().contactsProperty().clear();
 			StageCoordinator.INSTANCE.getSceneMap().clear();
 			clearCredsIfFound();
 			StageCoordinator.INSTANCE.switchToLoginScene();
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		} catch (NotBoundException e) {
+		} catch (RemoteException | NotBoundException e) {
 			e.printStackTrace();
 		}
 	}
@@ -438,7 +437,7 @@ public class HomePageController implements Initializable {
 		}));
 
 		// Request focus on the newContact field by default.
-		Platform.runLater(() -> newContact.requestFocus());
+		Platform.runLater(newContact::requestFocus);
 		dialog.setResultConverter(dialogButton -> {
 			if (dialogButton == loginButtonType) {
 				return invitedContacts.size();
@@ -446,9 +445,7 @@ public class HomePageController implements Initializable {
 			return null;
 		});
 		Optional<Integer> result = dialog.showAndWait();
-		result.ifPresent(length -> {
-			System.out.println(length);
-		});
+		result.ifPresent(System.out::println);
 		if (!invitedContacts.isEmpty()) {
 			// calling RMI SERVICE TO ADD CONTACTS if list is not empty
 			// SEND USER PHONE AND LIST OF ADDED CONTACT BY USER

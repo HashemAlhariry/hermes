@@ -41,9 +41,10 @@ public enum RMIConnection {
 		return (Server) services.get("Server");
 	}
 
-	public void close() throws AccessException, RemoteException, NotBoundException {
+	public void close(String phone) throws AccessException, RemoteException, NotBoundException {
 		// logout if RMI is going to be closed by the application normally
-		getServer().logout(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+		//
+		getServer().logout(phone);
 	}
 
 

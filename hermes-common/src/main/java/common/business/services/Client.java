@@ -3,6 +3,7 @@ package common.business.services;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import common.business.dtos.GroupDto;
 import common.business.dtos.GroupStatusDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserDto;
@@ -30,4 +31,5 @@ public interface Client extends Remote {
 
 	public void serverAvailability(boolean checkServerAvailability) throws RemoteException;
 
+    void addNewContactOnInvitationAcceptance(GroupDto groupDto) throws RemoteException;
 }

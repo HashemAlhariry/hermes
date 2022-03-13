@@ -1,6 +1,7 @@
 package gov.iti.jets.client;
 
 import gov.iti.jets.client.business.services.util.ServiceFactory;
+import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
 import gov.iti.jets.client.presistance.network.RMIConnection;
 import javafx.application.Application;
@@ -9,33 +10,34 @@ import javafx.stage.Stage;
 
 public class App extends Application {
 
-	private StageCoordinator stageCoordinator =    StageCoordinator.INSTANCE;
+    private StageCoordinator stageCoordinator = StageCoordinator.INSTANCE;
 
-	public static void main(String[] args) {
-		launch(args);
+    public static void main(String[] args) {
+        launch(args);
 
-	}
+    }
 
-	@Override
-	public void init() throws Exception {
-		super.init();
-		RMIConnection.INSTANCE.init();
-	}
+    @Override
+    public void init() throws Exception {
+        super.init();
+        RMIConnection.INSTANCE.init();
+    }
 
-	@Override
-	public void start(Stage primaryStage) throws Exception {
-		stageCoordinator.initStage(primaryStage);
-		stageCoordinator.switchToLoginScene();
-		primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
-		primaryStage.setTitle("Hermes");
-		primaryStage.show();
-	}
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        stageCoordinator.initStage(primaryStage);
+        stageCoordinator.switchToLoginScene();
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/icon.png")));
+        primaryStage.setTitle("Hermes");
+        primaryStage.show();
+    }
 
-	@Override
-	public void stop() throws Exception {
-		RMIConnection.INSTANCE.close();
-		ServiceFactory.INSTANCE.releaseClientImpl();
-		super.stop();
+    @Override
+    public void stop() throws Exception {
+        if (ModelsFactory.INSTANCE.getUserModel().getOnlineStatus() != null)
+            RMIConnection.INSTANCE.close(ModelsFactory.INSTANCE.getUserModel().getPhoneNumber());
+        ServiceFactory.INSTANCE.releaseClientImpl();
+        super.stop();
 		/*
 		/ IMPORTANT: Due to the fact that client has no mechanism to close all the underlying
 		/ connections, and the connections are pooled and closed fairly aggressively anyway by
@@ -45,7 +47,7 @@ public class App extends Application {
 		/ stub-object from the rmiregistry, there was only one option that is to force the client's
 		/ JVM to close using System.exit(0) and considering it a normal terminataion. 
 		*/
-		System.exit(0);
-	}
+        System.exit(0);
+    }
 
 }

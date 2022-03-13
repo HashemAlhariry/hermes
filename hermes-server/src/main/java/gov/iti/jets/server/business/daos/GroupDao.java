@@ -20,4 +20,6 @@ public interface GroupDao {
 	List<String> getUsersByGroupId(Long groupID);
 
 	boolean checkPrivateChatEstablished(String client1, String client2);
+
+	GroupEntity getGroupById(int id);
 }

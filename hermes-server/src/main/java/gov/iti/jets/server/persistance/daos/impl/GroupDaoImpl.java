@@ -142,4 +142,20 @@ public class GroupDaoImpl implements GroupDao {
 
 	}
 
+    @Override
+    public GroupEntity getGroupById(int id) {
+		String sql = "Select * from `group` where id = ?";
+		GroupEntity groupEntity = null;
+		try(var connection = DataSource.INSTANCE.getDataSource().getConnection();
+		var preparedStatement = connection.prepareStatement(sql)){
+			var groups = preparedStatement.executeQuery();
+			if(groups.next()) {
+				groupEntity = new GroupEntity(groups.getInt("id"),groups.getString("name"),groups.getString("image"),groups.getInt("particpiants_number"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return groupEntity;
+    }
+
 }

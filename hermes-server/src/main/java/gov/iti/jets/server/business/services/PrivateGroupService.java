@@ -4,5 +4,5 @@ import common.business.dtos.PrivateGroupDetailsDto;
 
 public interface PrivateGroupService {
 
-    public void addNewPrivateGroupChat(PrivateGroupDetailsDto privateGroupDetailsDto);
+    public int addNewPrivateGroupChat(PrivateGroupDetailsDto privateGroupDetailsDto);
 }

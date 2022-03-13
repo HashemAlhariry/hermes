@@ -63,6 +63,7 @@ public class GroupServiceImpl implements GroupService {
 			 gE.image = "person.png" ;
 		}
 		img = ImageIO.read(getClass().getResource("/userImages/" + gE.image));
+		System.out.println(gE.image+" :WALID IMAGE");
 		ByteArrayOutputStream baos  = new ByteArrayOutputStream();
 		ImageIO.write(img, gE.image.split("\\.")[1], baos);
 		groupDtos.add(new GroupDto(gE.id, gE.name, baos.toByteArray(), onlineStatus));
@@ -74,7 +75,7 @@ public class GroupServiceImpl implements GroupService {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 
-	@Override
+    @Override
 	public String getPrivateChatPeerPhone(int groupId, UserDto userDto) {
 		GroupDao groupDao = DaosFactory.INSTANCE.getGroupDao();
 		List<String> usersPhones = groupDao.getUsersByGroupId((long) groupId);

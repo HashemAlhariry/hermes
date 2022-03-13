@@ -9,13 +9,14 @@ import gov.iti.jets.server.persistance.util.DaosFactory;
 public class PrivateGroupServiceImpl implements PrivateGroupService {
 
     @Override
-    public void addNewPrivateGroupChat(PrivateGroupDetailsDto privateGroupDetailsDto) {
+    public int addNewPrivateGroupChat(PrivateGroupDetailsDto privateGroupDetailsDto) {
+        int groupID = -1;
         GroupEntity groupEntity = new GroupEntity(0,privateGroupDetailsDto.uniqueName,"Default",2);
         //insert new group to the db
        int check = DaosFactory.INSTANCE.getGroupDao().insertGroup(groupEntity);
        if(check==1){
            //get the id of the
-              int groupID =  DaosFactory.INSTANCE.getGroupDao().getGroupId(groupEntity);
+              groupID =  DaosFactory.INSTANCE.getGroupDao().getGroupId(groupEntity);
               System.out.println(groupID);
               // create new group user for each contact
            GroupUserEntity groupUserEntity1 = new GroupUserEntity(groupID,privateGroupDetailsDto.firstContact);
@@ -27,5 +28,6 @@ public class PrivateGroupServiceImpl implements PrivateGroupService {
            }
 
        }
+       return groupID;
     }
 }

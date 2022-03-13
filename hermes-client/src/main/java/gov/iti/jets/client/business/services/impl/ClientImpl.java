@@ -1,21 +1,26 @@
 package gov.iti.jets.client.business.services.impl;
 
+import java.io.IOException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
+import common.business.dtos.GroupDto;
 import common.business.dtos.GroupStatusDto;
 import common.business.dtos.MessageDto;
 import common.business.dtos.UserDto;
 import common.business.services.Client;
 import common.business.util.OnlineStatus;
+import gov.iti.jets.client.presentation.controllers.Contact;
 import gov.iti.jets.client.presentation.models.UserModel;
 import gov.iti.jets.client.presentation.util.ModelsFactory;
 import gov.iti.jets.client.presentation.util.StageCoordinator;
+import gov.iti.jets.client.presentation.util.Util;
 import gov.iti.jets.client.presentation.util.Utils;
 import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 
 public class ClientImpl extends UnicastRemoteObject implements Client {
@@ -115,5 +120,15 @@ public class ClientImpl extends UnicastRemoteObject implements Client {
 
 
 	}
+
+    @Override
+    public void addNewContactOnInvitationAcceptance(GroupDto groupDto) throws RemoteException {
+		try {
+			Image img  = Util.INSTANCE.fromArrayOfBytesToImage(groupDto.image);
+			ModelsFactory.INSTANCE.getContactsModel().getContacts().add(new Contact(groupDto.id,groupDto.name,img,groupDto.status));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 
 }
